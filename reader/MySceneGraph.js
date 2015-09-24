@@ -34,17 +34,19 @@ MySceneGraph.prototype.onXMLReady=function()
 		return;
 	}	
 
+	var error = this.parseIlumination(rootElement);
+
+	if (error != null) {
+		this.onXMLError(error);
+		return;
+	}	
+
 	this.loadedOk=true;
 	
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
 	this.scene.onGraphLoaded();
 };
 
-
-
-/*
- * Example of method that parses elements of one block and stores information in a specific data structure
- */
 MySceneGraph.prototype.parseInitials= function(rootElement) {
 	
 	console.log("INITIALS:");
@@ -126,36 +128,93 @@ MySceneGraph.prototype.parseInitials= function(rootElement) {
 	this.reference=this.reader.getFloat(reference,'length',true);
 
 	console.log("\tREFERENCE:"+this.reference);
+};
+	
+MySceneGraph.prototype.parseIlumination = function(rootElement) {
+	var iluminations = rootElement.getElementsByTagName("ILUMINATION");
+	if(iluminations == null) return "ilumination values missing";
 
-	/*
+	if(iluminations.length != 1) return "0 or more iluminations were found!";
+
+
+	//gets each ilumination element*/
+	var iluminationElems = iluminations[0];
+
+	//ambient
+	var ambients = iluminationElems.getElementsByTagName("ambient");
+	if(ambients == null) return "ambient values missing";
+	if(ambients.length != 1) return "0 or more ambient elements were found!";
+
+	var ambient = ambients[0];
+	this.ambient = [];
+	this.ambient["r"] = this.reader.getFloat(ambient, "r", true);
+	this.ambient["g"] = this.reader.getFloat(ambient, "g", true);
+	this.ambient["b"] = this.reader.getFloat(ambient, "b", true);
+	this.ambient["a"] = this.reader.getFloat(ambient, "a", true);
+
+	console.log("AMBIENT: TEST R(20.0) = "+this.ambient["r"]);
+	console.log("AMBIENT: TEST G(56.0) = "+this.ambient["g"]);
+	console.log("AMBIENT: TEST B(80.0) = "+this.ambient["b"]);
+	console.log("AMBIENT: TEST A(0.25) = "+this.ambient["a"]);
+
+	//doubleside
+	var doublesides = iluminationElems.getElementsByTagName("doubleside");
+	if(doublesides == null) return "doubleside values missing";
+	if(doublesides.length != 1) return "0 or more doubleside	 elements were found!";
+
+	var doubleside = doublesides[0];
+	this.doubleside = [];
+	this.doubleside["value"] = this.reader.getBoolean(doubleside, "value", true);
+
+	console.log("DOUBLESIDE: TEST VALUE(0) "+this.doubleside["value"]);
+
+	//background
+	var backgrounds = iluminationElems.getElementsByTagName("background");
+	if(backgrounds == null) return "backgrounds values missing";
+	if(backgrounds.length != 1) return "0 or more backgrounds were found!";
+
+	var background = backgrounds[0];
+	this.background = [];
+	this.background["r"] = this.reader.getFloat(background, "r", true);
+	this.background["g"] = this.reader.getFloat(background, "g", true);
+	this.background["b"] = this.reader.getFloat(background, "b", true);
+	this.background["a"] = this.reader.getFloat(background, "a", true);
+
+	console.log("BACKGROUND: TEST R(20.0) = "+this.background["r"]);
+	console.log("BACKGROUND: TEST G(19.0) = "+this.background["g"]);
+	console.log("BACKGROUND: TEST B(21.0) = "+this.background["b"]);
+	console.log("BACKGROUND: TEST A(1) = "+this.background["a"]);
+}
+	
+/*
+ * Example of method that parses elements of one block and stores information in a specific data structure
+ */
+/*
 	this.background = this.reader.getRGBA(globals, 'background');
 	this.drawmode = this.reader.getItem(globals, 'drawmode', ["fill","line","point"]);
 	this.cullface = this.reader.getItem(globals, 'cullface', ["back","front","none", "frontandback"]);
 	this.cullorder = this.reader.getItem(globals, 'cullorder', ["ccw","cw"]);
-
+	
 	console.log("Globals read from file: {background=" + this.background + ", drawmode=" + this.drawmode + ", cullface=" + this.cullface + ", cullorder=" + this.cullorder + "}");
-
 	var tempList=rootElement.getElementsByTagName('list');
-
+	
 	if (tempList == null  || tempList.length==0) {
 		return "list element is missing.";
 	}
-	
+		
 	this.list=[];
 	// iterate over every element
 	var nnodes=tempList[0].children.length;
 	for (var i=0; i< nnodes; i++)
 	{
 		var e=tempList[0].children[i];
-
+	
 		// process each element and store its information
 		this.list[e.id]=e.attributes.getNamedItem("coords").value;
 		console.log("Read list item id "+ e.id+" with value "+this.list[e.id]);
 	};
-	*/
+*/
 
-};
-	
 /*
  * Callback to be executed on any read error
  */
