@@ -185,6 +185,73 @@ MySceneGraph.prototype.parseIlumination = function(rootElement) {
 	console.log("BACKGROUND: TEST B(21.0) = "+this.background["b"]);
 	console.log("BACKGROUND: TEST A(1) = "+this.background["a"]);
 }
+
+MySceneGraph.prototype.parseLights = function(rootElement) {
+	var lights = rootElement.getElementsByTagName("LIGHTS");
+	if(lights == null) return "light values missing";
+	if(lights.length != 1) return "0 or more lights were found";
+
+	var first_lights = lights[0];
+
+	//LIGHT
+	var light = first_lights.getElementsByTagName("LIGHT");
+	if(light == null) return "light values missing";
+	if(light.length != 1) return "0 or more light elements were found";
+
+	for(var i=0; i<light.length; i++) {
+		var iterLight = light[i];
+
+		//enable/disable
+		var enables = iterLight.getElementsByTagName("enable");
+		var enable = enables[0];
+		this.enable = [];
+		this.enable["value"] = this.reader.getBoolean(enable, "value", true);
+
+
+		//light position
+		var positions = iterLight.getElementsByTagName("position");
+		var position = positions[0];
+		this.position = [];
+		this.position["x"] = this.reader.getFloat(position, "x", true);
+		this.position["y"] = this.reader.getFloat(position, "y", true);
+		this.position["z"] = this.reader.getFloat(position, "z", true);
+		this.position["w"] = this.reader.getFloat(position, "w", true);
+
+		//ambient component
+		var ambients = iterLight.getElementsByTagName("ambient");
+		var ambient = ambients[0];
+		this.ambient = [];
+		this.ambient["r"] = this.reader.getFloat(ambient, "r", true);
+		this.ambient["g"] = this.reader.getFloat(ambient, "g", true);
+		this.ambient["b"] = this.reader.getFloat(ambient, "b", true);
+		this.ambient["a"] = this.reader.getFloat(ambient, "a", true);
+
+		//diffuse component
+		var diffuses = iterLight.getElementsByTagName("diffuse");
+		var diffuse = diffuses[0];
+		this.diffuse = [];
+		this.diffuse["r"] = this.reader.getFloat(diffuse, "r", true);
+		this.diffuse["g"] = this.reader.getFloat(diffuse, "g", true);
+		this.diffuse["b"] = this.reader.getFloat(diffuse, "b", true);
+		this.diffuse["a"] = this.reader.getFloat(diffuse, "a", true);
+
+		//specular component
+		var speculars = iterLight.getElementsByTagName("specular");
+		var specular = speculars[0];
+		this.specular = [];
+		this.specular["r"] = this.reader.getFloat(specular, "r", true);
+		this.specular["g"] = this.reader.getFloat(specular, "g", true);
+		this.specular["b"] = this.reader.getFloat(specular, "b", true);
+		this.specular["a"] = this.reader.getFloat(specular, "a", true);
+
+	}
+
+	console.log("ENABLE/DISABLE : TEST(FALSE) = "+this.enable["value"]);
+	console.log("POSITION : TEST(X, Y, Z, W) = ("+this.position["x"]+", "+this.position["y"]+", "+this.position["z"]+", "+this.position["w"]+")");
+	console.log("LIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.ambient["r"]+", "+this.ambient["g"]+", "+this.ambient["b"]+", "+this.ambient["a"]+")");
+	console.log("LIGHT DIFFUSE COMPONENT : TEST(R, G, B, A) = ("+this.diffuse["r"]+", "+this.diffuse["g"]+", "+this.diffuse["b"]+", "+this.diffuse["a"]+")");
+	console.log("LIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.specular["r"]+", "+this.specular["g"]+", "+this.specular["b"]+", "+this.specular["a"]+")");	
+};
 	
 /*
  * Example of method that parses elements of one block and stores information in a specific data structure
