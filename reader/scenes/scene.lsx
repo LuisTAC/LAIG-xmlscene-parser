@@ -11,18 +11,26 @@
     </INITIALS>
 
     <ILUMINATION>
-        <ambient r="ff" g="ff" b="ff" a="ff" />            <!-- global ambient -->
-        <doubleside value="tt" />                          <!-- double or single side illum. -->
-        <background r="ff" g="ff" b="ff" a="ff" />         <!-- background color -->
+        <ambient r="20.0" g="56.0" b="80.0" a="0.25" />            <!-- global ambient -->
+        <doubleside value="0" />                          <!-- double or single side illum. -->
+        <background r="20.0" g="19.0" b="21.0" a="1" />         <!-- background color -->
     </ILUMINATION>
 
     <LIGHTS>
-        <LIGHT id="ss">                                    <!-- light identifier -->
-            <enable value ="tt" />                         <!-- enable/disable -->
-            <position x="ff" y="ff" z="ff" w="ff" />       <!-- light position -->
-            <ambient r="ff" g="ff" b="ff" a="ff" />        <!-- ambient component -->
-            <diffuse r="ff" g="ff" b="ff" a="ff" />        <!-- diffuse component -->
-            <specular r="ff" g="ff" b="ff" a="ff" />       <!-- specular component -->
+        <LIGHT id="light0">                                    <!-- light identifier -->
+            <enable value="1" />                         <!-- enable/disable -->
+            <position x="4" y="6" z="1" w="1" />       <!-- light position -->
+            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />        <!-- diffuse component -->
+            <specular r="1.0" g="1.0" b="0.0" a="1.0" />       <!-- specular component -->
+        </LIGHT>
+
+        <LIGHT id="light1">                                    <!-- light identifier -->
+            <enable value="0" />                         <!-- enable/disable -->
+            <position x="10.5" y="6.0" z="1.0" w="1.0" />       <!-- light position -->
+            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />        <!-- diffuse component -->
+            <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
         </LIGHT>
         <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
     </LIGHTS>

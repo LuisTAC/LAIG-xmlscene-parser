@@ -41,6 +41,13 @@ MySceneGraph.prototype.onXMLReady=function()
 		return;
 	}	
 
+	var error = this.parseLights(rootElement);
+
+	if (error != null) {
+		this.onXMLError(error);
+		return;
+	}	
+
 	this.loadedOk=true;
 	
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
@@ -196,61 +203,70 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 	//LIGHT
 	var light = first_lights.getElementsByTagName("LIGHT");
 	if(light == null) return "light values missing";
-	if(light.length != 1) return "0 or more light elements were found";
+	if(light.length < 1) return "0 light elements were found";
 
+	this.lights=[];
 	for(var i=0; i<light.length; i++) {
+		var currLight = [];
 		var iterLight = light[i];
 
 		//enable/disable
 		var enables = iterLight.getElementsByTagName("enable");
 		var enable = enables[0];
-		this.enable = [];
-		this.enable["value"] = this.reader.getBoolean(enable, "value", true);
+		currLight["enable"] = this.reader.getBoolean(enable, "value", true);
 
 
 		//light position
 		var positions = iterLight.getElementsByTagName("position");
 		var position = positions[0];
-		this.position = [];
-		this.position["x"] = this.reader.getFloat(position, "x", true);
-		this.position["y"] = this.reader.getFloat(position, "y", true);
-		this.position["z"] = this.reader.getFloat(position, "z", true);
-		this.position["w"] = this.reader.getFloat(position, "w", true);
+		currLight["position"] = [];
+		currLight["position"]["x"] = this.reader.getFloat(position, "x", true);
+		currLight["position"]["y"] = this.reader.getFloat(position, "y", true);
+		currLight["position"]["z"] = this.reader.getFloat(position, "z", true);
+		currLight["position"]["w"] = this.reader.getFloat(position, "w", true);
 
 		//ambient component
 		var ambients = iterLight.getElementsByTagName("ambient");
 		var ambient = ambients[0];
-		this.ambient = [];
-		this.ambient["r"] = this.reader.getFloat(ambient, "r", true);
-		this.ambient["g"] = this.reader.getFloat(ambient, "g", true);
-		this.ambient["b"] = this.reader.getFloat(ambient, "b", true);
-		this.ambient["a"] = this.reader.getFloat(ambient, "a", true);
+		currLight["ambient"] = [];
+		currLight["ambient"]["r"] = this.reader.getFloat(ambient, "r", true);
+		currLight["ambient"]["g"] = this.reader.getFloat(ambient, "g", true);
+		currLight["ambient"]["b"] = this.reader.getFloat(ambient, "b", true);
+		currLight["ambient"]["a"] = this.reader.getFloat(ambient, "a", true);
 
 		//diffuse component
 		var diffuses = iterLight.getElementsByTagName("diffuse");
 		var diffuse = diffuses[0];
-		this.diffuse = [];
-		this.diffuse["r"] = this.reader.getFloat(diffuse, "r", true);
-		this.diffuse["g"] = this.reader.getFloat(diffuse, "g", true);
-		this.diffuse["b"] = this.reader.getFloat(diffuse, "b", true);
-		this.diffuse["a"] = this.reader.getFloat(diffuse, "a", true);
+		currLight["diffuse"] = [];
+		currLight["diffuse"]["r"] = this.reader.getFloat(diffuse, "r", true);
+		currLight["diffuse"]["g"] = this.reader.getFloat(diffuse, "g", true);
+		currLight["diffuse"]["b"] = this.reader.getFloat(diffuse, "b", true);
+		currLight["diffuse"]["a"] = this.reader.getFloat(diffuse, "a", true);
 
 		//specular component
 		var speculars = iterLight.getElementsByTagName("specular");
 		var specular = speculars[0];
-		this.specular = [];
-		this.specular["r"] = this.reader.getFloat(specular, "r", true);
-		this.specular["g"] = this.reader.getFloat(specular, "g", true);
-		this.specular["b"] = this.reader.getFloat(specular, "b", true);
-		this.specular["a"] = this.reader.getFloat(specular, "a", true);
+		currLight["specular"] = [];
+		currLight["specular"]["r"] = this.reader.getFloat(specular, "r", true);
+		currLight["specular"]["g"] = this.reader.getFloat(specular, "g", true);
+		currLight["specular"]["b"] = this.reader.getFloat(specular, "b", true);
+		currLight["specular"]["a"] = this.reader.getFloat(specular, "a", true);
 
+		this.lights[i]=currLight;
+
+		console.log("");
 	}
 
-	console.log("ENABLE/DISABLE : TEST(FALSE) = "+this.enable["value"]);
-	console.log("POSITION : TEST(X, Y, Z, W) = ("+this.position["x"]+", "+this.position["y"]+", "+this.position["z"]+", "+this.position["w"]+")");
-	console.log("LIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.ambient["r"]+", "+this.ambient["g"]+", "+this.ambient["b"]+", "+this.ambient["a"]+")");
-	console.log("LIGHT DIFFUSE COMPONENT : TEST(R, G, B, A) = ("+this.diffuse["r"]+", "+this.diffuse["g"]+", "+this.diffuse["b"]+", "+this.diffuse["a"]+")");
-	console.log("LIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.specular["r"]+", "+this.specular["g"]+", "+this.specular["b"]+", "+this.specular["a"]+")");	
+	for(var i=0; i<this.lights.length; i++) {
+		console.log("LIGHT["+i+"]:");
+		console.log("\tENABLE/DISABLE : TEST = "+this.lights[i]["enable"]);
+		console.log("\tPOSITION : TEST(X, Y, Z, W) = ("+this.lights[i]["position"]["x"]+", "+this.lights[i]["position"]["y"]+", "+this.lights[i]["position"]["z"]+", "+this.lights[i]["position"]["w"]+")");
+		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["ambient"]["r"]+", "+this.lights[i]["ambient"]["g"]+", "+this.lights[i]["ambient"]["b"]+", "+this.lights[i]["ambient"]["a"]+")");
+		console.log("\tLIGHT DIFFUSE COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["diffuse"]["r"]+", "+this.lights[i]["diffuse"]["g"]+", "+this.lights[i]["diffuse"]["b"]+", "+this.lights[i]["diffuse"]["a"]+")");
+		console.log("\tLIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["specular"]["r"]+", "+this.lights[i]["specular"]["g"]+", "+this.lights[i]["specular"]["b"]+", "+this.lights[i]["specular"]["a"]+")");	
+	}
+
+	
 };
 	
 /*
@@ -284,8 +300,7 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 
 /*
  * Callback to be executed on any read error
- */
- 
+ */ 
 MySceneGraph.prototype.onXMLError=function (message) {
 	console.error("XML Loading Error: "+message);	
 	this.loadedOk=false;
