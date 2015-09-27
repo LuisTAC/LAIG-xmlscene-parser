@@ -200,6 +200,8 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 
 	var first_lights = lights[0];
 
+	var ids = [];
+
 	//LIGHT
 	var light = first_lights.getElementsByTagName("LIGHT");
 	if(light == null) return "light values missing";
@@ -209,6 +211,9 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 	for(var i=0; i<light.length; i++) {
 		var currLight = [];
 		var iterLight = light[i];
+
+		//stores ids
+		ids[i] = iterLight["id"];
 
 		//enable/disable
 		var enables = iterLight.getElementsByTagName("enable");
@@ -253,8 +258,6 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 		currLight["specular"]["a"] = this.reader.getFloat(specular, "a", true);
 
 		this.lights[i]=currLight;
-
-		console.log("");
 	}
 
 	for(var i=0; i<this.lights.length; i++) {
@@ -264,6 +267,10 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["ambient"]["r"]+", "+this.lights[i]["ambient"]["g"]+", "+this.lights[i]["ambient"]["b"]+", "+this.lights[i]["ambient"]["a"]+")");
 		console.log("\tLIGHT DIFFUSE COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["diffuse"]["r"]+", "+this.lights[i]["diffuse"]["g"]+", "+this.lights[i]["diffuse"]["b"]+", "+this.lights[i]["diffuse"]["a"]+")");
 		console.log("\tLIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["specular"]["r"]+", "+this.lights[i]["specular"]["g"]+", "+this.lights[i]["specular"]["b"]+", "+this.lights[i]["specular"]["a"]+")");	
+	}
+
+	for(var i=0; i<ids.length; i++) {
+		console.log(ids[i]+"   ");
 	}
 
 	
