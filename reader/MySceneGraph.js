@@ -213,7 +213,7 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 		var iterLight = light[i];
 
 		//stores ids
-		ids[i] = iterLight["id"];
+		currLight["id"] = this.reader.getString(iterLight,"id",true);
 
 		//enable/disable
 		var enables = iterLight.getElementsByTagName("enable");
@@ -269,8 +269,8 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 		console.log("\tLIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["specular"]["r"]+", "+this.lights[i]["specular"]["g"]+", "+this.lights[i]["specular"]["b"]+", "+this.lights[i]["specular"]["a"]+")");	
 	}
 
-	for(var i=0; i<ids.length; i++) {
-		console.log(ids[i]+"   ");
+	for(var i=0; i<this.lights.length; i++) {
+		console.log(this.lights[i]["id"]);
 	}
 
 	
