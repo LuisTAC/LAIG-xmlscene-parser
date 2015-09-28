@@ -103,7 +103,11 @@ MySceneGraph.prototype.parseInitials= function(rootElement) {
 		var rotation = elems[i];
 
 		this.rotation[i]['axis']=this.reader.getString(rotation,'axis',true);
-		//check axis is one of 'x','y','z'
+		if(this.rotation[i]['axis']!='x' &&
+			this.rotation[i]['axis']!='y' &&
+			this.rotation[i]['axis']!='z')
+			return "invalid "+(i+1)+" 'axis' value found. (expected=[x,y,z]; found="+this.rotation[i]['axis']+")";
+		
 		this.rotation[i]['angle']=this.reader.getFloat(rotation,'angle',true);
 		console.log("\tROTATION["+i+"] - axis:"+this.rotation[i]['axis']);
 		console.log("\tROTATION["+i+"] - angle:"+this.rotation[i]['angle']);
