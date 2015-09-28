@@ -19,7 +19,7 @@ XMLscene.prototype.init = function (application) {
 	this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-	this.axis=new CGFaxis(this);
+	//this.axis=new CGFaxis(this);
 
 };
 
@@ -96,9 +96,6 @@ XMLscene.prototype.display = function () {
 	// Apply transformations corresponding to the camera position relative to the origin
 	this.applyViewMatrix();
 
-	// Draw axis
-	this.axis.display();
-
 	this.setDefaultAppearance();
 	
 	// ---- END Background, camera and axis setup
@@ -108,6 +105,11 @@ XMLscene.prototype.display = function () {
 	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
+        this.axis=new CGFaxis(this,this.graph.reference);
+
+        // Draw axis
+        this.axis.display();
+
 		this.initLights();
 
 	};	
