@@ -1,4 +1,3 @@
-
 function XMLscene() {
     CGFscene.call(this);
 }
@@ -11,7 +10,7 @@ XMLscene.prototype.init = function (application) {
 
     this.initCameras();
 
-    this.initLights();
+    //this.initLights();
 
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
@@ -21,15 +20,43 @@ XMLscene.prototype.init = function (application) {
     this.gl.depthFunc(this.gl.LEQUAL);
 
 	this.axis=new CGFaxis(this);
+
 };
 
 XMLscene.prototype.initLights = function () {
 
     this.shader.bind();
 
-	this.lights[0].setPosition(2, 3, 3, 1);
-    this.lights[0].setDiffuse(1.0,1.0,1.0,1.0);
-    this.lights[0].update();
+    for (var i = 0; i < this.graph.lights.length && i < 8; i++) {
+    	var pos_x = this.graph.lights[i]["position"]["x"];
+    	var pos_y = this.graph.lights[i]["position"]["y"];
+    	var pos_z = this.graph.lights[i]["position"]["z"];
+    	var pos_w = this.graph.lights[i]["position"]["w"];
+    	this.lights[i].setPosition(pos_x, pos_y, pos_z, pos_w);
+
+    	var amb_r = this.graph.lights[i]["ambient"]["r"];
+    	var amb_g = this.graph.lights[i]["ambient"]["g"];
+    	var amb_b = this.graph.lights[i]["ambient"]["b"];
+    	var amb_a = this.graph.lights[i]["ambient"]["a"];
+    	this.lights[i].setAmbient(amb_r, amb_g, amb_b, amb_a);
+
+    	var dif_r = this.graph.lights[i]["diffuse"]["r"];
+    	var dif_g = this.graph.lights[i]["diffuse"]["g"];
+    	var dif_b = this.graph.lights[i]["diffuse"]["b"];
+    	var dif_a = this.graph.lights[i]["diffuse"]["a"];
+    	this.lights[i].setDiffuse(dif_r, dif_g, dif_b, dif_a);
+
+    	var spe_r = this.graph.lights[i]["specular"]["r"];
+    	var spe_g = this.graph.lights[i]["specular"]["g"];
+    	var spe_b = this.graph.lights[i]["specular"]["b"];
+    	var spe_a = this.graph.lights[i]["specular"]["a"];
+    	this.lights[i].setSpecular(spe_r, spe_g, spe_b, spe_a);
+
+    	var ena = this.graph.lights[i]["enable"];
+    	if(ena) this.lights[i].enable();
+
+    	this.lights[i].update();
+    };
  
     this.shader.unbind();
 };
@@ -81,7 +108,8 @@ XMLscene.prototype.display = function () {
 	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
-		this.lights[0].update();
+		this.initLights();
+
 	};	
 
     this.shader.unbind();

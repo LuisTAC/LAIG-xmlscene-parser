@@ -261,19 +261,13 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 	}
 
 	for(var i=0; i<this.lights.length; i++) {
-		console.log("LIGHT["+i+"]:");
+		console.log("LIGHT["+i+"]: "+this.lights[i]["id"]);
 		console.log("\tENABLE/DISABLE : TEST = "+this.lights[i]["enable"]);
 		console.log("\tPOSITION : TEST(X, Y, Z, W) = ("+this.lights[i]["position"]["x"]+", "+this.lights[i]["position"]["y"]+", "+this.lights[i]["position"]["z"]+", "+this.lights[i]["position"]["w"]+")");
 		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["ambient"]["r"]+", "+this.lights[i]["ambient"]["g"]+", "+this.lights[i]["ambient"]["b"]+", "+this.lights[i]["ambient"]["a"]+")");
 		console.log("\tLIGHT DIFFUSE COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["diffuse"]["r"]+", "+this.lights[i]["diffuse"]["g"]+", "+this.lights[i]["diffuse"]["b"]+", "+this.lights[i]["diffuse"]["a"]+")");
 		console.log("\tLIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["specular"]["r"]+", "+this.lights[i]["specular"]["g"]+", "+this.lights[i]["specular"]["b"]+", "+this.lights[i]["specular"]["a"]+")");	
 	}
-
-	for(var i=0; i<this.lights.length; i++) {
-		console.log(this.lights[i]["id"]);
-	}
-
-	
 };
 	
 /*
