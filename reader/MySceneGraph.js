@@ -110,19 +110,19 @@ MySceneGraph.prototype.parseInitials= function(rootElement) {
 	}
 	
 	//SCALE
-	var elems = initials.getElementsByTagName('scale');
+	var elems = initials.getElementsByTagName("scale");
 	if (elems == null)  return "scale element is missing.";
 	if (elems.length != 1) return "invalid number of 'scale' elements found. (expected=1; found="+elems.length+")";
 
 	var scale = elems[0];
 
 	this.scale=[];
-	this.scale['sx']=this.reader.getFloat(scale,'sx',true);
-	this.scale['sy']=this.reader.getFloat(scale,'sy',true);
-	this.scale['sz']=this.reader.getFloat(scale,'sz',true);
-	console.log("\tSCALE - sx:"+this.scale['sx']);
-	console.log("\tSCALE - sy:"+this.scale['sy']);
-	console.log("\tSCALE - sz:"+this.scale['sz']);
+	this.scale["sx"]=this.reader.getFloat(scale,"sx",true);
+	this.scale["sy"]=this.reader.getFloat(scale,"sy",true);
+	this.scale["sz"]=this.reader.getFloat(scale,"sz",true);
+	console.log("\tSCALE - sx:"+this.scale["sx"]);
+	console.log("\tSCALE - sy:"+this.scale["sy"]);
+	console.log("\tSCALE - sz:"+this.scale["sz"]);
 
 	//REFERENCE
 
@@ -261,19 +261,13 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 	}
 
 	for(var i=0; i<this.lights.length; i++) {
-		console.log("LIGHT["+i+"]:");
+		console.log("LIGHT["+i+"]: "+this.lights[i]["id"]);
 		console.log("\tENABLE/DISABLE : TEST = "+this.lights[i]["enable"]);
 		console.log("\tPOSITION : TEST(X, Y, Z, W) = ("+this.lights[i]["position"]["x"]+", "+this.lights[i]["position"]["y"]+", "+this.lights[i]["position"]["z"]+", "+this.lights[i]["position"]["w"]+")");
 		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["ambient"]["r"]+", "+this.lights[i]["ambient"]["g"]+", "+this.lights[i]["ambient"]["b"]+", "+this.lights[i]["ambient"]["a"]+")");
 		console.log("\tLIGHT DIFFUSE COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["diffuse"]["r"]+", "+this.lights[i]["diffuse"]["g"]+", "+this.lights[i]["diffuse"]["b"]+", "+this.lights[i]["diffuse"]["a"]+")");
 		console.log("\tLIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["specular"]["r"]+", "+this.lights[i]["specular"]["g"]+", "+this.lights[i]["specular"]["b"]+", "+this.lights[i]["specular"]["a"]+")");	
 	}
-
-	for(var i=0; i<this.lights.length; i++) {
-		console.log(this.lights[i]["id"]);
-	}
-
-	
 };
 	
 /*
