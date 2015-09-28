@@ -12,7 +12,6 @@ function getUrlVars() {
 }	 
 
 serialInclude(['../lib/CGF.js', 'XMLscene.js', 'MySceneGraph.js', 
-
 main=function()
 {
 	// Standard application, scene and interface setup
