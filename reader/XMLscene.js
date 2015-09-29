@@ -107,17 +107,20 @@ XMLscene.prototype.display = function () {
 	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
-        // Sets reference
-        this.axis=new CGFaxis(this,this.graph.reference);
+        // Sets reference 
+        if(this.graph.reference != 0) {
+            console.log("No axis built!");
+            this.axis=new CGFaxis(this,this.graph.reference);
+        }
 
         // Draw axis
         this.axis.display();
 
         // Sets scale
-        var x = this.graph.scale["sx"];
-        var y = this.graph.scale["sy"];
-        var z = this.graph.scale["sz"];
-        this.scale(x, y, z);
+        var sx = this.graph.scale["sx"];
+        var sy = this.graph.scale["sy"];
+        var sz = this.graph.scale["sz"];
+        this.scale(sx, sy, sz);
 
         // Sets rotation
         for(var i=0; i<this.graph.rotation.length; i++) {
@@ -131,13 +134,23 @@ XMLscene.prototype.display = function () {
                     this.rotate(ang*degToRad, 0,1,0);
                     break;
                 case "z":
-                    this.rotate(ang * degToRad, 0,0,1);
+                    this.rotate(ang*degToRad, 0,0,1);
                     break;
                 default:
                     console.log("Invalid rotation axis!");
                     break;
             }
         }
+
+        // Sets translate
+        var tx = this.graph.translate["x"];
+        var ty = this.graph.translate["y"];
+        var tz = this.graph.translate["z"];
+        this.translate(tx, ty, tz);
+
+        // Sets frustum
+        // How exactly are we supposed to do this?
+
 
         // IS THIS THE RIGHT PLACE? SHOULD THE TRANSFORMATIONS AFFECT THE LIGHTS?
 		this.initLights();
