@@ -13,7 +13,7 @@
     <ILUMINATION>
         <ambient r="20.0" g="56.0" b="80.0" a="0.25" />            <!-- global ambient -->
         <doubleside value="0" />                          <!-- double or single side illum. -->
-        <background r="0.0" g="0.5" b="0.0" a="1" />         <!-- background color -->
+        <background r="0.0" g="0.0" b="0.0" a="1" />         <!-- background color -->
     </ILUMINATION>
 
     <LIGHTS>
