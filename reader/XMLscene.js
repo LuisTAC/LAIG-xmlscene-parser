@@ -78,15 +78,9 @@ XMLscene.prototype.setDefaultAppearance = function () {
 // As loading is asynchronous, this may be called already after the application has started the run loop
 XMLscene.prototype.onGraphLoaded = function () 
 {
-	this.gl.clearColor(this.graph.background["r"],this.graph.background["g"],this.graph.background["b"],this.graph.background["a"]);
-	//this.lights[0].setVisible(true);
-    //this.lights[0].enable();
-
-    // Sets reference 
-    if(this.graph.reference != 0) this.axis=new CGFaxis(this,this.graph.reference);
-
-    // IS THIS THE RIGHT PLACE? SHOULD THE TRANSFORMATIONS AFFECT THE LIGHTS?
-    this.initLights();
+	this.gl.clearColor(this.graph.background[0],this.graph.background[1],this.graph.background[2],this.graph.background[3]);
+	this.lights[0].setVisible(true);
+    this.lights[0].enable();
 };
 
 XMLscene.prototype.display = function () {
@@ -113,8 +107,14 @@ XMLscene.prototype.display = function () {
 	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
-        
-        if(this.graph.reference != 0) this.axis.display();
+        // Sets reference 
+        if(this.graph.reference != 0) {
+            console.log("No axis built!");
+            this.axis=new CGFaxis(this,this.graph.reference);
+        }
+
+        // Draw axis
+        this.axis.display();
 
         // Sets scale
         var sx = this.graph.scale["sx"];
@@ -150,6 +150,10 @@ XMLscene.prototype.display = function () {
 
         // Sets frustum
         // How exactly are we supposed to do this?
+
+
+        // IS THIS THE RIGHT PLACE? SHOULD THE TRANSFORMATIONS AFFECT THE LIGHTS?
+		this.initLights();
 
 	};	
 
