@@ -21,7 +21,7 @@ XMLscene.prototype.init = function (application) {
 	this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
 
-	//this.axis=new CGFaxis(this);
+	this.axis = new CGFaxis(this);
 
 };
 
@@ -57,14 +57,18 @@ XMLscene.prototype.initLights = function () {
     	var ena = this.graph.lights[i]["enable"];
     	if(ena) this.lights[i].enable();
 
+        this.lights[i].setVisible(true);
+
     	this.lights[i].update();
     };
  
     this.shader.unbind();
 };
 
-XMLscene.prototype.initCameras = function () {
-    this.camera = new CGFcamera(0.4, 0.1, 500, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
+XMLscene.prototype.initCameras = function (near, far) {
+    near = near || 0.1;
+    far = far || 500;
+    this.camera = new CGFcamera(0.4, near, far, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
 };
 
 XMLscene.prototype.setDefaultAppearance = function () {
@@ -79,8 +83,24 @@ XMLscene.prototype.setDefaultAppearance = function () {
 XMLscene.prototype.onGraphLoaded = function () 
 {
 	this.gl.clearColor(this.graph.background["r"],this.graph.background["g"],this.graph.background["b"],this.graph.background["a"]);
-	this.lights[0].setVisible(true);
-    this.lights[0].enable();
+	
+    //Build new axis
+    if(this.graph.reference!=0) this.axis = new CGFaxis(this,this.graph.reference);
+
+    //ILLUMINATION -> ambient
+    var amb_r = this.graph.ambient["r"];
+    var amb_g = this.graph.ambient["g"];
+    var amb_b = this.graph.ambient["b"];
+    var amb_a = this.graph.ambient["a"];
+    this.setGlobalAmbientLight(amb_r, amb_g, amb_b, amb_a);
+
+    this.initLights();
+
+    this.initCameras(this.graph.frustum["near"], this.graph.frustum["far"]);
+    myInterface.setActiveCamera(this.camera);
+    
+    //this.lights[0].setVisible(true);
+    //this.lights[0].enable();
 };
 
 XMLscene.prototype.display = function () {
@@ -107,15 +127,13 @@ XMLscene.prototype.display = function () {
 	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
-        // Sets reference 
+        // Draw axis
         if(this.graph.reference != 0) {
-            console.log("No axis built!");
-            this.axis=new CGFaxis(this,this.graph.reference);
+            this.axis.display();
         }
 
-        // Draw axis
-        this.axis.display();
-
+        
+        /*
         // Sets scale
         var sx = this.graph.scale["sx"];
         var sy = this.graph.scale["sy"];
@@ -147,13 +165,10 @@ XMLscene.prototype.display = function () {
         var ty = this.graph.translate["y"];
         var tz = this.graph.translate["z"];
         this.translate(tx, ty, tz);
+        */
 
         // Sets frustum
         // How exactly are we supposed to do this?
-
-
-        // IS THIS THE RIGHT PLACE? SHOULD THE TRANSFORMATIONS AFFECT THE LIGHTS?
-		this.initLights();
 
 	};	
 
