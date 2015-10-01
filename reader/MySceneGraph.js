@@ -273,7 +273,19 @@ MySceneGraph.prototype.parseLights = function(rootElement) {
 		console.log("\tLIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.lights[i]["specular"]["r"]+", "+this.lights[i]["specular"]["g"]+", "+this.lights[i]["specular"]["b"]+", "+this.lights[i]["specular"]["a"]+")");	
 	}
 };
-	
+
+MySceneGraph.prototype.parseTextures = function(rootElement) {
+	var textures = rootElement.getElementsByTagName("TEXTURES");
+	if(textures == null) return "textures values missing";
+	if(textures.length != 1) return "0 or more textures were found";
+}
+
+MySceneGraph.prototype.parseMaterials = function(rootElement) {
+	var materials = rootElement.getElementsByTagName("MATERIALS");
+	if(materials == null) return "materials values missing";
+	if(materials.length != 1) return "0 or more materials were found";
+}
+
 /*
  * Example of method that parses elements of one block and stores information in a specific data structure
  */

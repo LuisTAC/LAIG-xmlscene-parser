@@ -132,7 +132,10 @@ XMLscene.prototype.display = function () {
             this.axis.display();
         }
 
-        
+        for (var i = 0; i < this.lights.length; i++) {
+            this.lights[i].update();
+        };
+
         /*
         // Sets scale
         var sx = this.graph.scale["sx"];
