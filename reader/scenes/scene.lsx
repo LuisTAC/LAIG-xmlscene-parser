@@ -44,13 +44,22 @@
     </TEXTURES>
 
     <MATERIALS>
-        <MATERIAL id="ss">                                  
-            <shininess value="ff" />
-            <specular r="ff" g="ff" b="ff" a="ff" />        <!-- specular reflection -->
-            <diffuse r="ff" g="ff" b="ff" a="ff" />         <!-- diffuse reflection -->
-            <ambient r="ff" g="ff" b="ff" a="ff" />         <!-- ambient reflection -->
-            <emission r="ff" g="ff" b="ff" a="ff" />        <!-- emission component -->
+        <MATERIAL id="mat0_wood">                                
+            <shininess value="10" />
+            <specular r="0.15" g="0.11" b="0.05" a="1.0" />        <!-- specular reflection -->
+            <diffuse r="0.59" g="0.44" b="0.2" a="1.0" />         <!-- diffuse reflection -->
+            <ambient r="0.59" g="0.44" b="0.2" a="1.0" />         <!-- ambient reflection -->
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
         </MATERIAL>
+
+        <MATERIAL id="mat1_metal">
+            <shininess value="10" />
+            <specular r="0.74" g="0.78" b="0.8" a="1.0" />        <!-- specular reflection -->
+            <diffuse r="0.25" g="0.25" b="0.25" a="1.0" />         <!-- diffuse reflection -->
+            <ambient r="0.25" g="0.25" b="0.25" a="1.0" />         <!-- ambient reflection -->
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+        </MATERIAL>
+
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
     </MATERIALS>
 

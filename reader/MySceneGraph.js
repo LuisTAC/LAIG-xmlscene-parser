@@ -48,6 +48,22 @@ MySceneGraph.prototype.onXMLReady=function()
 		return;
 	}	
 
+	/*
+	var error = this.parseTextures(rootElement);
+
+	if (error != null) {
+		this.onXMLError(error);
+		return;
+	}
+	*/
+
+	var error = this.parseMaterials(rootElement);
+
+	if (error != null) {
+		this.onXMLError(error);
+		return;
+	}
+
 	this.loadedOk=true;
 	
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
@@ -284,6 +300,74 @@ MySceneGraph.prototype.parseMaterials = function(rootElement) {
 	var materials = rootElement.getElementsByTagName("MATERIALS");
 	if(materials == null) return "materials values missing";
 	if(materials.length != 1) return "0 or more materials were found";
+
+	var first_materials = materials[0];
+
+	var material = first_materials.getElementsByTagName("MATERIAL");
+	if(material == null) return "material values missing";
+	if(material.length < 1) return "0 or more 'material' were found";
+
+	this.materials=[];
+	for (var i = 0; i < material.length; i++) {
+		var currMaterial = [];
+		var iterMaterial = material[i];
+
+		//stores ids
+		currMaterial["id"] = this.reader.getString(iterMaterial,"id",true);
+
+		//enable/disable
+		var shininesses = iterMaterial.getElementsByTagName("shininess");
+		var shininess = shininesses[0];
+		currMaterial["shininess"] = this.reader.getFloat(shininess, "value", true);
+
+		//specular component
+		var speculars = iterMaterial.getElementsByTagName("specular");
+		var specular = speculars[0];
+		currMaterial["specular"] = [];
+		currMaterial["specular"]["r"] = this.reader.getFloat(specular, "r", true);
+		currMaterial["specular"]["g"] = this.reader.getFloat(specular, "g", true);
+		currMaterial["specular"]["b"] = this.reader.getFloat(specular, "b", true);
+		currMaterial["specular"]["a"] = this.reader.getFloat(specular, "a", true);
+
+
+		//diffuse component
+		var diffuses = iterMaterial.getElementsByTagName("diffuse");
+		var diffuse = diffuses[0];
+		currMaterial["diffuse"] = [];
+		currMaterial["diffuse"]["r"] = this.reader.getFloat(diffuse, "r", true);
+		currMaterial["diffuse"]["g"] = this.reader.getFloat(diffuse, "g", true);
+		currMaterial["diffuse"]["b"] = this.reader.getFloat(diffuse, "b", true);
+		currMaterial["diffuse"]["a"] = this.reader.getFloat(diffuse, "a", true);
+
+		//ambient component
+		var ambients = iterMaterial.getElementsByTagName("ambient");
+		var ambient = ambients[0];
+		currMaterial["ambient"] = [];
+		currMaterial["ambient"]["r"] = this.reader.getFloat(ambient, "r", true);
+		currMaterial["ambient"]["g"] = this.reader.getFloat(ambient, "g", true);
+		currMaterial["ambient"]["b"] = this.reader.getFloat(ambient, "b", true);
+		currMaterial["ambient"]["a"] = this.reader.getFloat(ambient, "a", true);
+
+		//emission component
+		var emissions = iterMaterial.getElementsByTagName("emission");
+		var emission = emissions[0];
+		currMaterial["emission"] = [];
+		currMaterial["emission"]["r"] = this.reader.getFloat(emission, "r", true);
+		currMaterial["emission"]["g"] = this.reader.getFloat(emission, "g", true);
+		currMaterial["emission"]["b"] = this.reader.getFloat(emission, "b", true);
+		currMaterial["emission"]["a"] = this.reader.getFloat(emission, "a", true);
+
+		this.materials[i]=currMaterial;
+	};
+
+	for(var i=0; i<this.materials.length; i++) {
+		console.log("MATERIAL["+i+"]: "+this.materials[i]["id"]);
+		console.log("\tSHININESS : TEST = "+this.materials[i]["shininess"]);
+		console.log("\tLIGHT SPECULAR COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["specular"]["r"]+", "+this.materials[i]["specular"]["g"]+", "+this.materials[i]["specular"]["b"]+", "+this.materials[i]["specular"]["a"]+")");
+		console.log("\tLIGHT DIFFUSE COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["diffuse"]["r"]+", "+this.materials[i]["diffuse"]["g"]+", "+this.materials[i]["diffuse"]["b"]+", "+this.materials[i]["diffuse"]["a"]+")");
+		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["ambient"]["r"]+", "+this.materials[i]["ambient"]["g"]+", "+this.materials[i]["ambient"]["b"]+", "+this.materials[i]["ambient"]["a"]+")");
+		console.log("\tLIGHT EMISSION COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["emission"]["r"]+", "+this.materials[i]["emission"]["g"]+", "+this.materials[i]["emission"]["b"]+", "+this.materials[i]["emission"]["a"]+")");
+	}
 }
 
 /*
