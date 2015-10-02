@@ -54,8 +54,8 @@ XMLscene.prototype.initLights = function () {
     	var spe_a = this.graph.lights[i]["specular"]["a"];
     	this.lights[i].setSpecular(spe_r, spe_g, spe_b, spe_a);
 
-    	var ena = this.graph.lights[i]["enable"];
-    	if(ena) this.lights[i].enable();
+    	this.lights[i].ena = this.graph.lights[i]["enable"];
+    	if(this.lights[i].ena) this.lights[i].enable();
 
         this.lights[i].setVisible(true);
 
@@ -64,6 +64,17 @@ XMLscene.prototype.initLights = function () {
  
     this.shader.unbind();
 };
+
+XMLscene.prototype.updateLights = function() {
+    
+    for (var i = 0; i < this.graph.lights.length; i++) {
+        if(this.lights[i].ena) this.lights[i].enable();
+        else this.lights[i].disable();
+    };
+
+    for (i = 0; i < this.lights.length; i++)
+        this.lights[i].update();
+}
 
 XMLscene.prototype.initCameras = function (near, far) {
     near = near || 0.1;
@@ -127,6 +138,9 @@ XMLscene.prototype.display = function () {
 	// This is one possible way to do it
 	if (this.graph.loadedOk)
 	{
+        // Update all lights used
+        this.updateLights();
+
         // Draw axis
         if(this.graph.reference != 0) {
             this.axis.display();

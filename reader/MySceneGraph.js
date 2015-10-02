@@ -38,7 +38,7 @@ MySceneGraph.prototype.onXMLReady=function()
 	if (error != null) {
 		this.onXMLError(error);
 		return;
-	}	
+	}
 
 	// Parse Lights
 	var error = this.parseLights(rootElement);
@@ -404,7 +404,7 @@ MySceneGraph.prototype.parseMaterials = function(rootElement) {
 		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["ambient"]["r"]+", "+this.materials[i]["ambient"]["g"]+", "+this.materials[i]["ambient"]["b"]+", "+this.materials[i]["ambient"]["a"]+")");
 		console.log("\tLIGHT EMISSION COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["emission"]["r"]+", "+this.materials[i]["emission"]["g"]+", "+this.materials[i]["emission"]["b"]+", "+this.materials[i]["emission"]["a"]+")");
 	}
-};
+}
 
 MySceneGraph.prototype.parseLeaves = function(rootElement) {
 	var leaves = rootElement.getElementsByTagName("LEAVES");
