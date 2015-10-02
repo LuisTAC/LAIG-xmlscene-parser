@@ -36,9 +36,13 @@
     </LIGHTS>
 
     <TEXTURES>
-        <TEXTURE id="ss">
-            <file path="ss" />                             <!-- path to file -->
-            <amplif_factor s="ff" t="ff" />                <!-- x/s, y/t -->
+        <TEXTURE id="sand_text">
+            <file path="path/to/sand_file.txt" />                             <!-- path to file -->
+            <amplif_factor s="2.0" t="5.0" />                <!-- x/s, y/t -->
+        </TEXTURE>
+        <TEXTURE id="water_text">
+            <file path="path/to/water_file.txt" />                             <!-- path to file -->
+            <amplif_factor s="3.0" t="6.0" />                <!-- x/s, y/t -->
         </TEXTURE>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     </TEXTURES>

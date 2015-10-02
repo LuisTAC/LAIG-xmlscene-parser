@@ -28,38 +28,42 @@ MySceneGraph.prototype.onXMLReady=function()
 	
 	// Here should go the calls for different functions to parse the various blocks
 	var error = this.parseInitials(rootElement);
-
 	if (error != null) {
 		this.onXMLError(error);
 		return;
 	}	
 
+	// Parse Ilumination
 	var error = this.parseIlumination(rootElement);
-
 	if (error != null) {
 		this.onXMLError(error);
 		return;
 	}	
 
+	// Parse Lights
 	var error = this.parseLights(rootElement);
-
 	if (error != null) {
 		this.onXMLError(error);
 		return;
 	}	
 
-	/*
+	// Parse Textures
 	var error = this.parseTextures(rootElement);
-
 	if (error != null) {
 		this.onXMLError(error);
 		return;
 	}
-	*/
 
+	// Parse Materials
 	var error = this.parseMaterials(rootElement);
-
 	if (error != null) {
+		this.onXMLError(error);
+		return;
+	}
+
+	// Parse Leaves
+	var error = this.parseLeaves(rootElement);
+	if(error != null) {
 		this.onXMLError(error);
 		return;
 	}
@@ -294,7 +298,39 @@ MySceneGraph.prototype.parseTextures = function(rootElement) {
 	var textures = rootElement.getElementsByTagName("TEXTURES");
 	if(textures == null) return "textures values missing";
 	if(textures.length != 1) return "0 or more textures were found";
-}
+
+	var first_textures = textures[0];
+
+	var texture = first_textures.getElementsByTagName("TEXTURE");
+	if(texture == null) return "texture values missing";
+	if(texture.length < 1) return "0 or more 'texture' were found";
+
+	this.textures = [];
+	for(var i=0; i<texture.length; i++) {
+		var currTexture = [];
+		var iterTexture = texture[i];
+
+		currTexture["id"] = this.reader.getString(iterTexture, "id", true);
+
+		var files = iterTexture.getElementsByTagName("file");
+		var file = files[0];
+		currTexture["file"] = this.reader.getString(file, "path", true);
+
+		var amplif_factors = iterTexture.getElementsByTagName("amplif_factor");
+		var amplif_factor = amplif_factors[0];
+		currTexture["amplif_factor"] = [];
+		currTexture["amplif_factor"]["s"] = this.reader.getFloat(amplif_factor, "s", true);
+		currTexture["amplif_factor"]["t"] = this.reader.getFloat(amplif_factor, "t", true);
+
+		this.textures[i] = currTexture;
+	}
+
+	for(var i=0; i<this.textures.length; i++) {
+		console.log("TEXTURE #"+i+" ID : "+this.textures[i]["id"]);
+		console.log("\tAMPLIF_FACTOR S : "+this.textures[i]["amplif_factor"]["s"]);
+		console.log("\tAMPLIF_FACTOR T : "+this.textures[i]["amplif_factor"]["t"]);
+	}
+};
 
 MySceneGraph.prototype.parseMaterials = function(rootElement) {
 	var materials = rootElement.getElementsByTagName("MATERIALS");
@@ -368,7 +404,15 @@ MySceneGraph.prototype.parseMaterials = function(rootElement) {
 		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["ambient"]["r"]+", "+this.materials[i]["ambient"]["g"]+", "+this.materials[i]["ambient"]["b"]+", "+this.materials[i]["ambient"]["a"]+")");
 		console.log("\tLIGHT EMISSION COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["emission"]["r"]+", "+this.materials[i]["emission"]["g"]+", "+this.materials[i]["emission"]["b"]+", "+this.materials[i]["emission"]["a"]+")");
 	}
-}
+};
+
+MySceneGraph.prototype.parseLeaves = function(rootElement) {
+	var leaves = rootElement.getElementsByTagName("LEAVES");
+	if(leaves == null) return "leaves elements missing";
+	if(leaves.length != 1) return "0 or more leaves were found";
+
+	var first_leaves = leaves[0];
+};
 
 /*
  * Example of method that parses elements of one block and stores information in a specific data structure
