@@ -68,6 +68,13 @@ MySceneGraph.prototype.onXMLReady = function()
 		return;
 	}
 
+	// Parse Nodes
+	var error = this.parseNodes(rootElement);
+	if(error != null) {
+		this.onXMLError(error);
+		return;
+	}
+
 	this.loadedOk=true;
 	
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
@@ -414,7 +421,7 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 	var first_leaves = leaves[0];
 
 	var leaf_array = first_leaves.getElementsByTagName("LEAF");
-	if(leaf_array.length == null) return "leaf values missing";
+	if(leaf_array == null) return "leaf values missing";
 	if(leaf_array.length < 1) return "0 leaf elements found";
 
 	this.leaves = [];
@@ -483,6 +490,49 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 		console.log(this.leaves[i]["type"]);
 		console.log(this.leaves[i]["args"]);
 	}
+};
+
+MySceneGraph.prototype.parseNodes = function(rootElement) {
+	var nodes = rootElement.getElementsByTagName("NODES");
+	if(nodes.length == null) return "nodes elements missing";
+	if(nodes.length != 1) return "0 or more nodes were found";
+
+	var first_nodes = nodes[0];
+
+	this.nodes = [];
+
+	// Stores ROOT node first
+	var root = first_nodes.getElementsByTagName("ROOT");
+	if(root.length == null) return "no root node found";
+	if(root.length != 1) return "0 or more root nodes found";
+	this.nodes["rootID"] = this.reader.getString(root[0], "id", true);
+
+	// Stores all NODE elements after rootID
+	var node_array = first_nodes.getElementsByTagName("NODE");
+	if(node_array == null) return "no node elems found";
+	if(node_array < 1) return "0 node elems found";
+
+	for(var i=0; i<node_array.length; i++) {
+		var currNode = [];
+		var iterNode = node_array[i];
+
+		// Stores NODE id
+		currNode["id"] = this.reader.getString(iterNode, "id", true);
+
+		// Stores MATERIAL from currNode
+		var materials = iterNode.getElementsByTagName("MATERIAL");
+		var material = materials[0];
+
+		var materialID = this.reader.getString(material, "id", true);
+		if(materialID != "null") {
+			currNode["materialID"] = materialID;
+		}
+		else {
+			// Sets parent Node material to currNode
+		}
+
+	}
+
 };
 
 /*
