@@ -82,6 +82,30 @@ XMLscene.prototype.initCameras = function (near, far) {
     this.camera = new CGFcamera(0.4, near, far, vec3.fromValues(15, 15, 15), vec3.fromValues(0, 0, 0));
 };
 
+XMLscene.prototype.initMaterials = function () {
+    
+    this.materials=[];
+    for (var i = 0; i < this.graph.materials.length; i++) {
+        var currAppearance = new CGFappearance(this);
+
+        var id = this.graph.materials[i]["id"];
+        var shin = this.graph.materials[i]["shininess"];
+        var spec = this.graph.materials[i]["specular"];
+        var diff = this.graph.materials[i]["diffuse"];
+        var amb = this.graph.materials[i]["ambient"];
+        var emi = this.graph.materials[i]["emission"];
+
+        currAppearance.setShininess(shin);
+        currAppearance.setSpecular(spec["r"], spec["g"], spec["b"], spec["a"]);
+        currAppearance.setDiffuse(diff["r"], diff["g"], diff["b"], diff["a"]);
+        currAppearance.setAmbient(amb["r"], amb["g"], amb["b"], amb["a"]);
+        currAppearance.setEmission(emi["r"], emi["g"], emi["b"], emi["a"]);
+        currAppearance.id=id;
+
+        this.materials[i]=currAppearance;
+    };
+}
+
 XMLscene.prototype.setDefaultAppearance = function () {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
     this.setDiffuse(0.2, 0.4, 0.8, 1.0);
@@ -106,12 +130,14 @@ XMLscene.prototype.onGraphLoaded = function ()
     this.setGlobalAmbientLight(amb_r, amb_g, amb_b, amb_a);
 
     this.initLights();
+    //this.lights[0].setVisible(true);
+    //this.lights[0].enable();
 
     this.initCameras(this.graph.frustum["near"], this.graph.frustum["far"]);
     myInterface.setActiveCamera(this.camera);
     
-    //this.lights[0].setVisible(true);
-    //this.lights[0].enable();
+    this.initMaterials();
+
 };
 
 XMLscene.prototype.display = function () {

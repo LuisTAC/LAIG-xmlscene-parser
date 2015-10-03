@@ -486,9 +486,9 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 	}
 
 	for(var i=0; i<this.leaves.length; i++) {
-		console.log(this.leaves[i]["id"]);
-		console.log(this.leaves[i]["type"]);
-		console.log(this.leaves[i]["args"]);
+		console.log("LEAF["+i+"]: "+this.leaves[i]["id"]);
+		console.log("\tTYPE: "+this.leaves[i]["type"]);
+		console.log("\tARGS: ");console.log(this.leaves[i]["args"]);
 	}
 };
 
@@ -524,6 +524,7 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		var material = materials[0];
 
 		var materialID = this.reader.getString(material, "id", true);
+		//TODO: check if material does exist
 		if(materialID != "null") {
 			currNode["materialID"] = materialID;
 		}
@@ -532,7 +533,6 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		}
 
 	}
-
 };
 
 /*
