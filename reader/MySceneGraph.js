@@ -21,7 +21,7 @@ function MySceneGraph(filename, scene) {
 /*
  * Callback to be executed after successful reading
  */
-MySceneGraph.prototype.onXMLReady=function() 
+MySceneGraph.prototype.onXMLReady = function() 
 {
 	console.log("XML Loading finished.");
 	var rootElement = this.reader.xmlDoc.documentElement;
@@ -74,7 +74,7 @@ MySceneGraph.prototype.onXMLReady=function()
 	this.scene.onGraphLoaded();
 };
 
-MySceneGraph.prototype.parseInitials= function(rootElement) {
+MySceneGraph.prototype.parseInitials = function(rootElement) {
 	
 	console.log("INITIALS:");
 
@@ -215,7 +215,7 @@ MySceneGraph.prototype.parseIlumination = function(rootElement) {
 	console.log("BACKGROUND: TEST G(19.0) = "+this.background["g"]);
 	console.log("BACKGROUND: TEST B(21.0) = "+this.background["b"]);
 	console.log("BACKGROUND: TEST A(1) = "+this.background["a"]);
-}
+};
 
 MySceneGraph.prototype.parseLights = function(rootElement) {
 	var lights = rootElement.getElementsByTagName("LIGHTS");
@@ -404,7 +404,7 @@ MySceneGraph.prototype.parseMaterials = function(rootElement) {
 		console.log("\tLIGHT AMBIENT COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["ambient"]["r"]+", "+this.materials[i]["ambient"]["g"]+", "+this.materials[i]["ambient"]["b"]+", "+this.materials[i]["ambient"]["a"]+")");
 		console.log("\tLIGHT EMISSION COMPONENT : TEST(R, G, B, A) = ("+this.materials[i]["emission"]["r"]+", "+this.materials[i]["emission"]["g"]+", "+this.materials[i]["emission"]["b"]+", "+this.materials[i]["emission"]["a"]+")");
 	}
-}
+};
 
 MySceneGraph.prototype.parseLeaves = function(rootElement) {
 	var leaves = rootElement.getElementsByTagName("LEAVES");
@@ -412,6 +412,77 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 	if(leaves.length != 1) return "0 or more leaves were found";
 
 	var first_leaves = leaves[0];
+
+	var leaf_array = first_leaves.getElementsByTagName("LEAF");
+	if(leaf_array.length == null) return "leaf values missing";
+	if(leaf_array.length < 1) return "0 leaf elements found";
+
+	this.leaves = [];
+	for(var i=0; i<leaf_array.length; i++) {
+		var currLeaf = [];
+		var iterLeaf = leaf_array[i];
+
+		// Stores id in the first place
+		currLeaf["id"] = this.reader.getString(iterLeaf, "id", true);
+
+		// Stores "args" according to "type"
+		var leaf_type = this.reader.getString(iterLeaf, "type", true);
+		currLeaf["type"] = leaf_type;
+
+		// Stores each argument into currLeaf[]
+		var args = this.reader.getString(iterLeaf, "args", true);
+		var split_args = args.split(" ");
+		//console.log(split_args);
+
+		currLeaf["args"] = [];
+		switch(leaf_type) {
+			// CAN CONVERT HERE TO INT OR FLOAT IF NEEDED!
+			case "rectangle":
+				// Get each argument into the array
+				currLeaf["args"]["x1"] = split_args[0];
+				currLeaf["args"]["y1"] = split_args[1];
+				currLeaf["args"]["x2"] = split_args[2];
+				currLeaf["args"]["y2"] = split_args[3];
+				break;
+			case "cylinder":
+				// Get each argument into the array
+				currLeaf["args"]["height"] = split_args[0];
+				currLeaf["args"]["bottom_r"] = split_args[1];
+				currLeaf["args"]["top_r"] = split_args[2];
+				currLeaf["args"]["sections_h"] = split_args[3];
+				currLeaf["args"]["parts_sec"] = split_args[4];
+				break;
+			case "sphere":
+				// Get each argument into the array
+				currLeaf["args"]["radius"] = split_args[0];
+				currLeaf["args"]["parts_r"] = split_args[1];
+				currLeaf["args"]["parts_sec"] = split_args[2];
+				break;
+			case "triangle":
+				// Get each argument into the array
+				currLeaf["args"]["xt_1"] = split_args[0];
+				currLeaf["args"]["yt_1"] = split_args[1];
+				currLeaf["args"]["zt_1"] = split_args[2];
+
+				currLeaf["args"]["xt_2"] = split_args[3];
+				currLeaf["args"]["yt_2"] = split_args[4];
+				currLeaf["args"]["zt_2"] = split_args[5];
+
+				currLeaf["args"]["xt_3"] = split_args[6];
+				currLeaf["args"]["yt_3"] = split_args[7];
+				currLeaf["args"]["zt_3"] = split_args[8];
+				break;
+			default:
+				return "Not valid leaf type";
+		}
+		this.leaves[i] = currLeaf;
+	}
+
+	for(var i=0; i<this.leaves.length; i++) {
+		console.log(this.leaves[i]["id"]);
+		console.log(this.leaves[i]["type"]);
+		console.log(this.leaves[i]["args"]);
+	}
 };
 
 /*
@@ -446,7 +517,7 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 /*
  * Callback to be executed on any read error
  */ 
-MySceneGraph.prototype.onXMLError=function (message) {
+MySceneGraph.prototype.onXMLError = function (message) {
 	console.error("XML Loading Error: "+message);	
 	this.loadedOk=false;
 };
