@@ -521,6 +521,9 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 
 		// Stores MATERIAL from currNode
 		var nodeMaterials = iterNode.getElementsByTagName("MATERIAL");
+		if(nodeMaterials == null) return "no MATERIAL elems found";
+		if(nodeMaterials < 1) return "0 MATERIAL elems found";
+
 		var nodeMaterial = nodeMaterials[0];
 		var nodeMaterialID = this.reader.getString(nodeMaterial, "id", true);
 
@@ -579,6 +582,8 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		currNode["descendants"] = this.descendants;
 		
 		this.nodes[i] = currNode;
+
+		delete this.descendants;
 	}
 
 	// TESTING VALUES READ FROM NODES
