@@ -124,7 +124,7 @@
         <NODE id="node3">       <!--   defines one intermediate node; may be repeated as necessary -->
 
             <!-- next two lines are mandatory -->
-            <MATERIAL id="null" />    <!-- declared material superimposes the material received from parent node -->
+            <MATERIAL id="mat0_wood" />    <!-- declared material superimposes the material received from parent node -->
                                     <!-- id="null" maintains material from parent node        -->
             <TEXTURE id="water_text" />     <!-- declared texture superimposes the texture received from parent node -->
                                     <!-- id="null" maintains texture from parent node       -->

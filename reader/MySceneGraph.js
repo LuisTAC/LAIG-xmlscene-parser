@@ -520,18 +520,73 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		currNode["id"] = this.reader.getString(iterNode, "id", true);
 
 		// Stores MATERIAL from currNode
-		var materials = iterNode.getElementsByTagName("MATERIAL");
-		var material = materials[0];
+		var nodeMaterials = iterNode.getElementsByTagName("MATERIAL");
+		var nodeMaterial = nodeMaterials[0];
+		var nodeMaterialID = this.reader.getString(nodeMaterial, "id", true);
 
-		var materialID = this.reader.getString(material, "id", true);
-		//TODO: check if material does exist
-		if(materialID != "null") {
-			currNode["materialID"] = materialID;
-		}
+		// Checks if material exists
+		if(nodeMaterialID == "null") currNode["materialID"] = nodeMaterialID;
 		else {
-			// Sets parent Node material to currNode
+			var foundEqual = 0;
+			for(var j=0; j<this.materials.length; j++) {
+				if(nodeMaterialID == this.materials[j]["id"]) {
+					foundEqual = 1;
+					currNode["materialID"] = nodeMaterialID;
+					break;
+				}
+			}	
+			if(foundEqual == 0) return "no valid material provided";
 		}
+		
 
+		// Stores TEXTURE from currNode
+		var nodeTextures = iterNode.getElementsByTagName("TEXTURE");
+		var nodeTexture = nodeTextures[0];
+		var nodeTextureID = this.reader.getString(nodeTexture, "id", true);
+
+		// Checks if texture exists
+		if(nodeTextureID == "null") currNode["textureID"] = nodeTextureID;
+		else if(nodeTextureID == "clear") currNode["textureID"] = nodeTextureID;
+		else {
+			var foundEqualTex = 0;
+			for(var k=0; k<this.textures.length; k++) {
+				if(nodeTextureID == this.textures[k]["id"]) {
+					foundEqualTex = 1;
+					currNode["textureID"] = nodeTextureID;
+					break;
+				}
+			}
+			if(foundEqualTex == 0) return "no valid texture provided";
+		}
+		
+
+
+		// GEOMETRICAL TRANSFORMATIONS for each NODE
+		// HOW THE FUCK IS THIS DONE?
+
+
+		// Stores Descendants IDs
+		var descendants = iterNode.getElementsByTagName("DESCENDANTS");
+		var first_descendants = descendants[0];
+
+		var descendant_array = first_descendants.getElementsByTagName("DESCENDANT");
+		this.descendants = [];
+		for(var z=0; z<descendant_array.length; z++) {
+			var descendantID = this.reader.getString(descendant_array[z], "id", true);
+			// IS THIS RIGHT? OR SHOULD I BE MORE SPECIFIC IN THE "DESCENDANTID" PART
+			this.descendants[z] = descendantID;
+		}
+		currNode["descendants"] = this.descendants;
+		
+		this.nodes[i] = currNode;
+	}
+
+	// TESTING VALUES READ FROM NODES
+	console.log(this.nodes["rootID"]);
+	for(var i=0; i<this.nodes.length; i++) {
+		console.log(this.nodes[i]["materialID"]);
+		console.log(this.nodes[i]["textureID"]);
+		console.log(this.nodes[i]["descendants"]);
 	}
 };
 
