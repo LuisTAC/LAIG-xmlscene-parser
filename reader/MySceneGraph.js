@@ -566,7 +566,41 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 
 		// GEOMETRICAL TRANSFORMATIONS for each NODE
 		// HOW THE FUCK IS THIS DONE?
+		var j=2;
+		var transfElm = iterNode.children[j];
+		currNode["geo_transf"]=[];
+		while(transfElm.nodeName=="TRANSLATION" || transfElm.nodeName=="ROTATION" || transfElm.nodeName=="SCALE")
+		{
+			var transf = [];
+			if(transfElm.nodeName=="TRANSLATION")
+			{
+				var transl_x = this.reader.getFloat(transfElm,'x',true);
+				var transl_y = this.reader.getFloat(transfElm,'y',true);
+				var transl_z = this.reader.getFloat(transfElm,'z',true);
+				transf = ["translation",transl_x, transl_y, transl_z];
+			}
+			else if(transfElm.nodeName=="ROTATION")
+			{
+				var rot_axis = this.reader.getString(transfElm,"axis",true);
+				if(rot_axis!='x' &&
+					rot_axis!='y' &&
+					rot_axis!='z')
+					return "invalid "+(i+1)+" 'axis' value found. (expected=[x,y,z]; found="+rot_axis+")";
 
+				var rot_angle = this.reader.getFloat(transfElm,"angle",true);
+				transf=["rotation",rot_axis, rot_angle];
+			}
+			else if(transfElm.nodeName=="SCALE")
+			{
+				var scal_x = this.reader.getFloat(transfElm,'sx',true);
+				var scal_y = this.reader.getFloat(transfElm,'sy',true);
+				var scal_z = this.reader.getFloat(transfElm,'sz',true);
+				transf = ["scale",scal_x, scal_y, scal_z];
+			}
+			currNode["geo_transf"][j-2]=transf;
+			j++;
+			transfElm=iterNode.children[j];
+		}
 
 		// Stores Descendants IDs
 		var descendants = iterNode.getElementsByTagName("DESCENDANTS");
@@ -591,6 +625,7 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 	for(var i=0; i<this.nodes.length; i++) {
 		console.log(this.nodes[i]["materialID"]);
 		console.log(this.nodes[i]["textureID"]);
+		console.log(this.nodes[i]["geo_transf"]);
 		console.log(this.nodes[i]["descendants"]);
 	}
 };
