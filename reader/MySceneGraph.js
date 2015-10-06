@@ -439,6 +439,11 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 		// Stores each argument into currLeaf[]
 		var args = this.reader.getString(iterLeaf, "args", true);
 		var split_args = args.split(" ");
+		for(var j=0; j<split_args.length; j++)
+		{
+			if(isNaN(split_args[j])) return "invalid leaf args (@LEAF["+i+"]="+currLeaf["id"]+" args["+j+"]="+split_args[j]+")!";
+		}
+		
 		//console.log(split_args);
 
 		currLeaf["args"] = [];
