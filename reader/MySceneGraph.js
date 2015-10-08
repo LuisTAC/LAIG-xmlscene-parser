@@ -33,8 +33,8 @@ MySceneGraph.prototype.onXMLReady = function()
 		return;
 	}	
 
-	// Parse Ilumination
-	var error = this.parseIlumination(rootElement);
+	// Parse illumination
+	var error = this.parseIllumination(rootElement);
 	if (error != null) {
 		this.onXMLError(error);
 		return;
@@ -168,18 +168,18 @@ MySceneGraph.prototype.parseInitials = function(rootElement) {
 	console.log("\tREFERENCE:"+this.reference);
 };
 	
-MySceneGraph.prototype.parseIlumination = function(rootElement) {
-	var iluminations = rootElement.getElementsByTagName("ILUMINATION");
-	if(iluminations == null) return "ilumination values missing";
+MySceneGraph.prototype.parseIllumination = function(rootElement) {
+	var illuminations = rootElement.getElementsByTagName("ILLUMINATION");
+	if(illuminations == null) return "illumination values missing";
 
-	if(iluminations.length != 1) return "0 or more iluminations were found!";
+	if(illuminations.length != 1) return "0 or more illuminations were found!";
 
 
-	//gets each ilumination element*/
-	var iluminationElems = iluminations[0];
+	//gets each illumination element*/
+	var illuminationElems = illuminations[0];
 
 	//ambient
-	var ambients = iluminationElems.getElementsByTagName("ambient");
+	var ambients = illuminationElems.getElementsByTagName("ambient");
 	if(ambients == null) return "ambient values missing";
 	if(ambients.length != 1) return "0 or more ambient elements were found!";
 
@@ -196,7 +196,7 @@ MySceneGraph.prototype.parseIlumination = function(rootElement) {
 	console.log("AMBIENT: TEST A(0.25) = "+this.ambient["a"]);
 
 	//doubleside
-	var doublesides = iluminationElems.getElementsByTagName("doubleside");
+	var doublesides = illuminationElems.getElementsByTagName("doubleside");
 	if(doublesides == null) return "doubleside values missing";
 	if(doublesides.length != 1) return "0 or more doubleside	 elements were found!";
 
@@ -207,7 +207,7 @@ MySceneGraph.prototype.parseIlumination = function(rootElement) {
 	console.log("DOUBLESIDE: TEST VALUE(0) "+this.doubleside["value"]);
 
 	//background
-	var backgrounds = iluminationElems.getElementsByTagName("background");
+	var backgrounds = illuminationElems.getElementsByTagName("background");
 	if(backgrounds == null) return "backgrounds values missing";
 	if(backgrounds.length != 1) return "0 or more backgrounds were found!";
 
