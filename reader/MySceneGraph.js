@@ -111,7 +111,7 @@ MySceneGraph.prototype.parseInitials = function(rootElement) {
 	console.log("\tFRUSTUM - far:"+this.frustum['far']);
 
 	//TRANSLATE
-	var elems = initials.getElementsByTagName('translate');
+	var elems = initials.getElementsByTagName('translation');
 	if (elems == null)  return "translate element is missing.";
 	if (elems.length != 1) return "invalid number of 'translate' elements found. (expected=1; found="+elems.length+")";
 
