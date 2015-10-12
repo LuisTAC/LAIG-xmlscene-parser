@@ -3,11 +3,15 @@
  * @constructor
  */
 
-function MyCylinder(scene, slices, stacks) {
+function MyCylinder(scene, height, bottom_r, top_r, sections_height, parts_section) {
  	CGFobject.call(this,scene);
 	
-	this.slices=slices;
-	this.stacks=stacks;
+	this.height = height;
+	this.bottom_r = bottom_r;
+	this.top_r = top_r;
+	this.sections_height = sections_height;
+	this.parts_section = parts_section;
+
  	this.initBuffers();
 };
 
@@ -16,7 +20,7 @@ MyCylinder.prototype.constructor = MyCylinder;
 
 MyCylinder.prototype.initBuffers = function() {
 
-	var angle = (360/this.slices) * degToRad;
+	//var angle = (360/this.slices) * degToRad;
 
  	this.vertices = [];
  	this.normals = [];

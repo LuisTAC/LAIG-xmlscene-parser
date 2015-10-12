@@ -22,7 +22,7 @@ function MyRectangle(scene, x1, y1, x2, y2, s, t) {
 MyRectangle.prototype = Object.create(CGFobject.prototype);
 MyRectangle.prototype.constructor = MyRectangle;
 
-MyRectangle.prototype.initBuffers = function(){
+MyRectangle.prototype.initBuffers = function() {
  	this.vertices = [
  	x1, y2, 0,
  	x2, y2, 0,
