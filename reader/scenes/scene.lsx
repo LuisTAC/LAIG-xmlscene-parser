@@ -81,7 +81,28 @@
     </LEAVES>
 
     <NODES>
-        <ROOT id="car" />
+        <ROOT id="scene" />
+
+        <NODE id="scene">
+            <MATERIAL id="null">
+            <TEXTURE id="clear">
+
+            <DESCENDANTS>
+                <DESCENDANT id="car" />
+                <DESCENDANT id="scene_floor" />
+                <DESCENDANT id="scene_column_left" />
+                <DESCENDANT id="scene_column_right" />
+                <DESCEMDAMT id="scene_box" />
+            </DESCENDANTS>
+        </NODE>
+
+        <!--FLOOR-->
+
+        <!--COLUMNS-->
+
+        <!--BOX-->
+
+        <!--CAR-->
 
         <NODE id="car">
 
@@ -462,7 +483,6 @@
                 <DESCENDANT id="hood" />
             </DESCENDANTS>
         </NODE>
-
     </NODES>
 
 </SCENE>
