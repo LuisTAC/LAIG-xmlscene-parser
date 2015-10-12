@@ -567,15 +567,9 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 			if(foundEqualTex == 0) return "no valid texture provided";
 		}
 		
-
-
-		// GEOMETRICAL TRANSFORMATIONS for each NODE
-		// HOW THE FUCK IS THIS DONE?
-		var j=2;
-		var transfElm = iterNode.children[j];
 		currNode["geo_transf"]=[];
-		while(transfElm.nodeName=="TRANSLATION" || transfElm.nodeName=="ROTATION" || transfElm.nodeName=="SCALE")
-		{
+		for (var j = 2; j < iterNode.children.length; j++) {
+			var transfElm = iterNode.children[j];
 			var transf = [];
 			if(transfElm.nodeName=="TRANSLATION")
 			{
@@ -603,8 +597,6 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 				transf = ["scale",scal_x, scal_y, scal_z];
 			}
 			currNode["geo_transf"][j-2]=transf;
-			j++;
-			transfElm=iterNode.children[j];
 		}
 
 		// Stores Descendants IDs
@@ -626,12 +618,13 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 	}
 
 	// TESTING VALUES READ FROM NODES
-	console.log(this.nodes["rootID"]);
+	console.log("ROOT: "+this.nodes["rootID"]);
 	for(var i=0; i<this.nodes.length; i++) {
-		console.log(this.nodes[i]["materialID"]);
-		console.log(this.nodes[i]["textureID"]);
-		console.log(this.nodes[i]["geo_transf"]);
-		console.log(this.nodes[i]["descendants"]);
+		console.log("NODE["+i+"]: "+this.nodes[i]["id"]);
+		console.log("\tMATERIAL: "+this.nodes[i]["materialID"]);
+		console.log("\tTEXTURE: "+this.nodes[i]["textureID"]);
+		console.log("\tTRANSF: "+this.nodes[i]["geo_transf"]);
+		console.log("\tDESCENDANTS: "+this.nodes[i]["descendants"]);
 	}
 };
 

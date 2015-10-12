@@ -88,8 +88,8 @@
         <ROOT id="scene" />
 
         <NODE id="scene">
-            <MATERIAL id="null">
-            <TEXTURE id="clear">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
 
             <DESCENDANTS>
                 <DESCENDANT id="car" />
@@ -116,8 +116,8 @@
 
         <!--COLUMNS-->
         <NODE id="scene_column_left">
-            <MATERIAL id="null">
-            <TEXTURE id="clear">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
 
             <TRANSLATION x="-6.0" y="0.0" z="-6.0" />
 
@@ -127,8 +127,8 @@
         </NODE>
 
         <NODE id="scene_column_right">
-            <MATERIAL id="null">
-            <TEXTURE id="clear">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
 
             <TRANSLATION x="6.0" y="0.0" z="-6.0" />
 
