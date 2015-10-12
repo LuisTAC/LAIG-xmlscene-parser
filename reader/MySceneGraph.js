@@ -75,6 +75,13 @@ MySceneGraph.prototype.onXMLReady = function()
 		return;
 	}
 
+	// Build Graph
+	var error = this.buildGraph();
+	if(error != null) {
+		this.onXMLError(error);
+		return;
+	}
+
 	this.loadedOk=true;
 	
 	// As the graph loaded ok, signal the scene so that any additional initialization depending on the graph can take place
@@ -626,6 +633,88 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		console.log("\tTRANSF: "+this.nodes[i]["geo_transf"]);
 		console.log("\tDESCENDANTS: "+this.nodes[i]["descendants"]);
 	}
+};
+
+MySceneGraph.prototype.getNodeByID = function(nodeID) {
+	for(var i=0; this.nodes.length; i++) {
+		if(nodeID == this.nodes[i]["id"]) {
+			return 
+		}
+	}
+	return null;
+};
+
+MySceneGraph.prototype.getMaterialByID = function(matID) {
+	for(var i=0; i<this.materials.length; i++) {
+		if(matID == this.materials[i]["id"]) {
+			return this.materials[i];
+		}
+	}
+	return null;
+};
+
+MySceneGraph.prototype.getTextureByID = function(textID) {
+	for(var i=0; i<this.textures.length; i++) {
+		if(textID == this.textures[i]["id"]) {
+			return this.textures[i];
+		}
+	}
+	return null;
+};
+
+MySceneGraph.prototype.getNodeObjByID = function(nodeID) {
+	for(var i=0; i<this.node_ret.length; i++) {
+		if(nodeID == this.node_ret[i].id) {
+			return this.node_ret[i];
+		}
+	}
+	return null;
+}
+
+MySceneGraph.prototype.createSceneNodeArray = function() {
+	// Iterates over all the nodes and creates a new Node object
+	this.node_ret = [];
+	for(var i=0; i<this.nodes.length; i++) {
+		var id = this.nodes[i]["id"];
+		var materialID = this.nodes[i]["materialID"];
+		var textureID = this.nodes[i]["textureID"];
+
+		var newNode = new Node(id);
+
+		var material = this.getMaterialByID(materialID);
+		var texture = this.getTextureByID(textureID);
+
+		newNode.setMaterial(material);
+		newNode.setTexture(texture);
+
+		this.node_ret.push(newNode);
+	}
+	for(var i=0; i<this.leaves.length; i++) {
+		var id = this.leaves[i]["id"];
+
+		var newNode = new Node(id);
+		newNode.leaf = true;
+
+		this.node_ret.push(newNode);
+	}
+};
+MySceneGraph.prototype.linkSceneNodes = function() {
+	for(var i=0; i<this.nodes.length; i++) {
+		var descendants = this.nodes[i]["descendants"];
+		var parObj = this.getNodeObjByID(this.nodes[i]["id"]);
+		for(var j=0; j<descendants.length; j++) {
+			var descID = descendants[j];
+
+			var descObj = this.getNodeObjByID(descID);
+
+			parObj.push(descObj);
+		}
+	}
+};
+
+MySceneGraph.prototype.buildGraph = function() {
+	this.createSceneNodeArray();
+	this.linkSceneNodes();
 };
 
 /*
