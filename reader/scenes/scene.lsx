@@ -78,6 +78,10 @@
         <LEAF id="side" type="rectangle" args="-1.75 1.5 1.75 -1.5" />
         <LEAF id="hood" type="rectangle" args="-2.0 1.5 2.0 -1.5" />
         <LEAF id="exhaust" type="cylinder" args="2.0 0.25 0.25 1 10" />
+        <!-- COLUMN -->
+        <LEAF id="column" type="cylinder" args="15.0 3.0 3.0 5 10" />
+        <LEAF id="box_side" type="rectangle" args="-2.0 -2.5 2.0 2.5" />
+        <LEAF id="top" type="rectangle" args="-2.0 -2.0 2.0 2.0" />
     </LEAVES>
 
     <NODES>
@@ -98,9 +102,112 @@
 
         <!--FLOOR-->
 
+        <NODE id="scene_floor">       
+            <MATERIAL id="mat_metal" /> 
+            <TEXTURE id="clear" />
+
+            <ROTATION axis="x" angle="-90.0" />
+            <SCALE sx="3.0" sy="1.0" sz="3.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="floor" />
+            </DESCENDANTS>
+        </NODE>
+
         <!--COLUMNS-->
+        <NODE id="scene_column_left">
+            <MATERIAL id="null">
+            <TEXTURE id="clear">
+
+            <TRANSLATION x="-6.0" y="0.0" z="-6.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="column" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="scene_column_right">
+            <MATERIAL id="null">
+            <TEXTURE id="clear">
+
+            <TRANSLATION x="6.0" y="0.0" z="-6.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="column" />
+            </DESCENDANTS>
+        </NODE>
 
         <!--BOX-->
+
+        <NODE id="scene_box">
+            <MATERIAL id="mat_metal" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0.0" y="2.5" z="-6.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="box_front" />
+                <DESCENDANT id="box_back" />
+                <DESCENDANT id="box_left" />
+                <DESCENDANT id="box_right" />
+                <DESCENDANT id="box_top" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="box_front">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0.0" y="0.0" z="2.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="box_side" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="box_back">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <ROTATION axis="y" angle="180" />
+            <TRANSLATION x="0.0" y="0.0" z="-2.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="box_side" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="box_left">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <ROTATION axis="y" angle="-90.0" />
+            <TRANSLATION x="-2.0" y="0.0" z="0.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="box_side" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="box_right">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <ROTATION axis="y" angle="90.0" />
+            <TRANSLATION x="2.0" y="0.0" z="0.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="box_side" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="box_top">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <ROTATION axis="x" angle="-90.0" />
+            <TRANSLATION x="0.0" y="0.0" z="5.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="top" />
+            </DESCENDANTS>
+        </NODE>
 
         <!--CAR-->
 
