@@ -542,15 +542,11 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		// Checks if material exists
 		if(nodeMaterialID == "null") currNode["materialID"] = nodeMaterialID;
 		else {
-			var foundEqual = 0;
-			for(var j=0; j<this.materials.length; j++) {
-				if(nodeMaterialID == this.materials[j]["id"]) {
-					foundEqual = 1;
-					currNode["materialID"] = nodeMaterialID;
-					break;
-				}
-			}	
-			if(foundEqual == 0) return "no valid material provided";
+			var mat = this.getMaterialByID(nodeMaterialID);
+			if(!mat)
+			{
+				return "no valid material provided ("+currNode["materialID"]+")";
+			}
 		}
 		
 
@@ -563,15 +559,11 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		if(nodeTextureID == "null") currNode["textureID"] = nodeTextureID;
 		else if(nodeTextureID == "clear") currNode["textureID"] = nodeTextureID;
 		else {
-			var foundEqualTex = 0;
-			for(var k=0; k<this.textures.length; k++) {
-				if(nodeTextureID == this.textures[k]["id"]) {
-					foundEqualTex = 1;
-					currNode["textureID"] = nodeTextureID;
-					break;
-				}
+			var text = this.getTextureByID(nodeTextureID);
+			if(!text)
+			{
+				return "no valid texture provided ("+currNode["textureID"]+")";
 			}
-			if(foundEqualTex == 0) return "no valid texture provided";
 		}
 		
 		currNode["geo_transf"]=[];
