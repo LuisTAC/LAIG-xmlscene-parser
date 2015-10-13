@@ -57,7 +57,7 @@ XMLscene.prototype.initLights = function () {
     	this.lights[i].ena = this.graph.lights[i]["enable"];
     	if(this.lights[i].ena) this.lights[i].enable();
 
-        this.lights[i].setVisible(true);
+        //this.lights[i].setVisible(true);
 
     	this.lights[i].update();
     };
@@ -138,6 +138,13 @@ XMLscene.prototype.onGraphLoaded = function ()
     
     this.initMaterials();
 
+    // Test MyRectangle
+    var floor = this.graph.node_ret[42];
+    var light = this.graph.node_ret[43];
+
+    this.rectangle = new MyRectangle(this, floor.args["x1"], floor.args["y1"], floor.args["x2"], floor.args["y2"]);
+    this.cylinder = new MyCylinder(this, light.args["height"], light.args["bottom_r"], light.args["top_r"], light.args["sections_h"], light.args["parts_sec"]);
+
 };
 
 XMLscene.prototype.display = function () {
@@ -176,6 +183,10 @@ XMLscene.prototype.display = function () {
             this.lights[i].update();
         };
 
+
+        this.rectangle.display();
+        this.cylinder.display();
+        //this.quad.display();
         /*
         // Sets scale
         var sx = this.graph.scale["sx"];

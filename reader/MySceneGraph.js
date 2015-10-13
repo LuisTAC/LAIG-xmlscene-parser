@@ -687,6 +687,9 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 		var newNode = new Node(id);
 		newNode.leaf = true;
 
+		var args = this.leaves[i]["args"];
+		newNode.setArgs(args);
+
 		this.node_ret.push(newNode);
 	}
 };

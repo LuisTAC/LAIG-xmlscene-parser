@@ -1,6 +1,7 @@
 
 function Node(id) {
 	this.id=id;
+	this.args = [];
 	this.material=null;
 	this.matrix=null;
 	this.texture=null;
@@ -10,6 +11,10 @@ function Node(id) {
 
 Node.prototype.push = function(node) {
 	this.descendants.push(node);
+};
+
+Node.prototype.setArgs = function(args) {
+	this.args=args;
 };
 
 Node.prototype.setMaterial = function(material) {

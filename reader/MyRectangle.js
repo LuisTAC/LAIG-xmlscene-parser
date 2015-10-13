@@ -6,6 +6,7 @@
 function MyRectangle(scene, x1, y1, x2, y2, s, t) {
 
 	CGFobject.call(this,scene);
+
  	this.x1=x1;
  	this.y1=y1;
  	this.x2=x2;
@@ -24,10 +25,10 @@ MyRectangle.prototype.constructor = MyRectangle;
 
 MyRectangle.prototype.initBuffers = function() {
  	this.vertices = [
- 	x1, y2, 0,
- 	x2, y2, 0,
- 	x1, y1, 0,
- 	x2, y1, 0
+ 	this.x1, this.y2, 0,
+ 	this.x2, this.y2, 0,
+ 	this.x1, this.y1, 0,
+ 	this.x2, this.y1, 0
  	];
 
  	this.indices = [
