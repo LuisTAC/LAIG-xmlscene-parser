@@ -186,7 +186,10 @@ XMLscene.prototype.display = function () {
 
 
         // Test drawing functions
-        this.rectangle.display();
+        this.pushMatrix();
+            this.translate(0, 0, 0.5);
+            this.rectangle.display();
+        this.popMatrix();
         this.cylinder.display();
         this.triangle.display();
 

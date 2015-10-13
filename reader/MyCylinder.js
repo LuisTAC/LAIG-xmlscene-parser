@@ -26,12 +26,15 @@ MyCylinder.prototype.initBuffers = function() {
  	this.normals = [];
  	this.indices = [];
 
- 	for (var j=0; j<this.sections_height; j++) {
-	 	for (var i=0; i<this.parts_section; i++) {
-	 		this.vertices.push(Math.cos(i*angle), Math.sin(i*angle), (j/this.sections_height));
+ 	var radius_diff = Math.abs(this.top_r - this.bottom_r);
+ 	var patch_height = radius_diff/this.sections_height;
+
+ 	for (var j=0; j<this.sections_height; j++) { //stacks
+	 	for (var i=0; i<this.parts_section; i++) { //slices
+	 		this.vertices.push(Math.cos(i*angle), Math.sin(i*angle), (this.height*j/this.sections_height));
 	 		this.normals.push(Math.cos(i*angle), Math.sin(i*angle), 0);
 
-	 		this.vertices.push(Math.cos(i*angle), Math.sin(i*angle), ((j+1)/this.sections_height));
+	 		this.vertices.push(Math.cos(i*angle), Math.sin(i*angle), (this.height*(j+1)/this.sections_height));
 	 		this.normals.push(Math.cos(i*angle), Math.sin(i*angle), 0);
 
 	 	};
