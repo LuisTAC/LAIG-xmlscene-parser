@@ -138,13 +138,14 @@ XMLscene.prototype.onGraphLoaded = function ()
     
     this.initMaterials();
 
-    // Test MyRectangle
+    // Tests
     var floor = this.graph.node_ret[42];
     var light = this.graph.node_ret[43];
+    var triangle = this.graph.node_ret[46];
 
     this.rectangle = new MyRectangle(this, floor.args["x1"], floor.args["y1"], floor.args["x2"], floor.args["y2"]);
     this.cylinder = new MyCylinder(this, light.args["height"], light.args["bottom_r"], light.args["top_r"], light.args["sections_h"], light.args["parts_sec"]);
-
+    this.triangle = new MyTriangle(this, triangle.args["xt_1"], triangle.args["yt_1"], triangle.args["zt_1"], triangle.args["xt_2"], triangle.args["yt_2"], triangle.args["zt_2"], triangle.args["xt_3"], triangle.args["yt_3"], triangle.args["zt_3"]);
 };
 
 XMLscene.prototype.display = function () {
@@ -184,12 +185,14 @@ XMLscene.prototype.display = function () {
         };
 
 
+        // Test drawing functions
         this.rectangle.display();
         this.cylinder.display();
-        //this.quad.display();
-        /*
+        this.triangle.display();
+
+        
         // Sets scale
-        var sx = this.graph.scale["sx"];
+        /*var sx = this.graph.scale["sx"];
         var sy = this.graph.scale["sy"];
         var sz = this.graph.scale["sz"];
         this.scale(sx, sy, sz);
