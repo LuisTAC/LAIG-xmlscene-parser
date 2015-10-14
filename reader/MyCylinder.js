@@ -26,16 +26,18 @@ MyCylinder.prototype.initBuffers = function() {
  	this.normals = [];
  	this.indices = [];
 
- 	var radius_diff = Math.abs(this.top_r - this.bottom_r);
+ 	var radius_diff = this.top_r - this.bottom_r;
  	var patch_height = radius_diff/this.sections_height;
+
+ 	var radius = parseFloat(this.bottom_r);
 
  	for (var j=0; j<this.sections_height; j++) { //stacks
 	 	for (var i=0; i<this.parts_section; i++) { //slices
-	 		this.vertices.push(Math.cos(i*angle), Math.sin(i*angle), (this.height*j/this.sections_height));
-	 		this.normals.push(Math.cos(i*angle), Math.sin(i*angle), 0);
+	 		this.vertices.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), (this.height*j/this.sections_height));
+	 		this.normals.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), 0);
 
-	 		this.vertices.push(Math.cos(i*angle), Math.sin(i*angle), (this.height*(j+1)/this.sections_height));
-	 		this.normals.push(Math.cos(i*angle), Math.sin(i*angle), 0);
+	 		this.vertices.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), (this.height*(j+1)/this.sections_height));
+	 		this.normals.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), 0);
 
 	 	};
 
@@ -48,6 +50,7 @@ MyCylinder.prototype.initBuffers = function() {
 	 	this.indices.push(temp+(2*this.parts_section)-2,temp,temp+(2*this.parts_section)-1);
 	 	this.indices.push(temp,temp+1,temp+(2*this.parts_section)-1);
 
+	 	radius+=patch_height;
 
  	};
 
