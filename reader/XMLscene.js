@@ -115,8 +115,7 @@ XMLscene.prototype.setDefaultAppearance = function () {
 
 // Handler called when the graph is finally loaded. 
 // As loading is asynchronous, this may be called already after the application has started the run loop
-XMLscene.prototype.onGraphLoaded = function () 
-{
+XMLscene.prototype.onGraphLoaded = function () {
 	this.gl.clearColor(this.graph.background["r"],this.graph.background["g"],this.graph.background["b"],this.graph.background["a"]);
 	
     //Build new axis
@@ -189,12 +188,12 @@ XMLscene.prototype.display = function () {
 
         // Test drawing functions
         this.pushMatrix();
-            this.translate(0, 0, 1);
+            this.translate(0, 0, 0.5);
             this.rectangle.display();
         this.popMatrix();
-        //this.cylinder.display();
+        this.cylinder.display();
         //this.triangle.display();*/
-        this.sphere.display();
+        //this.sphere.display();
 
         
         // Sets scale

@@ -31,28 +31,29 @@ MyCylinder.prototype.initBuffers = function() {
 
  	var radius = parseFloat(this.bottom_r);
 
- 	for (var j=0; j<this.sections_height; j++) { //stacks
+ 	for (var j=0; j<=this.sections_height; j++) { //stacks
 	 	for (var i=0; i<this.parts_section; i++) { //slices
 	 		this.vertices.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), (this.height*j/this.sections_height));
 	 		this.normals.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), 0);
-
-	 		this.vertices.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), (this.height*(j+1)/this.sections_height));
-	 		this.normals.push(radius*Math.cos(i*angle), radius*Math.sin(i*angle), 0);
-
 	 	};
-
-	 	var temp = j*2*this.parts_section;
-
-	 	for(var i=0;i<this.parts_section-1; i++) {
-	 		this.indices.push(temp+i*2,temp+i*2+2,temp+i*2+1);
-	 		this.indices.push(temp+i*2+2,temp+i*2+3,temp+i*2+1);
-	 	};
-	 	this.indices.push(temp+(2*this.parts_section)-2,temp,temp+(2*this.parts_section)-1);
-	 	this.indices.push(temp,temp+1,temp+(2*this.parts_section)-1);
-
 	 	radius+=patch_height;
-
  	};
+
+ 	for (var j=0; j<this.sections_height; j++) { //stacks
+	 	for (var i=0; i<this.parts_section; i++) { //slices
+	 		if(i==this.parts_section-1)
+	 		{
+	 			this.indices.push(j*this.parts_section+i, j*this.parts_section, (j+1)*this.parts_section+i);
+	 			this.indices.push(j*this.parts_section, (j+1)*this.parts_section, (j+1)*this.parts_section+i);
+	 		}
+	 		else
+	 		{
+	 			this.indices.push(j*this.parts_section+i, j*this.parts_section+i+1, (j+1)*this.parts_section+i);
+	 			this.indices.push(j*this.parts_section+i+1, (j+1)*this.parts_section+i+1, (j+1)*this.parts_section+i);
+	 		}
+	 	};
+ 	};
+
 
  	var patchS=1/this.parts_section;
  	var patchT=1/this.sections_height;
