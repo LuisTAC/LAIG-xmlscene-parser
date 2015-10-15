@@ -73,9 +73,7 @@
         <LEAF id="light" type="cylinder" args="0.5 0.25 1 5 10" />    <!-- height, bottom radius, top radius, sections along height, parts per section -->
         <LEAF id="door" type="rectangle" args="-1.5 -2.0 1.5 -2.0" />      
         <LEAF id="wheel" type="cylinder" args="1.0 1.0 1.0 1 10" />    <!-- height, bottom radius, top radius, sections along height, parts per section -->
-        <!-- TEST TRIANGLE -->
-        <LEAF id="tri1" type="triangle" args="0 0 0 -4 0 4 4 0 4" /> <!-- coordinates of each vertex -->
-        <!-- END OF TEST TRIANGLE -->
+        
         <LEAF id="bumper" type="rectangle" args="-1.5 2.0 1.5 -2.0" />
         <LEAF id="side" type="rectangle" args="-1.75 1.5 1.75 -1.5" />
         <LEAF id="hood" type="rectangle" args="-2.0 1.5 2.0 -1.5" />
@@ -84,6 +82,15 @@
         <LEAF id="column" type="cylinder" args="15.0 3.0 3.0 5 10" />
         <LEAF id="box_side" type="rectangle" args="-2.0 -2.5 2.0 2.5" />
         <LEAF id="top" type="rectangle" args="-2.0 -2.0 2.0 2.0" />
+
+        <!-- TESTS -->
+        <!-- TEST TRIANGLE -->
+        <LEAF id="tri1" type="triangle" args="0 0 0 -4 0 4 4 0 4" /> <!-- coordinates of each vertex -->
+        <!-- END OF TEST TRIANGLE -->
+
+        <!-- TEST SPHERE -->
+        <LEAF id="sphere1" type="sphere" args="2.0 10 10" /> <!-- sphere:    radius, parts along radius, parts per section -->
+        <!-- END OF TEST SPHERE -->
     </LEAVES>
 
     <NODES>

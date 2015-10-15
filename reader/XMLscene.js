@@ -142,10 +142,12 @@ XMLscene.prototype.onGraphLoaded = function ()
     var floor = this.graph.node_ret[42];
     var light = this.graph.node_ret[43];
     var triangle = this.graph.node_ret[46];
+    var sphere = this.graph.node_ret[54];
 
     this.rectangle = new MyRectangle(this, floor.args["x1"], floor.args["y1"], floor.args["x2"], floor.args["y2"]);
     this.cylinder = new MyCylinder(this, light.args["height"], light.args["bottom_r"], light.args["top_r"], light.args["sections_h"], light.args["parts_sec"]);
     this.triangle = new MyTriangle(this, triangle.args["xt_1"], triangle.args["yt_1"], triangle.args["zt_1"], triangle.args["xt_2"], triangle.args["yt_2"], triangle.args["zt_2"], triangle.args["xt_3"], triangle.args["yt_3"], triangle.args["zt_3"]);
+    this.sphere = new MySphere(this, sphere.args["radius"], sphere.args["parts_r"], sphere.args["parts_sec"]);
 };
 
 XMLscene.prototype.display = function () {
@@ -187,11 +189,12 @@ XMLscene.prototype.display = function () {
 
         // Test drawing functions
         this.pushMatrix();
-            this.translate(0, 0, 0.5);
+            this.translate(0, 0, 1);
             this.rectangle.display();
         this.popMatrix();
-        this.cylinder.display();
-        this.triangle.display();
+        //this.cylinder.display();
+        //this.triangle.display();*/
+        this.sphere.display();
 
         
         // Sets scale
