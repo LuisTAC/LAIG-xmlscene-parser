@@ -140,7 +140,7 @@ XMLscene.prototype.onGraphLoaded = function () {
     // Tests
     var floor = this.graph.node_ret[42];
     var light = this.graph.node_ret[43];
-    var triangle = this.graph.node_ret[46];
+    var triangle = this.graph.node_ret[53];
     var sphere = this.graph.node_ret[54];
 
     this.rectangle = new MyRectangle(this, floor.args["x1"], floor.args["y1"], floor.args["x2"], floor.args["y2"]);
@@ -187,12 +187,12 @@ XMLscene.prototype.display = function () {
 
 
         // Test drawing functions
-        this.pushMatrix();
+       /* this.pushMatrix();
             this.translate(0, 0, 0.5);
             this.rectangle.display();
         this.popMatrix();
-        this.cylinder.display();
-        //this.triangle.display();*/
+        this.cylinder.display();*/
+        this.triangle.display();
         //this.sphere.display();
 
         

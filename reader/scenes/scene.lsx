@@ -70,7 +70,7 @@
     <LEAVES>
         <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
         <LEAF id="floor" type="rectangle" args="-5.0 1.0 5.0 -1.0" />      <!-- Bottom part of scene Car -->
-        <LEAF id="light" type="cylinder" args="0.5 0.5 1 5 40" />    <!-- height, bottom radius, top radius, sections along height, parts per section -->
+        <LEAF id="light" type="cylinder" args="0.5 0.5 0 5 40" />    <!-- height, bottom radius, top radius, sections along height, parts per section -->
         <LEAF id="door" type="rectangle" args="-1.5 -2.0 1.5 -2.0" />      
         <LEAF id="wheel" type="cylinder" args="1.0 1.0 1.0 1 10" />    <!-- height, bottom radius, top radius, sections along height, parts per section -->
         
