@@ -712,6 +712,32 @@ MySceneGraph.prototype.buildGraph = function() {
 	this.linkSceneNodes();
 };
 
+MySceneGraph.prototype.dfs_init = function() {
+	for(var i=0; i<this.node_ret.length; i++) {
+		this.node_ret.visited = false;
+	};
+
+	var root = this.getNodeObjByID(this.nodes["rootID"]);
+	this.dfs(root);
+
+	for(var i=0; i<this.node_ret.length; i++) {
+		console.log("Visited: "+this.node_ret[i].visited);
+	};
+};
+
+MySceneGraph.prototype.dfs = function(elem) {
+	elem.setVisited(true);
+	if(elem.leaf)
+	{
+		//get type & draw
+	}
+	for(var i=0; i<elem.descendants.length; i++) {
+		if(elem.descendants[i].visited != true) {
+			this.dfs(elem.descendants[i]);
+		}
+	};
+};
+
 /*
  * Example of method that parses elements of one block and stores information in a specific data structure
  */

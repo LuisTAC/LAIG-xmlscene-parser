@@ -7,6 +7,7 @@ function Node(id) {
 	this.texture=null;
 	this.descendants=[];
 	this.leaf=false;
+	this.visited=false;
 };
 
 Node.prototype.push = function(node) {
@@ -27,4 +28,8 @@ Node.prototype.setTexture = function(texture) {
 
 Node.prototype.setMatrix = function(matrix) {
 	this.matrix=math.clone(m);
+};
+
+Node.prototype.setVisited = function(visited) {
+	this.visited=visited;
 };
