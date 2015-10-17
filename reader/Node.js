@@ -8,6 +8,7 @@ function Node(id) {
 	this.descendants=[];
 	this.leaf=false;
 	this.visited=false;
+	this.type=null;
 };
 
 Node.prototype.push = function(node) {
@@ -32,4 +33,8 @@ Node.prototype.setMatrix = function(matrix) {
 
 Node.prototype.setVisited = function(visited) {
 	this.visited=visited;
+};
+
+Node.prototype.setType = function(type) {
+	this.type=type;
 };

@@ -102,13 +102,15 @@ MySceneGraph.prototype.parseInitials = function(rootElement) {
 	if (elems == null)  return "frustum element is missing.";
 	if (elems.length != 1) return "invalid number of 'frustum' elements found. (expected=1; found="+elems.length+")";
 
+	this.initials=[];
+
 	var frustum = elems[0];
 
-	this.frustum=[];
-	this.frustum['near']=this.reader.getFloat(frustum,'near',true);
-	this.frustum['far']=this.reader.getFloat(frustum,'far',true);
-	console.log("\tFRUSTUM - near:"+this.frustum['near']);
-	console.log("\tFRUSTUM - far:"+this.frustum['far']);
+	this.initials.frustum=[];
+	this.initials.frustum['near']=this.reader.getFloat(frustum,'near',true);
+	this.initials.frustum['far']=this.reader.getFloat(frustum,'far',true);
+	console.log("\tFRUSTUM - near:"+this.initials.frustum['near']);
+	console.log("\tFRUSTUM - far:"+this.initials.frustum['far']);
 
 	//TRANSLATE
 	var elems = initials.getElementsByTagName('translation');
@@ -117,34 +119,34 @@ MySceneGraph.prototype.parseInitials = function(rootElement) {
 
 	var translate = elems[0];
 
-	this.translate=[];
-	this.translate['x']=this.reader.getFloat(translate,'x',true);
-	this.translate['y']=this.reader.getFloat(translate,'y',true);
-	this.translate['z']=this.reader.getFloat(translate,'z',true);
-	console.log("\tTRANSLATE - x:"+this.translate['x']);
-	console.log("\tTRANSLATE - y:"+this.translate['y']);
-	console.log("\tTRANSLATE - z:"+this.translate['z']);
+	this.initials.translate=[];
+	this.initials.translate['x']=this.reader.getFloat(translate,'x',true);
+	this.initials.translate['y']=this.reader.getFloat(translate,'y',true);
+	this.initials.translate['z']=this.reader.getFloat(translate,'z',true);
+	console.log("\tTRANSLATE - x:"+this.initials.translate['x']);
+	console.log("\tTRANSLATE - y:"+this.initials.translate['y']);
+	console.log("\tTRANSLATE - z:"+this.initials.translate['z']);
 
 	//ROTATIONS
 	var elems = initials.getElementsByTagName('rotation');
 	if (elems == null)  return "rotation element is missing.";
 	if (elems.length != 3) return "invalid number of 'rotation' elements found. (expected=3; found="+elems.length+")";
 
-	this.rotation=[[],[],[]];
+	this.initials.rotation=[[],[],[]];
 	for (var i=0; i<3; i++)
 	{
 
 		var rotation = elems[i];
 
-		this.rotation[i]['axis']=this.reader.getString(rotation,'axis',true);
-		if(this.rotation[i]['axis']!='x' &&
-			this.rotation[i]['axis']!='y' &&
-			this.rotation[i]['axis']!='z')
-			return "invalid "+(i+1)+" 'axis' value found. (expected=[x,y,z]; found="+this.rotation[i]['axis']+")";
+		this.initials.rotation[i]['axis']=this.reader.getString(rotation,'axis',true);
+		if(this.initials.rotation[i]['axis']!='x' &&
+			this.initials.rotation[i]['axis']!='y' &&
+			this.initials.rotation[i]['axis']!='z')
+			return "invalid "+(i+1)+" 'axis' value found. (expected=[x,y,z]; found="+this.initials.rotation[i]['axis']+")";
 		
-		this.rotation[i]['angle']=this.reader.getFloat(rotation,'angle',true);
-		console.log("\tROTATION["+i+"] - axis:"+this.rotation[i]['axis']);
-		console.log("\tROTATION["+i+"] - angle:"+this.rotation[i]['angle']);
+		this.initials.rotation[i]['angle']=this.reader.getFloat(rotation,'angle',true);
+		console.log("\tROTATION["+i+"] - axis:"+this.initials.rotation[i]['axis']);
+		console.log("\tROTATION["+i+"] - angle:"+this.initials.rotation[i]['angle']);
 	}
 	
 	//SCALE
@@ -154,13 +156,13 @@ MySceneGraph.prototype.parseInitials = function(rootElement) {
 
 	var scale = elems[0];
 
-	this.scale=[];
-	this.scale["sx"]=this.reader.getFloat(scale,"sx",true);
-	this.scale["sy"]=this.reader.getFloat(scale,"sy",true);
-	this.scale["sz"]=this.reader.getFloat(scale,"sz",true);
-	console.log("\tSCALE - sx:"+this.scale["sx"]);
-	console.log("\tSCALE - sy:"+this.scale["sy"]);
-	console.log("\tSCALE - sz:"+this.scale["sz"]);
+	this.initials.scale=[];
+	this.initials.scale["sx"]=this.reader.getFloat(scale,"sx",true);
+	this.initials.scale["sy"]=this.reader.getFloat(scale,"sy",true);
+	this.initials.scale["sz"]=this.reader.getFloat(scale,"sz",true);
+	console.log("\tSCALE - sx:"+this.initials.scale["sx"]);
+	console.log("\tSCALE - sy:"+this.initials.scale["sy"]);
+	console.log("\tSCALE - sz:"+this.initials.scale["sz"]);
 
 	//REFERENCE
 
@@ -170,9 +172,9 @@ MySceneGraph.prototype.parseInitials = function(rootElement) {
 
 	var reference = elems[0];
 
-	this.reference=this.reader.getFloat(reference,'length',true);
+	this.initials.reference=this.reader.getFloat(reference,'length',true);
 
-	console.log("\tREFERENCE:"+this.reference);
+	console.log("\tREFERENCE:"+this.initials.reference);
 };
 	
 MySceneGraph.prototype.parseIllumination = function(rootElement) {
@@ -683,12 +685,14 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 	}
 	for(var i=0; i<this.leaves.length; i++) {
 		var id = this.leaves[i]["id"];
+		var type = this.leaves[i]["type"];
 
 		var newNode = new Node(id);
 		newNode.leaf = true;
 
 		var args = this.leaves[i]["args"];
 		newNode.setArgs(args);
+		newNode.setType(type);
 
 		this.node_ret.push(newNode);
 	}
@@ -710,32 +714,6 @@ MySceneGraph.prototype.linkSceneNodes = function() {
 MySceneGraph.prototype.buildGraph = function() {
 	this.createSceneNodeArray();
 	this.linkSceneNodes();
-};
-
-MySceneGraph.prototype.dfs_init = function() {
-	for(var i=0; i<this.node_ret.length; i++) {
-		this.node_ret.visited = false;
-	};
-
-	var root = this.getNodeObjByID(this.nodes["rootID"]);
-	this.dfs(root);
-
-	for(var i=0; i<this.node_ret.length; i++) {
-		console.log("Visited: "+this.node_ret[i].visited);
-	};
-};
-
-MySceneGraph.prototype.dfs = function(elem) {
-	elem.setVisited(true);
-	if(elem.leaf)
-	{
-		//get type & draw
-	}
-	for(var i=0; i<elem.descendants.length; i++) {
-		if(elem.descendants[i].visited != true) {
-			this.dfs(elem.descendants[i]);
-		}
-	};
 };
 
 /*
@@ -766,6 +744,8 @@ MySceneGraph.prototype.dfs = function(elem) {
 		console.log("Read list item id "+ e.id+" with value "+this.list[e.id]);
 	};
 */
+
+
 
 /*
  * Callback to be executed on any read error

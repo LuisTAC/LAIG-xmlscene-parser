@@ -20,6 +20,8 @@ XMLscene.prototype.init = function (application) {
     this.gl.enable(this.gl.DEPTH_TEST);
 	this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
+    this.paused = false;
+    this.updateSpeed=1;
 
 	this.axis = new CGFaxis(this);
 
@@ -113,13 +115,90 @@ XMLscene.prototype.setDefaultAppearance = function () {
     this.setShininess(10.0);	
 };
 
+XMLscene.prototype.dfs_init = function() {
+    for(var i=0; i<this.graph.node_ret.length; i++) {
+        this.graph.node_ret[i].visited = false;
+    };
+
+    // Create matrix
+    var matrix = mat4.create();
+    mat4.identity(matrix);
+
+    // Initials processing
+    // Scalings
+    mat4.scale(matrix, matrix, [this.graph.initials.scale["sx"], this.graph.initials.scale["sy"], this.graph.initials.scale["sz"]]);
+
+    // Rotations
+    for(var i=0; i<this.graph.initials.rotation.length; i++) {
+        var axis = this.graph.initials.rotation[i]["axis"];
+
+        switch(axis) {
+            case "x":
+                mat4.rotateX(matrix, matrix, this.graph.initials.rotation[i]["angle"]*degToRad);
+                break;
+            case "y":
+                mat4.rotateY(matrix, matrix, this.graph.initials.rotation[i]["angle"]*degToRad);
+                break;
+            case "z":
+                mat4.rotateZ(matrix, matrix, this.graph.initials.rotation[i]["angle"]*degToRad);
+                break;
+        }
+    };
+
+    // Translations
+    mat4.translate(matrix, matrix, [this.graph.initials.translate["x"], this.graph.initials.translate["y"], this.graph.initials.translate["z"]]);
+
+    // Applies matrix to scene
+    this.multMatrix(matrix);
+
+    this.pushMatrix();
+
+    var root = this.graph.getNodeObjByID(this.graph.nodes["rootID"]);
+    this.dfs(root);
+};
+
+XMLscene.prototype.dfs = function(elem) {
+    elem.setVisited(true);
+    if(elem.leaf)
+    {
+        //get type & draw
+        var type = elem.type;
+        var args = elem.args;
+        switch(type) {
+            case "rectangle":
+                var rec = new MyRectangle(this, args["x1"], args["y1"], args["x2"], args["y2"]);
+                //rec.display();
+                break;
+            case "cylinder":
+                var cyl = new MyCylinder(this, args["height"], args["bottom_r"], args["top_r"], args["sections_h"], args["parts_sec"]);
+                //cyl.display();
+                break;
+            case "sphere":
+                var sphere = new MySphere(this, args["radius"], args["parts_r"], args["parts_sec"]);
+                //sphere.display();
+                break;
+            case "triangle":
+                var tri = new MyTriangle(this, args["xt_1"], args["yt_1"], args["zt_1"], args["xt_2"], args["yt_2"], args["zt_2"], args["xt_3"], args["yt_3"], args["zt_3"]);
+                tri.display();
+                break;
+        }
+
+    }
+    for(var i=0; i<elem.descendants.length; i++) {
+        if(elem.descendants[i].visited != true) {
+            this.dfs(elem.descendants[i]);
+        }
+    };
+
+};
+
 // Handler called when the graph is finally loaded. 
 // As loading is asynchronous, this may be called already after the application has started the run loop
 XMLscene.prototype.onGraphLoaded = function () {
 	this.gl.clearColor(this.graph.background["r"],this.graph.background["g"],this.graph.background["b"],this.graph.background["a"]);
 	
     //Build new axis
-    if(this.graph.reference!=0) this.axis = new CGFaxis(this,this.graph.reference);
+    if(this.graph.initials.reference!=0) this.axis = new CGFaxis(this,this.graph.initials.reference);
 
     //ILLUMINATION -> ambient
     var amb_r = this.graph.ambient["r"];
@@ -132,7 +211,7 @@ XMLscene.prototype.onGraphLoaded = function () {
     //this.lights[0].setVisible(true);
     //this.lights[0].enable();
 
-    this.initCameras(this.graph.frustum["near"], this.graph.frustum["far"]);
+    this.initCameras(this.graph.initials.frustum["near"], this.graph.initials.frustum["far"]);
     myInterface.setActiveCamera(this.camera);
     
     this.initMaterials();
@@ -185,7 +264,7 @@ XMLscene.prototype.display = function () {
             this.lights[i].update();
         };
 
-        this.graph.dfs_init();
+        this.dfs_init();
 
         // Test drawing functions
        /* this.pushMatrix();
@@ -238,3 +317,15 @@ XMLscene.prototype.display = function () {
     this.shader.unbind();
 };
 
+XMLscene.prototype.pause = function() {
+    if(this.paused) {
+        console.log("resume");
+        this.paused=false;
+        this.setUpdatePeriod(this.updateSpeed);
+    }
+    else {
+        console.log("paused");
+        this.paused=true;
+        this.setUpdatePeriod(0);
+    }
+};

@@ -18,7 +18,7 @@ MyInterface.prototype.init = function(application) {
 	// call CGFinterface init
 	CGFinterface.prototype.init.call(this, application);
 	
-	/*
+	
 	// init GUI. For more information on the methods, check:
 	//  http://workshop.chromeexperiments.com/examples/gui
 	
@@ -33,7 +33,7 @@ MyInterface.prototype.init = function(application) {
 
 	// add a group of controls (and open/expand by defult)
 	
-	var lights=this.gui.addFolder("Luzes");
+	/*var lights=this.gui.addFolder("Luzes");
 	lights.open();
 
 	// add two check boxes to the group. The identifiers must be members variables of the scene initialized in scene.init as boolean
