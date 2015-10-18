@@ -578,6 +578,7 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 				var transl_y = this.reader.getFloat(transfElm,'y',true);
 				var transl_z = this.reader.getFloat(transfElm,'z',true);
 				transf = ["translation",transl_x, transl_y, transl_z];
+				currNode["geo_transf"][j-2]=transf;
 			}
 			else if(transfElm.nodeName=="ROTATION")
 			{
@@ -589,6 +590,7 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 
 				var rot_angle = this.reader.getFloat(transfElm,"angle",true);
 				transf=["rotation",rot_axis, rot_angle];
+				currNode["geo_transf"][j-2]=transf;
 			}
 			else if(transfElm.nodeName=="SCALE")
 			{
@@ -596,8 +598,9 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 				var scal_y = this.reader.getFloat(transfElm,'sy',true);
 				var scal_z = this.reader.getFloat(transfElm,'sz',true);
 				transf = ["scale",scal_x, scal_y, scal_z];
+				currNode["geo_transf"][j-2]=transf;
 			}
-			currNode["geo_transf"][j-2]=transf;
+			
 		}
 
 		// Stores Descendants IDs
@@ -630,9 +633,9 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 };
 
 MySceneGraph.prototype.getNodeByID = function(nodeID) {
-	for(var i=0; this.nodes.length; i++) {
+	for(var i=0; i<this.nodes.length; i++) {
 		if(nodeID == this.nodes[i]["id"]) {
-			return 
+			return this.nodes[i];
 		}
 	}
 	return null;

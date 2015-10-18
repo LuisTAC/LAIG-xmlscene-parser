@@ -167,28 +167,80 @@ XMLscene.prototype.dfs = function(elem) {
         switch(type) {
             case "rectangle":
                 var rec = new MyRectangle(this, args["x1"], args["y1"], args["x2"], args["y2"]);
-                //rec.display();
+                rec.display();
                 break;
             case "cylinder":
                 var cyl = new MyCylinder(this, args["height"], args["bottom_r"], args["top_r"], args["sections_h"], args["parts_sec"]);
-                //cyl.display();
+                cyl.display();
                 break;
             case "sphere":
                 var sphere = new MySphere(this, args["radius"], args["parts_r"], args["parts_sec"]);
-                //sphere.display();
+                sphere.display();
                 break;
             case "triangle":
                 var tri = new MyTriangle(this, args["xt_1"], args["yt_1"], args["zt_1"], args["xt_2"], args["yt_2"], args["zt_2"], args["xt_3"], args["yt_3"], args["zt_3"]);
                 tri.display();
                 break;
         }
-
     }
+    else {
+        var currNode = this.graph.getNodeByID(elem.id);
+        var push = false;
+        if(currNode["geo_transf"].length != 0) {
+            // Creates Matrix
+            var matrix = mat4.create();
+            mat4.identity(matrix);
+
+            var transf_array = currNode["geo_transf"];
+
+            for(var i=0; i<transf_array.length; i++) {
+                // Checks tranformation type and pushes to transf matrix
+                var transf_type = transf_array[i][0];
+
+                if(transf_type == "rotation") {
+                    var axis = transf_array[i][1];
+
+                    switch(axis) {
+                        case "x":
+                            mat4.rotateX(matrix, matrix, transf_array[i][2]*degToRad);
+                        break;
+                        case "y":
+                            mat4.rotateY(matrix, matrix, transf_array[i][2]*degToRad);
+                            break;
+                        case "z":
+                            mat4.rotateZ(matrix, matrix, transf_array[i][2]*degToRad);
+                            break;
+                    }
+                }
+                else if(transf_type == "translation") {
+                    mat4.translate(matrix, matrix, [transf_array[i][1], transf_array[i][2], transf_array[i][3]]);
+                }
+                else if(transf_type == "scale") {
+                    
+                    mat4.scale(matrix, matrix, [transf_array[i][1], transf_array[i][2], transf_array[i][3]]);
+                }
+            };
+
+            // Applies Nodes matrix to scene
+                this.multMatrix(matrix);
+                this.pushMatrix();
+                push = true;
+
+        }
+    }
+
     for(var i=0; i<elem.descendants.length; i++) {
         if(elem.descendants[i].visited != true) {
             this.dfs(elem.descendants[i]);
         }
     };
+
+    /*if(!elem.leaf && (this.graph.getNodeByID(elem.id)["geo_transf"].length != 0)) {
+        // Takes matrix out of scene
+        this.popMatrix();
+
+    }*/
+    if(push) this.popMatrix();
 
 };
 

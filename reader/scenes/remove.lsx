@@ -20,7 +20,7 @@
 
 <LIGHTS>
     <LIGHT id="l01">                                    <!-- light identifier -->
-        <enable value ="1" />                         <!-- enable/disable -->
+        <enable value="1" />                         <!-- enable/disable -->
         <position x="0" y="6" z="7.5" w="1" />       <!-- light position -->
         <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
         <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
@@ -28,7 +28,7 @@
     </LIGHT>
 	
 	<LIGHT id="l02">                                    <!-- light identifier -->
-        <enable value ="1" />                         <!-- enable/disable -->
+        <enable value="1" />                         <!-- enable/disable -->
         <position x="5" y="4" z="7.5" w="1" />       <!-- light position -->
         <ambient r="0.5" g="0.5" b="0.5" a="1" />        <!-- ambient component -->
         <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
@@ -36,7 +36,7 @@
     </LIGHT>
 
     <LIGHT id="l03">                                    <!-- light identifier -->
-        <enable value ="1" />                         <!-- enable/disable -->
+        <enable value="1" />                         <!-- enable/disable -->
         <position x="10" y="4" z="7.5" w="7.5" />       <!-- light position -->
         <ambient r="0.5" g="0.5" b="0.5" a="1" />        <!-- ambient component -->
         <diffuse r="1" g="1" b="1" a="1" />        <!-- diffuse component -->
@@ -179,7 +179,7 @@
         <DESCENDANTS>
         	
             <DESCENDANT id="mesa" />     <!--    is the identifier of a node or of leaf; -->
-            <DESCENDANT id="CadeiroTecto1" />     may be repeatad as necessary. It can refer an -->
+            <DESCENDANT id="CadeiroTecto1" />     <!--may be repeatad as necessary. It can refer an -->
             <DESCENDANT id="paredeDireita" />                              <!--      identifier of another node, later defined in the lsx file. -->
         	<DESCENDANT id="paredefrente1" />
         	<DESCENDANT id="paredefrente2" />
@@ -945,7 +945,16 @@
 
 	</NODE>
 	
-	
+    <NODE id="cuboTESTE">
+        <MATERIAL id="null"/>
+        <TEXTURE id="null"/>
+
+        <TRANSLATION x="1.0" y="0.0" z="0.0"/>
+
+        <DESCENDANTS>
+            <DESCENDANT id="cubounitario"/>
+        </DESCEDANTS>
+    </NODE>	
 
 </NODES>
 
