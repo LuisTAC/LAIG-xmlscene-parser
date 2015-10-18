@@ -3,11 +3,11 @@ function Node(id) {
 	this.id=id;
 	this.args = [];
 	this.material=null;
-	this.matrix=null;
+	this.matrix=mat4.create();
 	this.texture=null;
 	this.descendants=[];
 	this.leaf=false;
-	this.visited=false;
+	this.visited=false
 	this.type=null;
 };
 
@@ -29,10 +29,6 @@ Node.prototype.setTexture = function(texture) {
 
 Node.prototype.setMatrix = function(matrix) {
 	this.matrix=math.clone(m);
-};
-
-Node.prototype.setVisited = function(visited) {
-	this.visited=visited;
 };
 
 Node.prototype.setType = function(type) {

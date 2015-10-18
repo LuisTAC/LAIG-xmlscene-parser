@@ -158,7 +158,6 @@ XMLscene.prototype.dfs_init = function() {
 };
 
 XMLscene.prototype.dfs = function(elem) {
-    elem.setVisited(true);
     if(elem.leaf)
     {
         //get type & draw
@@ -184,64 +183,17 @@ XMLscene.prototype.dfs = function(elem) {
         }
     }
     else {
-        var currNode = this.graph.getNodeByID(elem.id);
-        var push = false;
-        if(currNode["geo_transf"].length != 0) {
-            // Creates Matrix
-            var matrix = mat4.create();
-            mat4.identity(matrix);
+        // Applies Nodes matrix to scene
+        this.multMatrix(elem.matrix);
 
-            var transf_array = currNode["geo_transf"];
+        for(var i=0; i<elem.descendants.length; i++) {
+            this.pushMatrix();
 
-            for(var i=0; i<transf_array.length; i++) {
-                // Checks tranformation type and pushes to transf matrix
-                var transf_type = transf_array[i][0];
-
-                if(transf_type == "rotation") {
-                    var axis = transf_array[i][1];
-
-                    switch(axis) {
-                        case "x":
-                            mat4.rotateX(matrix, matrix, transf_array[i][2]*degToRad);
-                        break;
-                        case "y":
-                            mat4.rotateY(matrix, matrix, transf_array[i][2]*degToRad);
-                            break;
-                        case "z":
-                            mat4.rotateZ(matrix, matrix, transf_array[i][2]*degToRad);
-                            break;
-                    }
-                }
-                else if(transf_type == "translation") {
-                    mat4.translate(matrix, matrix, [transf_array[i][1], transf_array[i][2], transf_array[i][3]]);
-                }
-                else if(transf_type == "scale") {
-                    
-                    mat4.scale(matrix, matrix, [transf_array[i][1], transf_array[i][2], transf_array[i][3]]);
-                }
-            };
-
-            // Applies Nodes matrix to scene
-                this.multMatrix(matrix);
-                this.pushMatrix();
-                push = true;
-
-        }
-    }
-
-    for(var i=0; i<elem.descendants.length; i++) {
-        if(elem.descendants[i].visited != true) {
             this.dfs(elem.descendants[i]);
-        }
-    };
 
-    /*if(!elem.leaf && (this.graph.getNodeByID(elem.id)["geo_transf"].length != 0)) {
-        // Takes matrix out of scene
-        this.popMatrix();
-
-    }*/
-    if(push) this.popMatrix();
-
+            this.popMatrix();
+        };
+    }
 };
 
 // Handler called when the graph is finally loaded. 
@@ -367,17 +319,4 @@ XMLscene.prototype.display = function () {
 	};	
 
     this.shader.unbind();
-};
-
-XMLscene.prototype.pause = function() {
-    if(this.paused) {
-        console.log("resume");
-        this.paused=false;
-        this.setUpdatePeriod(this.updateSpeed);
-    }
-    else {
-        console.log("paused");
-        this.paused=true;
-        this.setUpdatePeriod(0);
-    }
 };

@@ -684,6 +684,31 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 		newNode.setMaterial(material);
 		newNode.setTexture(texture);
 
+		for (var j = 0; j < this.nodes[i]["geo_transf"].length; j++) {
+			var type = this.nodes[i]["geo_transf"][j][0];
+			if(type=="translation") {
+				mat4.translate(newNode.matrix, newNode.matrix, [this.nodes[i]["geo_transf"][j][1], this.nodes[i]["geo_transf"][j][2], this.nodes[i]["geo_transf"][j][3]]);
+			}
+			else if(type=="rotation") {
+				var axis = this.nodes[i]["geo_transf"][j][1];
+				var angle = this.nodes[i]["geo_transf"][j][2];
+				switch(axis) {
+					case "x":
+						mat4.rotateX(newNode.matrix, newNode.matrix, angle*degToRad);
+						break;
+					case "y":
+						mat4.rotateY(newNode.matrix, newNode.matrix, angle*degToRad);
+						break;
+					case "z":
+						mat4.rotateZ(newNode.matrix, newNode.matrix, angle*degToRad);
+						break;
+				}
+			}
+			else if(type=="scale") {
+				mat4.scale(newNode.matrix, newNode.matrix, [this.nodes[i]["geo_transf"][j][1], this.nodes[i]["geo_transf"][j][2], this.nodes[i]["geo_transf"][j][3]]);
+			}
+		};
+
 		this.node_ret.push(newNode);
 	}
 	for(var i=0; i<this.leaves.length; i++) {
