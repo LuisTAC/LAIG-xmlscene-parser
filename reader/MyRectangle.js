@@ -45,14 +45,28 @@ MyRectangle.prototype.initBuffers = function() {
 	0, 0, 1
 	];
 	
-	/*
 	this.texCoords = [
-	this.minS, this.maxT ,
-	this.maxS, this.maxT ,
-	this.minS, this.minT ,
-	this.maxS, this.minT
+		0, 0,
+		1, 0,
+		1, 1,
+		0, 1
 	];
-	*/
 
  	this.initGLBuffers();
+};
+
+MyRectangle.prototype.updateTex = function(s, t) {
+
+    this.ampS = s;
+    this.ampT = t;
+
+    this.texCoords = [
+        0, (this.ltY - this.rbY) / this.ampT,(this.rbX - this.ltX) / this.ampS, 
+        (this.ltY - this.rbY) / this.ampT, 0, 0,
+        (this.rbX - this.ltX) / this.ampS, 0
+    ];
+
+    //this.setTex = true;
+
+    this.updateTexCoordsGLBuffers();
 };

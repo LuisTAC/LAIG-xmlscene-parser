@@ -88,7 +88,7 @@
 
 
 <MATERIALS>
-    
+
      <MATERIAL id="m01">  								<!-- Wood -->                                
         <shininess value="120" />
         <specular r="0.1" g="0.1" b="0.1" a="1" />        <!-- specular reflection -->

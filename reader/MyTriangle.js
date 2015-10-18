@@ -63,3 +63,19 @@ MyTriangle.prototype.initBuffers = function() {
 
 	this.initGLBuffers();
 };
+
+MyTriangle.prototype.updateTex=function(S,T)
+{
+    var CB=Math.sqrt(Math.pow((this.z1-this.y1),2)+Math.pow((this.z2-this.y2),2)+Math.pow((this.z3-this.y3),2));
+    var AC=Math.sqrt(Math.pow((this.z1-this.x1),2)+Math.pow((this.z2-this.x2),2)+Math.pow((this.z3-this.x3),2));
+    var AB=Math.sqrt(Math.pow((this.y1-this.x1),2)+Math.pow((this.y2-this.x2),2)+Math.pow((this.y3-this.x3),2));
+ 
+    var cos_beta=(CB*CB-AC*AC+AB*AB)/2*CB*AB;
+    var sin_beta=Math.sqrt(1-cos_beta*cos_beta);
+    this.texCoords=[
+        0,0,
+        AB/S,0,
+        (AB-(CB*cos_beta))/S,(CB*sin_beta)/T
+    ]
+	this.updateTexCoordsGLBuffers();
+};
