@@ -547,8 +547,9 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 			var mat = this.getMaterialByID(nodeMaterialID);
 			if(!mat)
 			{
-				return "no valid material provided ("+currNode["materialID"]+")";
+				return "no valid material provided ("+currNode["materialID"]+")";2221
 			}
+			currNode["materialID"] = nodeMaterialID;
 		}
 		
 

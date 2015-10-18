@@ -120,7 +120,7 @@ XMLscene.prototype.dfs_init = function() {
         this.graph.node_ret[i].visited = false;
     };
 
-    // Create matrix
+    // Creates Transformations matrix
     var matrix = mat4.create();
     mat4.identity(matrix);
 
@@ -153,13 +153,27 @@ XMLscene.prototype.dfs_init = function() {
 
     this.pushMatrix();
 
+    /* -------------------------------------------------- */
+
+    // MATERIALS //
+
+    // Declares and initializes Materials stack
+    this.materialStack = [];
+    // Default appearance
+    var defaulApp = new CGFappearance(this);
+
+    this.materialStack.push(defaulApp);
+
+
     var root = this.graph.getNodeObjByID(this.graph.nodes["rootID"]);
     this.dfs(root);
 };
 
 XMLscene.prototype.dfs = function(elem) {
+
     if(elem.leaf)
     {
+        this.materialStack[this.materialStack.length - 1].apply();
         //get type & draw
         var type = elem.type;
         var args = elem.args;
@@ -183,7 +197,18 @@ XMLscene.prototype.dfs = function(elem) {
         }
     }
     else {
-        // Applies Nodes matrix to scene
+        // Materials application
+        if(elem.material != null) {
+            var newApp = new CGFappearance(this);
+            newApp.setShininess(elem.material["shininess"]);
+            newApp.setAmbient(elem.material["ambient"]["r"], elem.material["ambient"]["g"], elem.material["ambient"]["b"], elem.material["ambient"]["a"]);
+            newApp.setDiffuse(elem.material["diffuse"]["r"], elem.material["diffuse"]["g"], elem.material["diffuse"]["b"], elem.material["diffuse"]["a"]);
+            newApp.setSpecular(elem.material["specular"]["r"], elem.material["specular"]["g"], elem.material["specular"]["b"], elem.material["specular"]["a"]);
+
+            this.materialStack.push(newApp);
+        }
+
+        // Applies Nodes Geo Transf matrix to scene
         this.multMatrix(elem.matrix);
 
         for(var i=0; i<elem.descendants.length; i++) {
@@ -193,6 +218,10 @@ XMLscene.prototype.dfs = function(elem) {
 
             this.popMatrix();
         };
+
+        if(elem.material != null) {
+            this.materialStack.pop();
+        }
     }
 };
 
