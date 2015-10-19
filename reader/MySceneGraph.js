@@ -15,7 +15,13 @@ function MySceneGraph(filename, scene) {
 	 * If any error occurs, the reader calls onXMLError on this object, with an error message
 	 */
 	 
-	this.reader.open('scenes/'+filename, this);  
+	//this.reader.open('scenes/'+filename, this);  
+	this.path = "scenes/" + filename;
+	this.dir = filename.substr(0,filename.lastIndexOf("/"));
+
+	this.finalDir = "scenes/" + this.dir + "/";
+
+	this.reader.open(this.path, this);
 }
 
 /*
@@ -330,7 +336,7 @@ MySceneGraph.prototype.parseTextures = function(rootElement) {
 
 		var files = iterTexture.getElementsByTagName("file");
 		var file = files[0];
-		currTexture["file"] = this.reader.getString(file, "path", true);
+		currTexture["file"] = this.finalDir + this.reader.getString(file, "path", true);
 
 		var amplif_factors = iterTexture.getElementsByTagName("amplif_factor");
 		var amplif_factor = amplif_factors[0];

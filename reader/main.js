@@ -29,7 +29,13 @@ main=function()
 	// get file name provided in URL, e.g. http://localhost/myproj/?file=myfile.xml 
 	// or use "demo.xml" as default (assumes files in subfolder "scenes", check MySceneGraph constructor) 
 	
-	var filename=getUrlVars()['file'] || "scene.lsx";
+	//var filename=getUrlVars()['file'] || "scene.lsx";
+
+    nameFile = "remove.lsx";
+    var dir = nameFile.split(".");
+    var folderPlusScene = dir[0] + '/' + nameFile;
+    
+    var filename=getUrlVars()['file'] || folderPlusScene;
 
 	// create and load graph, and associate it to scene. 
 	// Check console for loading errors
