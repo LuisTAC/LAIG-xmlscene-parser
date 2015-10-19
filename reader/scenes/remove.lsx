@@ -6,7 +6,7 @@
     <rotation axis="x" angle="0" />                  <!-- initial rotation 3 -->
     <rotation axis="y" angle="0" />                  <!-- initial rotation 2 -->
     <rotation axis="z" angle="0" />                  <!-- initial rotation 1 -->
-    <scale sx="0.25" sy="0.25" sz="0.25" />                  <!-- initial scaling -->
+    <scale sx="1.0" sy="1.0" sz="1.0" />                  <!-- initial scaling -->
     <reference length="5" />                       <!-- axis length; "0" means no axis-->
 </INITIALS>
 
@@ -54,13 +54,12 @@
         <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
     </TEXTURE>
 	
-
     <TEXTURE id="paisagem">								<!-- Paisagem texture -->
         <file path="resources/paisagem.png" />         <!-- path to file -->
         <amplif_factor s="15" t="7" />                <!-- x/s, y/t -->
     </TEXTURE>
 
-     <TEXTURE id="floor">								<!-- Paisagem texture -->
+    <TEXTURE id="floor">								<!-- Paisagem texture -->
         <file path="resources/wood-floor.png" />         <!-- path to file -->
         <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
     </TEXTURE>
@@ -79,8 +78,6 @@
         <file path="resources/porta_japonesa.png" />         <!-- path to file -->
         <amplif_factor s="15" t="7" />                <!-- x/s, y/t -->
     </TEXTURE>
-
-
 
     <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     
@@ -214,9 +211,9 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>
-    	<NODE id="incensoTriangulo2" >
+
+    <NODE id="incensoTriangulo2" >
 	<!-- next two lines are mandatory -->
         <MATERIAL id="null" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -234,9 +231,9 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>
-    	<NODE id="incensoTriangulo3" >
+    
+    <NODE id="incensoTriangulo3" >
 	<!-- next two lines are mandatory -->
         <MATERIAL id="null" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -254,10 +251,9 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>
 
-    	<NODE id="incenso" >
+    <NODE id="incenso" >
 	<!-- next two lines are mandatory -->
         <MATERIAL id="yellow" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -275,11 +271,9 @@
             <DESCENDANT id="incensoTriangulo2" />                             <!--     may be repeatad as necessary. It can refer an -->
             <DESCENDANT id="incensoTriangulo3" />                             <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>
 
 	<NODE id="vaso">
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="m02" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -298,11 +292,9 @@
             <DESCENDANT id="tampovaso1" />                              <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>
 
-    	<NODE id="vaso1">
-
+    <NODE id="vaso1">
 	<!-- next two lines are mandatory -->
         <MATERIAL id="null" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -319,11 +311,9 @@
             <DESCENDANT id="vaso" />       <!-- "ss" is the identifier of a node or of leaf; -->                            <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>
 
-    	<NODE id="vaso2">
-
+    <NODE id="vaso2">
 	<!-- next two lines are mandatory -->
         <MATERIAL id="null" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -340,11 +330,9 @@
                                        <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
-    </NODE>	
+    </NODE>
 
 	<NODE id="tampovaso1">
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="null" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -362,14 +350,10 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>	
 
 
-
-
     <NODE id="chaorot">
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="m02" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -388,11 +372,9 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>	
 
 	<NODE id="tapete">
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="m02" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -412,13 +394,10 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
         	</DESCENDANTS>
-
     </NODE>	
 
-
-						 
+				 
 	<NODE id="paredefrente1"	>
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="m02" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -438,11 +417,9 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>		
 
 	<NODE id="paredefrente2"	>
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="m02" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -461,11 +438,9 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 
 	<NODE id="paredePaisagem" >
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="m02" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -484,11 +459,9 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 
     <NODE id="paredeDireita" >
-
 	<!-- next two lines are mandatory -->
         <MATERIAL id="m02" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -504,13 +477,11 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
     	
     		 
 						 
     <NODE id="perna1">       <!--   defines one intermediate node; may be repeated as necessary -->
-
         <!-- next two lines are mandatory -->
         <MATERIAL id="m01" />      <!-- declared material superimposes the material received from parent node -->
                                   <!-- id="null" maintains material from parent node        -->
@@ -530,7 +501,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 	
 	<NODE id="perna2">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -553,7 +523,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 	
 	<NODE id="perna3">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -577,9 +546,8 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
-	
+
 	<NODE id="perna4">       <!--   defines one intermediate node; may be repeated as necessary -->
 
         <!-- next two lines are mandatory -->
@@ -601,7 +569,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 	
 	<NODE id="fase1">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -623,7 +590,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 	
 	<NODE id="fase2">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -648,7 +614,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 	
 	<NODE id="fase3">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -672,7 +637,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 	
 	<NODE id="fase4">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -717,7 +681,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
     </NODE>
 	
 	<NODE id="fase6">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -741,7 +704,6 @@
                                           <!--     may be repeatad as necessary. It can refer an -->
                                           <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 	
 	<NODE id="cubounitario">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -767,7 +729,6 @@
 
 			<!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 	
 	<NODE id="tampomesa">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -790,7 +751,6 @@
 
 			<!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 	
 	<NODE id="mesa">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -816,7 +776,6 @@
 			<DESCENDANT id="perna4" />
 			<!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 	
 	<NODE id="candeiro">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -837,7 +796,6 @@
 			<DESCENDANT id="suporteCandeiro" />
 			<!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 
 	<NODE id="abajur">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -857,7 +815,6 @@
 			
 			<!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 
 	
@@ -877,7 +834,6 @@
             <DESCENDANT id="cilindroCandeiro" />       <!-- "ss" is the identifier of a node or of leaf -->
 														<!-- identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 	
 
@@ -899,7 +855,6 @@
             <DESCENDANT id="candeiro" />       <!-- "ss" is the identifier of a node or of leaf; -->
 											   <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 
 	<NODE id="CadeiroTecto2">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -919,7 +874,6 @@
             <DESCENDANT id="candeiro" />       <!-- "ss" is the identifier of a node or of leaf; -->
 											   <!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 
 	<NODE id="paralelepipedo">       <!--   defines one intermediate node; may be repeated as necessary -->
@@ -942,7 +896,6 @@
 
 			<!--      identifier of another node, later defined in the lsx file. -->
             </DESCENDANTS>
-
 	</NODE>
 	
     <NODE id="cuboTESTE">

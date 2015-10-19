@@ -52,14 +52,6 @@
             <file path="resources/water.jpg" />                             <!-- path to file -->
             <amplif_factor s="3.0" t="6.0" />                <!-- x/s, y/t -->
         </TEXTURE>
-        <TEXTURE id="water_text">
-            <file path="resources/water.jpg" />                             <!-- path to file -->
-            <amplif_factor s="3.0" t="6.0" />                <!-- x/s, y/t -->
-        </TEXTURE>
-        <TEXTURE id="text_glass">
-            <file path="resources/glass.jpg" />                             <!-- path to file -->
-            <amplif_factor s="1.0" t="1.0" />                <!-- x/s, y/t -->
-        </TEXTURE>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     </TEXTURES>
 
@@ -126,14 +118,6 @@
             <diffuse r="0.5" g="0.1" b="0.1" a="1.0" />         <!-- diffuse reflection -->
             <ambient r="0.5" g="0.1" b="0.1" a="1.0" />         <!-- ambient reflection -->
             <emission r="0.5" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
-        </MATERIAL>
-
-        <MATERIAL id="mat_glass">
-            <shininess value="50" />
-            <specular r="0.0" g="0.0" b="0.2" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.3" g="0.4" b="0.6" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.3" g="0.4" b="0.6" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
         </MATERIAL>
 
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
@@ -296,8 +280,6 @@
                 <DESCENDANT id="car_back" />
                 <DESCENDANT id="car_exhaust" />
                 <DESCENDANT id="car_ceiling" />
-                <DESCENDANT id="car_windshield" />
-                <DESCENDANT id="car_windshield_rear" />
             </DESCENDANTS>
         </NODE>
 
@@ -463,8 +445,8 @@
         </NODE>
 
         <NODE id="car_door_win">
-            <MATERIAL id="mat_glass" />
-            <TEXTURE id="text_glass" />
+            <MATERIAL id="mat_blue" />
+            <TEXTURE id="clear" />
 
             <TRANSLATION x="0.0" y="1.125" z="0.0" />
             <SCALE sx="1.25" sy="0.75" sz="1.0" />
@@ -815,35 +797,6 @@
                 <DESCENDANT id="rec_unit" />
             </DESCENDANTS>
         </NODE>
-
-        <NODE id="car_windshield">
-            <MATERIAL id="mat_glass" />
-            <TEXTURE id="text_glass" />
-
-            <TRANSLATION x="-0.814" y="2.121" z="0.0" />
-            <ROTATION axis="z" angle="-26.565" />
-            <ROTATION axis="y" angle="-90" />
-            <SCALE sx="2.0" sy="0.847" sz="1.0" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="rec_unit" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="car_windshield_rear">
-            <MATERIAL id="mat_glass" />
-            <TEXTURE id="text_glass" />
-
-            <TRANSLATION x="0.814" y="2.121" z="0.0" />
-            <ROTATION axis="z" angle="26.565" />
-            <ROTATION axis="y" angle="90" />
-            <SCALE sx="2.0" sy="0.847" sz="1.0" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="rec_unit" />
-            </DESCENDANTS>
-        </NODE>
-
     </NODES>
 
 </SCENE>

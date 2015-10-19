@@ -26,7 +26,6 @@ XMLscene.prototype.init = function (application) {
     this.enableTextures(true);
 
 	this.axis = new CGFaxis(this);
-
 };
 
 XMLscene.prototype.initLights = function () {
@@ -177,43 +176,42 @@ XMLscene.prototype.dfs = function(elem) {
 
     if(elem.leaf)
     {
-        this.materialStack[this.materialStack.length - 1].apply();
         //get type & draw
         var type = elem.type;
         var args = elem.args;
-        var texPath = null;
-        if(this.textureStack.length != 0) {
-            texPath = this.textureStack[this.textureStack.length - 1]["file"];
-        }
         
         switch(type) {
             case "rectangle":
                 var rec = new MyRectangle(this, args["x1"], args["y1"], args["x2"], args["y2"]);
-                if(this.textureStack.length != 0) {
-                    rec.updateTex(this.textureStack[this.textureStack.length-1]["amplif_factor"]["s"], this.textureStack[this.textureStack.length-1]["amplif_factor"]["t"]);
+                if(this.textureStack.length>0) {
+                    if(this.textureStack[this.textureStack.length - 1]!=null) {
+                        rec.updateTex(this.textureStack[this.textureStack.length - 1].fact_s, this.textureStack[this.textureStack.length - 1].fact_t);
+                    }
+                    this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
                 }
-                this.materialStack[this.materialStack.length-1].loadTexture(texPath);
                 this.materialStack[this.materialStack.length - 1].apply();
                 rec.display();
                 break;
             case "cylinder":
                 var cyl = new MyCylinder(this, args["height"], args["bottom_r"], args["top_r"], args["sections_h"], args["parts_sec"]);
-                this.materialStack[this.materialStack.length-1].loadTexture(texPath);
+                this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
                 this.materialStack[this.materialStack.length - 1].apply();
                 cyl.display();
                 break;
             case "sphere":
                 var sphere = new MySphere(this, args["radius"], args["parts_r"], args["parts_sec"]);
-                this.materialStack[this.materialStack.length-1].loadTexture(texPath);
+                this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
                 this.materialStack[this.materialStack.length - 1].apply();
                 sphere.display();
                 break;
             case "triangle":
                 var tri = new MyTriangle(this, args["xt_1"], args["yt_1"], args["zt_1"], args["xt_2"], args["yt_2"], args["zt_2"], args["xt_3"], args["yt_3"], args["zt_3"]);
-                if(this.textureStack.length != 0) {
-                    tri.updateTex(this.textureStack[this.textureStack.length-1]["amplif_factor"]["s"], this.textureStack[this.textureStack.length-1]["amplif_factor"]["t"]);
+                if(this.textureStack.length>0) {
+                    if(this.textureStack[this.textureStack.length - 1]!=null) {
+                        rec.updateTex(this.textureStack[this.textureStack.length - 1].fact_s, this.textureStack[this.textureStack.length - 1].fact_t);
+                    }
+                    this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
                 }
-                this.materialStack[this.materialStack.length-1].loadTexture(texPath);
                 this.materialStack[this.materialStack.length - 1].apply();
                 tri.display();
                 break;
@@ -222,25 +220,15 @@ XMLscene.prototype.dfs = function(elem) {
     else {
         // Materials application
         if(elem.material != null) {
-            var newApp = new CGFappearance(this);
-            newApp.setShininess(elem.material["shininess"]);
-            newApp.setAmbient(elem.material["ambient"]["r"], elem.material["ambient"]["g"], elem.material["ambient"]["b"], elem.material["ambient"]["a"]);
-            newApp.setDiffuse(elem.material["diffuse"]["r"], elem.material["diffuse"]["g"], elem.material["diffuse"]["b"], elem.material["diffuse"]["a"]);
-            newApp.setSpecular(elem.material["specular"]["r"], elem.material["specular"]["g"], elem.material["specular"]["b"], elem.material["specular"]["a"]);
-
-            this.materialStack.push(newApp);
+            this.materialStack.push(elem.material);
         }
 
-        // Textures application
-        if(elem.texture != null) {
-            if(elem.texture=="clear") {
-                // Já tratamos
-            }
-            else {
-                this.textureStack.push(elem.texture);
-            }            
+        if(elem.texture=="clear") {
+            this.textureStack.push(null); //TODO IS THIS RIGHT???
         }
-
+        else if(elem.texture!="null"){
+            this.textureStack.push(elem.texture);
+        }
         // Applies Nodes Geo Transf matrix to scene
         this.multMatrix(elem.matrix);
 
@@ -255,7 +243,8 @@ XMLscene.prototype.dfs = function(elem) {
         if(elem.material != null) {
             this.materialStack.pop();
         }
-        if(elem.texture != null) {
+
+        if(elem.texture != "null" && elem.texture != "clear") {
             this.textureStack.pop();
         }
     }

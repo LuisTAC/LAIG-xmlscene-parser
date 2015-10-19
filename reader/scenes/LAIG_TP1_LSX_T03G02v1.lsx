@@ -32,14 +32,6 @@
             <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />        <!-- diffuse component -->
             <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
         </LIGHT>
-
-        <LIGHT id="light2">                                    <!-- light identifier -->
-            <enable value="1" />                         <!-- enable/disable -->
-            <position x="5" y="6.0" z="3" w="1.0" />       <!-- light position -->
-            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
-            <diffuse r="0.2" g="0.2" b="0.2" a="1.0" />        <!-- diffuse component -->
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />       <!-- specular component -->
-        </LIGHT>
         <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
     </LIGHTS>
 
@@ -51,14 +43,6 @@
         <TEXTURE id="water_text">
             <file path="resources/water.jpg" />                             <!-- path to file -->
             <amplif_factor s="3.0" t="6.0" />                <!-- x/s, y/t -->
-        </TEXTURE>
-        <TEXTURE id="water_text">
-            <file path="resources/water.jpg" />                             <!-- path to file -->
-            <amplif_factor s="3.0" t="6.0" />                <!-- x/s, y/t -->
-        </TEXTURE>
-        <TEXTURE id="text_glass">
-            <file path="resources/glass.jpg" />                             <!-- path to file -->
-            <amplif_factor s="1.0" t="1.0" />                <!-- x/s, y/t -->
         </TEXTURE>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     </TEXTURES>
@@ -128,14 +112,6 @@
             <emission r="0.5" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
         </MATERIAL>
 
-        <MATERIAL id="mat_glass">
-            <shininess value="50" />
-            <specular r="0.0" g="0.0" b="0.2" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.3" g="0.4" b="0.6" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.3" g="0.4" b="0.6" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
-        </MATERIAL>
-
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
     </MATERIALS>
 
@@ -143,12 +119,16 @@
         <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
         <LEAF id="rec_unit" type="rectangle" args="-0.5 0.5 0.5 -0.5" />
         <LEAF id="cyl_unit" type="cylinder" args="1.0 0.5 0.5 20 20" />
-        <LEAF id="cir_unit" type="cylinder" args="0.0 0.5 0.0 2 20" />
+        <LEAF id="cyr_unit" type="cylinder" args="0.0 0.5 0.0 2 20" />
         <LEAF id="cyl_lights" type="cylinder" args="1.0 0.5 0.0 10 10" />
         <LEAF id="sph_unit" type="sphere" args="1.0 20 20" />
-        <LEAF id="tri_unit" type="triangle" args="-0.5 0.0 0.0 0.5 0.0 0.0 0.0 0.5 0.0" />
-        <LEAF id="tri_side_win1" type="triangle" args="-0.375 0.0 0.0 0.0 0.0 0.0 0.0 0.75 0.0" />
-        <LEAF id="tri_side_win2" type="triangle" args="0.0 0.0 0.0 -0.375 0.0 0.0 0.0 0.75 0.0" />
+        <LEAF id="tri_unit" type="triangle" args="-1.0 0.0 0.0 0.0 1.0 0.0 1.0 0.0 0.0" />
+        
+        <LEAF id="floor" type="rectangle" args="-5.0 1.0 5.0 -1.0" />      <!-- Bottom part of scene Car -->
+        <LEAF id="door" type="rectangle" args="-1.5 -2.0 1.5 -2.0" />      
+       
+        <!--LEAF id="tri1" type="triangle" args="-0.5 -0.5 0.5 0.5 -0.5 0.5 0.0 0.5 -0.5" />  --> <!-- coordinates of each vertex -->
+        <LEAF id="exhaust" type="cylinder" args="2.0 0.25 0.25 1 10" />
         <!-- COLUMN -->
         <LEAF id="column" type="cylinder" args="15.0 3.0 3.0 5 10" />
         <LEAF id="box_side" type="rectangle" args="-2.0 -2.5 2.0 2.5" />
@@ -296,8 +276,6 @@
                 <DESCENDANT id="car_back" />
                 <DESCENDANT id="car_exhaust" />
                 <DESCENDANT id="car_ceiling" />
-                <DESCENDANT id="car_windshield" />
-                <DESCENDANT id="car_windshield_rear" />
             </DESCENDANTS>
         </NODE>
 
@@ -416,72 +394,36 @@
         <!--DOORS-->
 
         <NODE id="car_doors">       
-            <MATERIAL id="null" /> 
+            <MATERIAL id="mat_metal" /> 
             <TEXTURE id="clear" />
 
-            <TRANSLATION x="0.0" y="0.25" z="0.0" />
+            <TRANSLATION x="0.0" y="2.5" z="0.0" />
 
             <DESCENDANTS>
-                <DESCENDANT id="car_doors_left" />
-                <DESCENDANT id="car_doors_right" />
+                <DESCENDANT id="floor" />
             </DESCENDANTS>
         </NODE>
 
         <NODE id="car_doors_left">       
-            <MATERIAL id="null" /> 
+            <MATERIAL id="mat_metal" /> 
             <TEXTURE id="clear" /> <!--TODO:add texture-->
 
-            <TRANSLATION x="0.0" y="0.75" z="1.0" />
+            <TRANSLATION x="0.0" y="0.0" z="2.0" />
 
             <DESCENDANTS>
-                <DESCENDANT id="car_door" />
+                <DESCENDANT id="door" />
             </DESCENDANTS>
         </NODE>
 
         <NODE id="car_doors_right">       
-            <MATERIAL id="null" /> 
-            <TEXTURE id="null" />
+            <MATERIAL id="mat_metal" /> 
+            <TEXTURE id="clear" /> <!--TODO:add texture-->
 
-            <TRANSLATION x="0.0" y="0.75" z="-1.0" />
             <ROTATION axis="y" angle="180.0" />
-            
+            <TRANSLATION x="0.0" y="0.0" z="-2.0" />
 
             <DESCENDANTS>
-                <DESCENDANT id="car_door" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="car_door">
-            <MATERIAL id="null" />
-            <TEXTURE id="clear" />
-
-
-            <DESCENDANTS>
-                <DESCENDANT id="car_door_win" />
-                <DESCENDANT id="car_door_rec" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="car_door_win">
-            <MATERIAL id="mat_glass" />
-            <TEXTURE id="text_glass" />
-
-            <TRANSLATION x="0.0" y="1.125" z="0.0" />
-            <SCALE sx="1.25" sy="0.75" sz="1.0" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="rec_unit" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="car_door_rec">
-            <MATERIAL id="null" />
-            <TEXTURE id="clear" />
-
-            <SCALE sx="1.25" sy="1.5" sz="1.0" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="rec_unit" />
+                <DESCENDANT id="door" />
             </DESCENDANTS>
         </NODE>
 
@@ -491,7 +433,7 @@
             <MATERIAL id="mat_rubber" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0.0" y="0.35" z="0.0" />
+            <TRANSLATION x="0.0" y="0.0" z="0.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="car_wheels_front" />
@@ -505,7 +447,7 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="-1.6" y="0" z="0" />
+            <TRANSLATION x="-2.0" y="0" z="0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="car_wheels_front_left" />
@@ -516,7 +458,7 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="0" z="0.7" />
+            <TRANSLATION x="0" y="0" z="0.65" />
 
             <DESCENDANTS>
                 <DESCENDANT id="car_wheel" />
@@ -526,7 +468,7 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="0" z="-0.7" />
+            <TRANSLATION x="0" y="0" z="-0.65" />
             <ROTATION axis="x" angle="180.0" />
 
             <DESCENDANTS>
@@ -540,7 +482,7 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="1.6" y="0" z="0" />
+            <TRANSLATION x="2.0" y="0" z="0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="car_wheels_back_left" />
@@ -551,7 +493,7 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="0" z="0.7" />
+            <TRANSLATION x="0" y="0" z="0.65" />
 
             <DESCENDANTS>
                 <DESCENDANT id="car_wheel" />
@@ -561,7 +503,7 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0" y="0" z="-0.7" />
+            <TRANSLATION x="0" y="0" z="-0.65" />
             <ROTATION axis="x" angle="180.0" />
 
             <DESCENDANTS>
@@ -575,34 +517,34 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <SCALE sx="0.7" sy="0.7" sz="0.5" />
+            <SCALE sx="1.0" sy="1.0" sz="1.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="cyl_unit" />
-                <DESCENDANT id="car_wheel_top" />
-                <DESCENDANT id="car_wheel_bottom" />
+                <DESCENDANT id="car_wheel_front" />
+                <DESCENDANT id="car_wheel_back" />
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="car_wheel_top">
+        <NODE id="car_wheel_front">
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
             <TRANSLATION x="0.0" y="0.0" z="1" />
 
             <DESCENDANTS>
-                <DESCENDANT id="cir_unit" />
+                <DESCENDANT id="cyr_unit" />
             </DESCENDANTS>
         </NODE>
 
-        <NODE id="car_wheel_bottom">
+        <NODE id="car_wheel_back">
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
             <ROTATION axis="x" angle="180.0" />
 
             <DESCENDANTS>
-                <DESCENDANT id="cir_unit" />
+                <DESCENDANT id="cyr_unit" />
             </DESCENDANTS>
         </NODE>
 
@@ -618,8 +560,6 @@
                 <DESCENDANT id="car_front_left" />
                 <DESCENDANT id="car_front_right" />
                 <DESCENDANT id="car_hood" />
-                <DESCENDANT id="car_front_tri1" />
-                <DESCENDANT id="car_front_tri2" />
             </DESCENDANTS>
         </NODE>
 
@@ -639,8 +579,8 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="-1.56" y="0.75" z="1.0" />
-            <SCALE sx="1.88" sy="1.5" sz="1.0" />
+            <TRANSLATION x="-1.5" y="0.75" z="1.0" />
+            <SCALE sx="2.0" sy="1.5" sz="1.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="rec_unit" />
@@ -650,8 +590,8 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="-1.56" y="0.75" z="-1.0" />
-            <SCALE sx="1.88" sy="1.5" sz="1.0" />
+            <TRANSLATION x="-1.5" y="0.75" z="-1.0" />
+            <SCALE sx="2.0" sy="1.5" sz="1.0" />
             <ROTATION axis="y" angle="180" />
 
             <DESCENDANTS>
@@ -662,34 +602,15 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="-1.75" y="1.5" z="0.0" />
+            <TRANSLATION x="-1.5" y="1.5" z="0.0" />
             <ROTATION axis="x" angle="-90" />
-            <SCALE sx="1.5" sy="2.0" sz="1.0" />
+            <SCALE sx="2.0" sy="2.0" sz="1.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="rec_unit" />
             </DESCENDANTS>
         </NODE>
-        <NODE id="car_front_tri1">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
 
-            <TRANSLATION x="-0.625" y="1.50" z="1.0"/>
-
-            <DESCENDANTS>
-                <DESCENDANT id="tri_side_win1" />
-            </DESCENDANTS>                
-        </NODE>
-        <NODE id="car_front_tri2">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
-
-            <TRANSLATION x="-0.625" y="1.50" z="-1.0"/>
-
-            <DESCENDANTS>
-                <DESCENDANT id="tri_side_win2" />
-            </DESCENDANTS>                
-        </NODE>
         <!-- CAR BACK -->
         <NODE id="car_back">
             <MATERIAL id="null" />
@@ -702,8 +623,6 @@
                 <DESCENDANT id="car_back_left" />
                 <DESCENDANT id="car_back_right" />
                 <DESCENDANT id="car_trunk" />
-                <DESCENDANT id="car_back_tri1" />
-                <DESCENDANT id="car_back_tri2" />
             </DESCENDANTS>
         </NODE>
 
@@ -723,8 +642,8 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="1.56" y="0.75" z="1.0" />
-            <SCALE sx="1.88" sy="1.5" sz="1.0" />
+            <TRANSLATION x="1.5" y="0.75" z="1.0" />
+            <SCALE sx="2.0" sy="1.5" sz="1.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="rec_unit" />
@@ -734,8 +653,8 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="1.56" y="0.75" z="-1.0" />
-            <SCALE sx="1.88" sy="1.5" sz="1.0" />
+            <TRANSLATION x="1.5" y="0.75" z="-1.0" />
+            <SCALE sx="2.0" sy="1.5" sz="1.0" />
             <ROTATION axis="y" angle="180" />
 
             <DESCENDANTS>
@@ -746,59 +665,24 @@
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="1.75" y="1.5" z="0.0" />
+            <TRANSLATION x="1.5" y="1.5" z="0.0" />
             <ROTATION axis="x" angle="-90" />
-            <SCALE sx="1.5" sy="2.0" sz="1.0" />
+            <SCALE sx="2.0" sy="2.0" sz="1.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="rec_unit" />
             </DESCENDANTS>
         </NODE>
-        <NODE id="car_back_tri1">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
 
-            <TRANSLATION x="0.625" y="1.50" z="-1.0"/>
-            <ROTATION axis="y" angle="180" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="tri_side_win1" />
-            </DESCENDANTS>                
-        </NODE>
-        <NODE id="car_back_tri2">
-            <MATERIAL id="null" />
-            <TEXTURE id="null" />
-
-            <TRANSLATION x="0.625" y="1.50" z="1.0"/>
-            <ROTATION axis="y" angle="180" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="tri_side_win2" />
-            </DESCENDANTS>                
-        </NODE>
         <!-- EXHAUST -->
         <NODE id="car_exhaust">
-            <MATERIAL id="mat_rubber" />
-            <TEXTURE id="null" />
-
-            <TRANSLATION x="2.5" y="0.4" z="-0.5" />
-            <ROTATION axis="y" angle="90.0" />
-            <SCALE sx="0.25" sy="0.25" sz="0.25" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="cyl_unit" />
-                <DESCENDANT id="exhaust_top" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="exhaust_top">
             <MATERIAL id="null" />
             <TEXTURE id="null" />
 
-            <TRANSLATION x="0.0" y="0.0" z="1" />
+            <TRANSLATION x="0" y="1.25" z="-1.5" />
 
             <DESCENDANTS>
-                <DESCENDANT id="cir_unit" />
+                <DESCENDANT id="exhaust" />
             </DESCENDANTS>
         </NODE>
 
@@ -809,41 +693,11 @@
 
             <TRANSLATION x="0.0" y="2.5" z="0.0" />
             <ROTATION axis="x" angle="-90" />
-            <SCALE sx="1.25" sy="2.0" sz="1.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="rec_unit" />
             </DESCENDANTS>
         </NODE>
-
-        <NODE id="car_windshield">
-            <MATERIAL id="mat_glass" />
-            <TEXTURE id="text_glass" />
-
-            <TRANSLATION x="-0.814" y="2.121" z="0.0" />
-            <ROTATION axis="z" angle="-26.565" />
-            <ROTATION axis="y" angle="-90" />
-            <SCALE sx="2.0" sy="0.847" sz="1.0" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="rec_unit" />
-            </DESCENDANTS>
-        </NODE>
-
-        <NODE id="car_windshield_rear">
-            <MATERIAL id="mat_glass" />
-            <TEXTURE id="text_glass" />
-
-            <TRANSLATION x="0.814" y="2.121" z="0.0" />
-            <ROTATION axis="z" angle="26.565" />
-            <ROTATION axis="y" angle="90" />
-            <SCALE sx="2.0" sy="0.847" sz="1.0" />
-
-            <DESCENDANTS>
-                <DESCENDANT id="rec_unit" />
-            </DESCENDANTS>
-        </NODE>
-
     </NODES>
 
 </SCENE>

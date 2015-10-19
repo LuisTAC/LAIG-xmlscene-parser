@@ -680,12 +680,29 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 
 		var newNode = new Node(id);
 
-		var material = this.getMaterialByID(materialID);
-		var texture;
-		if(textureID!="clear") texture = this.getTextureByID(textureID);
-		else texture="clear";
+		var material_arr = this.getMaterialByID(materialID);
+		if(material_arr!=null) {
+			var newApp = new CGFappearance(this.scene);
+        	newApp.setShininess(material_arr["shininess"]);
+        	newApp.setAmbient(material_arr["ambient"]["r"], material_arr["ambient"]["g"], material_arr["ambient"]["b"], material_arr["ambient"]["a"]);
+        	newApp.setDiffuse(material_arr["diffuse"]["r"], material_arr["diffuse"]["g"], material_arr["diffuse"]["b"], material_arr["diffuse"]["a"]);
+        	newApp.setSpecular(material_arr["specular"]["r"], material_arr["specular"]["g"], material_arr["specular"]["b"], material_arr["specular"]["a"]);
+			newNode.setMaterial(newApp);
+		}
 
-		newNode.setMaterial(material);
+
+		var texture;
+		if(textureID=="clear") texture = "clear";
+		else if(textureID=="null") texture = "null";
+		else {
+			texture_arr = this.getTextureByID(textureID);
+			if(texture_arr!=null) {
+				texture = new CGFtexture(this.scene,texture_arr["file"]);
+				texture.fact_s=texture_arr["amplif_factor"]["s"];
+				texture.fact_t=texture_arr["amplif_factor"]["t"];
+				newNode.setTexture(texture);
+			}
+		}
 		newNode.setTexture(texture);
 
 		for (var j = 0; j < this.nodes[i]["geo_transf"].length; j++) {
