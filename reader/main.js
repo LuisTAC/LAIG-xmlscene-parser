@@ -31,7 +31,7 @@ main=function()
 	
 	//var filename=getUrlVars()['file'] || "scene.lsx";
 
-    nameFile = "remove.lsx";
+    nameFile = "scene.lsx";
     var dir = nameFile.split(".");
     var folderPlusScene = dir[0] + '/' + nameFile;
     
