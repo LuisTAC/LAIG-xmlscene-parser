@@ -9,6 +9,7 @@ function Node(id) {
 	this.leaf=false;
 	this.visited=false
 	this.type=null;
+	this.animation=null;
 };
 
 Node.prototype.push = function(node) {
@@ -33,4 +34,8 @@ Node.prototype.setMatrix = function(matrix) {
 
 Node.prototype.setType = function(type) {
 	this.type=type;
+};
+
+Node.prototype.setAnimation = function(animation) {
+	this.animation=animation;
 };

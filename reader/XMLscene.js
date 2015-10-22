@@ -12,8 +12,6 @@ XMLscene.prototype.init = function (application) {
 
     this.initCameras();
 
-    //this.initLights();
-
     this.gl.clearColor(0.0, 0.0, 0.0, 1.0);
 
     this.gl.clearDepth(100.0);
@@ -324,53 +322,11 @@ XMLscene.prototype.display = function () {
 
         this.dfs_init();
 
-        // Test drawing functions
-       /* this.pushMatrix();
-            this.translate(0, 0, 0.5);
-            this.rectangle.display();
-        this.popMatrix();
-        this.cylinder.display();*/
-        //this.triangle.display();
-        //this.sphere.display();
-
-        
-        // Sets scale
-        /*var sx = this.graph.scale["sx"];
-        var sy = this.graph.scale["sy"];
-        var sz = this.graph.scale["sz"];
-        this.scale(sx, sy, sz);
-
-        // Sets rotation
-        for(var i=0; i<this.graph.rotation.length; i++) {
-            var ang = this.graph.rotation[i]["angle"];
-            console.log(ang);
-            switch(this.graph.rotation[i]["axis"]) {
-                case "x":
-                    this.rotate(ang*degToRad, 1,0,0);
-                    break;
-                case "y":
-                    this.rotate(ang*degToRad, 0,1,0);
-                    break;
-                case "z":
-                    this.rotate(ang*degToRad, 0,0,1);
-                    break;
-                default:
-                    console.log("Invalid rotation axis!");
-                    break;
-            }
-        }
-
-        // Sets translate
-        var tx = this.graph.translate["x"];
-        var ty = this.graph.translate["y"];
-        var tz = this.graph.translate["z"];
-        this.translate(tx, ty, tz);
-        */
-
-        // Sets frustum
-        // How exactly are we supposed to do this?
-
 	};	
 
     this.shader.unbind();
+};
+
+XMLscene.prototype.update = function(currTime) {
+
 };
