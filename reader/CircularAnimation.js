@@ -3,9 +3,11 @@
  * @constructor
  */
 
-function CircularAnimation(scene, id, time, node, center, angle_beg, angle_rot) {
- 	Animation.call(this, id, time, node);
+function CircularAnimation(scene, id, time, center, angle_beg, angle_rot) {
+ 	Animation.call(this, scene, id, time);
 	
+ 	this.type="circular";
+
 	this.center=center;
 	this.x=center[0];
 	this.y=center[1];

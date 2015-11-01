@@ -67,6 +67,12 @@ MySceneGraph.prototype.onXMLReady = function()
 		return;
 	}
 
+	var error = this.parseAnimations(rootElement);
+	if(error != null) {
+		this.onXMLError(error);
+		return;
+	}
+
 	// Parse Leaves
 	var error = this.parseLeaves(rootElement);
 	if(error != null) {
@@ -428,6 +434,58 @@ MySceneGraph.prototype.parseMaterials = function(rootElement) {
 	}
 };
 
+MySceneGraph.prototype.parseAnimations = function(rootElement) {
+	var animations = rootElement.getElementsByTagName("ANIMATIONS");
+	if(animations == null) return "animations elements missing";
+	if(animations.length != 1) return "0 or more animations were found";
+
+	var first_animations = animations[0];
+
+	var animation_array = first_animations.getElementsByTagName("ANIMATION");
+	
+	this.animations = [];
+	for(var i=0; i<animation_array.length; i++) {
+		var currAnimation = [];
+		var iterAnimation = animation_array[i];
+
+		// Stores id in the first place
+		var id = this.reader.getString(iterAnimation, "id", true);
+		var span = this.reader.getInteger(iterAnimation, "span", true);
+		var type = this.reader.getString(iterAnimation, "type", true);
+
+		if(type=="linear")
+		{
+			var controlpoint_array = first_animations.getElementsByTagName("CONTROLPOINT");
+
+			var checkpoints =[[],[]];
+			for(var j=0; j<controlpoint_array.length; j++) {
+				var iterCheck = controlpoint_array[j];
+				var x = this.reader.getFloat(iterCheck, "xx", true);
+				var y = this.reader.getFloat(iterCheck, "yy", true);
+				var z = this.reader.getFloat(iterCheck, "zz", true);
+				checkpoints[j]=[x,y,z];
+			}
+			currAnimation = new LinearAnimation(this.scene, id, span, checkpoints);
+		}
+		else if(type=="circular")
+		{
+			var center = this.reader.getVector3(iterAnimation, "center", true);
+			var radius = this.reader.getFloat(iterAnimation, "radius", true);
+			var startang = this.reader.getFloat(iterAnimation, "startang", true);
+			var rotang = this.reader.getFloat(iterAnimation, "rotang", true);
+			currAnimation = new CircularAnimation(this.scene, id, span, center, startang, rotang);
+		}
+		else return "wrong animation type on animation["+id+"]";
+		this.animations[id]=currAnimation;
+	}
+	for(var key in this.animations)
+	{
+		console.log("ANIMATION["+key+"]");
+		console.log("\tTYPE: "+this.animations[key].type);
+		console.log("\tTIME: "+this.animations[key].time);
+	}
+};
+
 MySceneGraph.prototype.parseLeaves = function(rootElement) {
 	var leaves = rootElement.getElementsByTagName("LEAVES");
 	if(leaves == null) return "leaves elements missing";
@@ -576,6 +634,32 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 			currNode["textureID"] = nodeTextureID;
 		}
 		
+		// Stores ANIMATIONREF from currNode
+		var nodeAnimationRefs = iterNode.getElementsByTagName("ANIMATIONREF");
+		currNode["animations"]=[];
+		if(nodeAnimationRefs.length>0)
+		{
+			var nodeAnimationRef = nodeAnimationRefs[0];
+			var nodeAnimationRefIDs = this.reader.getString(nodeAnimationRef, "ids", true);
+			
+			if(nodeAnimationRefIDs != null)
+			{
+				var split_refs = nodeAnimationRefIDs.split(" ");
+				for(var j=0; j<split_refs.length; j++)
+				{
+					// Checks if animation exists
+					if(!(split_refs[j] in this.animations))
+					{
+						return "no valid animation provided ("+split_refs[j]+")";
+					}
+					else
+					{
+						currNode["animations"][j]=this.animations[split_refs[j]];
+					}
+				}
+			}
+		}
+
 		currNode["geo_transf"]=[];
 		for (var j = 2; j < iterNode.children.length; j++) {
 			var transfElm = iterNode.children[j];
@@ -619,7 +703,6 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		this.descendants = [];
 		for(var z=0; z<descendant_array.length; z++) {
 			var descendantID = this.reader.getString(descendant_array[z], "id", true);
-			// IS THIS RIGHT? OR SHOULD I BE MORE SPECIFIC IN THE "DESCENDANTID" PART
 			this.descendants[z] = descendantID;
 		}
 		currNode["descendants"] = this.descendants;
@@ -635,6 +718,11 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		console.log("NODE["+i+"]: "+this.nodes[i]["id"]);
 		console.log("\tMATERIAL: "+this.nodes[i]["materialID"]);
 		console.log("\tTEXTURE: "+this.nodes[i]["textureID"]);
+		console.log("\tANIMATIONS: ");
+		for(var j=0; j<this.nodes[i]["animations"].length; j++) {
+			console.log("\t\t ID:"+this.nodes[i]["animations"][j].id);
+			console.log("\t\t TYPE:"+this.nodes[i]["animations"][j].type);
+		}
 		console.log("\tTRANSF: "+this.nodes[i]["geo_transf"]);
 		console.log("\tDESCENDANTS: "+this.nodes[i]["descendants"]);
 	}
@@ -799,8 +887,6 @@ MySceneGraph.prototype.buildGraph = function() {
 		console.log("Read list item id "+ e.id+" with value "+this.list[e.id]);
 	};
 */
-
-
 
 /*
  * Callback to be executed on any read error

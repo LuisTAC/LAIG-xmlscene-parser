@@ -156,6 +156,15 @@
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
     </MATERIALS>
 
+    <ANIMATIONS>
+        <ANIMATION id="lin1" span="10" type="linear">
+            <CONTROLPOINT xx="0" yy="0" zz="0" />
+            <CONTROLPOINT xx="-2" yy="0" zz="0" />
+        </ANIMATION>
+
+        <ANIMATION id="cir1" span="20" type="circular" center="0 0 0" radius="2" startang="0" rotang="180"/>
+    </ANIMATIONS>
+
     <LEAVES>
         <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
         <LEAF id="rec_unit" type="rectangle" args="-0.5 0.5 0.5 -0.5" />
@@ -373,6 +382,8 @@
 
             <MATERIAL id="mat_red" />
             <TEXTURE id="clear" />
+            
+            <ANIMATIONREF ids="lin1 cir1"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="car_floor" />
@@ -931,7 +942,6 @@
                 <DESCENDANT id="rec_unit" />
             </DESCENDANTS>
         </NODE>
-
     </NODES>
 
 </SCENE>

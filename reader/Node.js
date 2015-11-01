@@ -9,7 +9,7 @@ function Node(id) {
 	this.leaf=false;
 	this.visited=false
 	this.type=null;
-	this.animation=null;
+	this.animations=null;
 };
 
 Node.prototype.push = function(node) {

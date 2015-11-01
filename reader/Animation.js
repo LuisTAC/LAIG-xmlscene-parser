@@ -3,13 +3,14 @@
  * @constructor
  */
 
-function Animation(scene, id, time, node) {
+function Animation(scene, id, time) {
 
 	this.id=id;
  	this.time=time;
- 	this.node=node;
  	this.state=0;
  	this.scene=scene;
+
+ 	this.type=null;
 };
 
 //Animation.prototype = Object.create(CGFobject.prototype);

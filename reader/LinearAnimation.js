@@ -3,9 +3,11 @@
  * @constructor
  */
 
-function LinearAnimation(scene, id, time, node, checkpoints) {
- 	Animation.call(this, id, time, node);
+function LinearAnimation(scene, id, time, checkpoints) {
+ 	Animation.call(this, scene, id, time);
 	
+ 	this.type="linear";
+
 	this.checkpoints=checkpoints;
 	this.x=checkpoints[0][0];
 	this.y=checkpoints[0][1];
