@@ -28,3 +28,6 @@ MySphere.prototype.display = function() {
  	this.scene.popMatrix();
 
 };
+
+MySphere.prototype.updateTex=function(S,T)
+{};

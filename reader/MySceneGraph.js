@@ -80,6 +80,8 @@ MySceneGraph.prototype.onXMLReady = function()
 		return;
 	}
 
+	this.buildPrimitives();
+
 	// Parse Nodes
 	var error = this.parseNodes(rootElement);
 	if(error != null) {
@@ -567,6 +569,31 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 		console.log("LEAF["+i+"]: "+this.leaves[i]["id"]);
 		console.log("\tTYPE: "+this.leaves[i]["type"]);
 		console.log("\tARGS: ");console.log(this.leaves[i]["args"]);
+	}
+};
+
+MySceneGraph.prototype.buildPrimitives = function() {
+	this.primitives=[];
+	for(var i=0; i<this.leaves.length; i++)
+	{
+		var id=this.leaves[i]["id"];
+		var type=this.leaves[i]["type"];
+		var args=this.leaves[i]["args"];
+		switch(type)
+		{
+			case "rectangle":
+				this.primitives[id] = new MyRectangle(this.scene, args["x1"], args["y1"], args["x2"], args["y2"]);
+				break;
+			case "cylinder":
+				this.primitives[id] = new MyCylinder(this.scene, args["height"], args["bottom_r"], args["top_r"], args["sections_h"], args["parts_sec"]);
+				break;
+			case "sphere":
+				this.primitives[id] = new MySphere(this.scene, args["radius"], args["parts_r"], args["parts_sec"]);
+				break;
+			case "triangle":
+				this.primitives[id] = new MyTriangle(this.scene, args["xt_1"], args["yt_1"], args["zt_1"], args["xt_2"], args["yt_2"], args["zt_2"], args["xt_3"], args["yt_3"], args["zt_3"]);
+				break;
+		}
 	}
 };
 

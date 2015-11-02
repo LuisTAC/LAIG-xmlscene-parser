@@ -174,46 +174,15 @@ XMLscene.prototype.dfs = function(elem) {
 
     if(elem.leaf)
     {
-        //get type & draw
-        var type = elem.type;
-        var args = elem.args;
-        
-        switch(type) {
-            case "rectangle":
-                var rec = new MyRectangle(this, args["x1"], args["y1"], args["x2"], args["y2"]);
-                if(this.textureStack.length>0) {
-                    if(this.textureStack[this.textureStack.length - 1]!=null) {
-                        rec.updateTex(this.textureStack[this.textureStack.length - 1].fact_s, this.textureStack[this.textureStack.length - 1].fact_t);
-                    }
-                    this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
-                }
-                this.materialStack[this.materialStack.length - 1].apply();
-                rec.display();
-                break;
-            case "cylinder":
-                var cyl = new MyCylinder(this, args["height"], args["bottom_r"], args["top_r"], args["sections_h"], args["parts_sec"]);
-                this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
-                this.materialStack[this.materialStack.length - 1].apply();
-                cyl.display();
-                break;
-            case "sphere":
-                var sphere = new MySphere(this, args["radius"], args["parts_r"], args["parts_sec"]);
-                this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
-                this.materialStack[this.materialStack.length - 1].apply();
-                sphere.display();
-                break;
-            case "triangle":
-                var tri = new MyTriangle(this, args["xt_1"], args["yt_1"], args["zt_1"], args["xt_2"], args["yt_2"], args["zt_2"], args["xt_3"], args["yt_3"], args["zt_3"]);
-                if(this.textureStack.length>0) {
-                    if(this.textureStack[this.textureStack.length - 1]!=null) {
-                        rec.updateTex(this.textureStack[this.textureStack.length - 1].fact_s, this.textureStack[this.textureStack.length - 1].fact_t);
-                    }
-                    this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
-                }
-                this.materialStack[this.materialStack.length - 1].apply();
-                tri.display();
-                break;
+        var prim = this.graph.primitives[elem.id];
+        if(this.textureStack.length>0) {
+            if(this.textureStack[this.textureStack.length - 1]!=null) {
+                prim.updateTex(this.textureStack[this.textureStack.length - 1].fact_s, this.textureStack[this.textureStack.length - 1].fact_t);
+            }
+            this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
         }
+        this.materialStack[this.materialStack.length - 1].apply();
+        prim.display();
     }
     else {
         // Materials application
