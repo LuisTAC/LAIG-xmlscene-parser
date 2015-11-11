@@ -3,10 +3,10 @@
  * @constructor
  */
 
-function Animation(scene, id, time) {
+function Animation(scene, id, span) {
 
 	this.id=id;
- 	this.time=time;
+ 	this.span=span;
  	this.state=0;
  	this.scene=scene;
 

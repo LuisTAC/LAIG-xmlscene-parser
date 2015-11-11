@@ -19,11 +19,13 @@ XMLscene.prototype.init = function (application) {
 	this.gl.enable(this.gl.CULL_FACE);
     this.gl.depthFunc(this.gl.LEQUAL);
     this.paused = false;
-    this.updateSpeed=1;
+    //this.updateSpeed=1;
 
     this.enableTextures(true);
 
 	this.axis = new CGFaxis(this);
+
+    this.setUpdatePeriod(1);
 };
 
 XMLscene.prototype.initLights = function () {
@@ -71,7 +73,7 @@ XMLscene.prototype.updateLights = function() {
 
     for (i = 0; i < this.lights.length; i++)
         this.lights[i].update();
-}
+};
 
 XMLscene.prototype.initCameras = function (near, far) {
     near = near || 0.1;
@@ -101,7 +103,7 @@ XMLscene.prototype.initMaterials = function () {
 
         this.materials[i]=currAppearance;
     };
-}
+};
 
 XMLscene.prototype.setDefaultAppearance = function () {
     this.setAmbient(0.2, 0.4, 0.8, 1.0);
@@ -290,4 +292,11 @@ XMLscene.prototype.display = function () {
 };
 
 XMLscene.prototype.update = function(currTime) {
+    if(this.graph.loadedOk) {
+       console.log(currTime);
+        for(key in this.graph.animations) {
+            this.graph.animations[key].update();
+        } 
+    }
+    
 };
