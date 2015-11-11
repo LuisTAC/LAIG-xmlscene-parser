@@ -47,20 +47,18 @@ LinearAnimation.prototype.update = function(currTime) {
 		this.y+=this.speedY;
 		this.z+=this.speedZ;
 	}
+	this.apply();
 };
 
 LinearAnimation.prototype.apply = function() {
-	this.scene.pushMatrix();
-		this.scene.rotate(this.angle*degToRad);
-		this.scene.translate(this.x,this.y,this.z);
-	this.scene.popMatrix();
+	mat4.translate(this.node.matrix, this.node.matrix, [this.speedX, this.speedY, this.speedZ]);
 };
 
 LinearAnimation.prototype.updateSpeeds = function() {
 	if(this.state>=this.checkpoints.length-1) return;
-	this.speedX = (this.checkpoints[this.state+1][0]-this.x)/(this.time_per_check*1000);
-	this.speedY = (this.checkpoints[this.state+1][1]-this.y)/(this.time_per_check*1000);
-	this.speedZ = (this.checkpoints[this.state+1][2]-this.z)/(this.time_per_check*1000);
+	this.speedX = (this.checkpoints[this.state+1][0]-this.x)/(this.time_per_check);
+	this.speedY = (this.checkpoints[this.state+1][1]-this.y)/(this.time_per_check);
+	this.speedZ = (this.checkpoints[this.state+1][2]-this.z)/(this.time_per_check);
 };
 
 LinearAnimation.prototype.updateAngle = function() {
