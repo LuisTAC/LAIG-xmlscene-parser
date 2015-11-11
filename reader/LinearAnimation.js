@@ -24,10 +24,20 @@ function LinearAnimation(scene, id, span, checkpoints) {
 LinearAnimation.prototype = Object.create(Animation.prototype);
 LinearAnimation.prototype.constructor = LinearAnimation;
 
+LinearAnimation.prototype.checkPositions = function() {
+	var lenCheckX = (this.checkpoints[this.state+1][0] + '').replace('.','').length;
+	var lenCheckY = (this.checkpoints[this.state+1][1] + '').replace('.','').length;
+	var lenCheckZ = (this.checkpoints[this.state+1][2] + '').replace('.','').length
+
+	return ((this.x.toPrecision(lenCheckX)==this.checkpoints[this.state+1][0]) && 
+		(this.y.toPrecision(lenCheckY)==this.checkpoints[this.state+1][1]) && 
+		(this.z.toPrecision(lenCheckZ)==this.checkpoints[this.state+1][2]));
+};
+
 LinearAnimation.prototype.update = function(currTime) {
 	if(this.state>=this.checkpoints.length-1) return; //ANIMATION OVER
-	if(this.x==this.checkpoints[this.state+1][0] && this.y==this.checkpoints[this.state+1][1] && this.z==this.checkpoints[this.state+1][2]) { // REACHED A CHECKPOINT
-		state++;
+	if(this.checkPositions()) { // REACHED A CHECKPOINT
+		this.state++;
 		this.updateSpeeds();
 		this.updateAngle();
 	}
@@ -48,9 +58,9 @@ LinearAnimation.prototype.apply = function() {
 
 LinearAnimation.prototype.updateSpeeds = function() {
 	if(this.state>=this.checkpoints.length-1) return;
-	this.speedX = (this.checkpoints[this.state+1][0]-this.x)/this.time_per_check;
-	this.speedY = (this.checkpoints[this.state+1][1]-this.y)/this.time_per_check;
-	this.speedZ = (this.checkpoints[this.state+1][2]-this.z)/this.time_per_check;
+	this.speedX = (this.checkpoints[this.state+1][0]-this.x)/(this.time_per_check*1000);
+	this.speedY = (this.checkpoints[this.state+1][1]-this.y)/(this.time_per_check*1000);
+	this.speedZ = (this.checkpoints[this.state+1][2]-this.z)/(this.time_per_check*1000);
 };
 
 LinearAnimation.prototype.updateAngle = function() {

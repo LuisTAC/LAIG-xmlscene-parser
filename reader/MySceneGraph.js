@@ -667,23 +667,15 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		if(nodeAnimationRefs.length>0)
 		{
 			var nodeAnimationRef = nodeAnimationRefs[0];
-			var nodeAnimationRefIDs = this.reader.getString(nodeAnimationRef, "ids", true);
+			var nodeAnimationRefID = this.reader.getString(nodeAnimationRef, "id", true);
 			
-			if(nodeAnimationRefIDs != null)
+			if(nodeAnimationRefID != null)
 			{
-				var split_refs = nodeAnimationRefIDs.split(" ");
-				for(var j=0; j<split_refs.length; j++)
+				if(!(nodeAnimationRefID in this.animations))
 				{
-					// Checks if animation exists
-					if(!(split_refs[j] in this.animations))
-					{
-						return "no valid animation provided ("+split_refs[j]+")";
-					}
-					else
-					{
-						currNode["animations"][j]=this.animations[split_refs[j]];
-					}
+					return "no valid animation found"
 				}
+				else currNode["animation"]=this.animations[nodeAnimationRefID];
 			}
 		}
 
@@ -851,6 +843,14 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 			}
 		};
 
+		// Sets Animation node referencer
+		var animation = this.nodes[i]["animation"];
+
+		if(animation != null) {
+			animation.setNode(newNode);
+		}
+
+		
 		this.node_ret.push(newNode);
 	}
 	for(var i=0; i<this.leaves.length; i++) {

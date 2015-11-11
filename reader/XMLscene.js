@@ -1,4 +1,5 @@
 var degToRad = Math.PI/180.0;
+var updatePeriod = 10;
 
 function XMLscene() {
     CGFscene.call(this);
@@ -25,7 +26,7 @@ XMLscene.prototype.init = function (application) {
 
 	this.axis = new CGFaxis(this);
 
-    this.setUpdatePeriod(1);
+    this.setUpdatePeriod(updatePeriod);
 };
 
 XMLscene.prototype.initLights = function () {
@@ -293,10 +294,10 @@ XMLscene.prototype.display = function () {
 
 XMLscene.prototype.update = function(currTime) {
     if(this.graph.loadedOk) {
-       console.log(currTime);
+       console.log("update");
         for(key in this.graph.animations) {
-            this.graph.animations[key].update();
+            this.graph.animations[key].update(currTime);
+            this.graph.animations[key].apply();
         } 
     }
-    
 };

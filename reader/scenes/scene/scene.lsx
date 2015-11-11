@@ -385,7 +385,7 @@
             <MATERIAL id="mat_red" />
             <TEXTURE id="clear" />
             
-            <ANIMATIONREF ids="lin1 cir1"/>
+            <ANIMATIONREF id="lin1"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="car_floor" />
