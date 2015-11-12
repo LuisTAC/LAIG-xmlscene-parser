@@ -9,51 +9,47 @@ function LinearAnimation(scene, id, span, checkpoints) {
  	this.type="linear";
 
 	this.checkpoints=checkpoints;
-	this.x=checkpoints[0][0];
-	this.y=checkpoints[0][1];
-	this.z=checkpoints[0][2];
 
-	this.time_per_check = span/(checkpoints.length-1);
+	this.dists=[];
+	this.dists.push(0);
+	for (var i = 1; i < checkpoints.length; i++) {
+		checkpoints[i]
+		this.dists[i]=dist(checkpoints[i-1],checkpoints[i])+this.dists[i-1];
+	};
 
-	this.updateSpeeds();
+	this.speed=this.dists[this.dists.length-1]/span;
 
-	this.updateAngle();
+	this.times=[];
+	this.times.push(0);
+	for (var i = 1; i < this.dists.length; i++) {
+		this.times[i]=this.dists[i]/this.speed;
+	};
+
+	//this.updateSpeeds();
+	//this.updateAngle();
 
 };
 
 LinearAnimation.prototype = Object.create(Animation.prototype);
 LinearAnimation.prototype.constructor = LinearAnimation;
 
-LinearAnimation.prototype.checkPositions = function() {
-	var lenCheckX = (this.checkpoints[this.state+1][0] + '').replace('.','').length;
-	var lenCheckY = (this.checkpoints[this.state+1][1] + '').replace('.','').length;
-	var lenCheckZ = (this.checkpoints[this.state+1][2] + '').replace('.','').length
-
-	return ((this.x.toPrecision(lenCheckX)==this.checkpoints[this.state+1][0]) && 
-		(this.y.toPrecision(lenCheckY)==this.checkpoints[this.state+1][1]) && 
-		(this.z.toPrecision(lenCheckZ)==this.checkpoints[this.state+1][2]));
-};
-
 LinearAnimation.prototype.update = function(currTime) {
-	if(this.state>=this.checkpoints.length-1) return; //ANIMATION OVER
-	if(this.checkPositions()) { // REACHED A CHECKPOINT
-		this.state++;
-		this.updateSpeeds();
-		this.updateAngle();
-	}
+	if(this.time_beg==null) this.time_beg=currTime;
 	else
 	{
-		this.x+=this.speedX;
-		this.y+=this.speedY;
-		this.z+=this.speedZ;
+		var time_dif=currTime-this.time_beg;
+		if(time_dif>=this.span) return; //ANIMATION OVER
+
 	}
 	this.apply();
 };
 
 LinearAnimation.prototype.apply = function() {
-	mat4.translate(this.node.matrix, this.node.matrix, [this.speedX, this.speedY, this.speedZ]);
+	mat4.rotateY(this.node.matrix, this.node.beg_matrix, this.angle*degToRad);
+	mat4.translate(this.node.matrix, this.node.beg_matrix, [this.speedX, this.speedY, this.speedZ]);
 };
 
+/*
 LinearAnimation.prototype.updateSpeeds = function() {
 	if(this.state>=this.checkpoints.length-1) return;
 	this.speedX = (this.checkpoints[this.state+1][0]-this.x)/(this.time_per_check);
@@ -63,4 +59,12 @@ LinearAnimation.prototype.updateSpeeds = function() {
 
 LinearAnimation.prototype.updateAngle = function() {
 	this.angle = Math.atan2(this.checkpoints[this.state+1][2], this.checkpoints[this.state+1][0]) - Math.atan2(this.z, this.x);
-};
+};*/
+
+function dist(point1,point2) {
+	if(point1.constructor==Array && point1.length==3 && point2.constructor==Array && point2.length==3)
+	{
+		return Math.sqrt( (point1[0]-point2[0])*(point1[0]-point2[0]) + (point1[1]-point2[1])*(point1[1]-point2[1]) + (point1[2]-point2[2])*(point1[2]-point2[2]) );
+	}
+	return null;
+}

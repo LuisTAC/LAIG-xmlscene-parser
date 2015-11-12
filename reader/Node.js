@@ -7,8 +7,8 @@ function Node(id) {
 	this.texture=null;
 	this.descendants=[];
 	this.leaf=false;
-	this.visited=false
 	this.type=null;
+	this.beg_matrix=null;
 };
 
 Node.prototype.push = function(node) {

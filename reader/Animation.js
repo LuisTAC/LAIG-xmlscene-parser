@@ -6,12 +6,12 @@
 function Animation(scene, id, span) {
 
 	this.id=id;
- 	this.span=span;
- 	this.state=0;
+ 	this.span=span*1000;//convert secs to milsecs
  	this.scene=scene;
  	this.node=null;
 
  	this.type=null;
+ 	this.beg_time=null;
 };
 
 //Animation.prototype = Object.create(CGFobject.prototype);

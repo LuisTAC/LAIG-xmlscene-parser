@@ -781,7 +781,7 @@ MySceneGraph.prototype.getNodeObjByID = function(nodeID) {
 		}
 	}
 	return null;
-}
+};
 
 MySceneGraph.prototype.createSceneNodeArray = function() {
 	// Iterates over all the nodes and creates a new Node object
@@ -848,6 +848,9 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 
 		if(animation != null) {
 			animation.setNode(newNode);
+			
+			newNode.beg_matrix=mat4.create();
+			mat4.copy(newNode.beg_matrix,newNode.matrix);
 		}
 
 		
