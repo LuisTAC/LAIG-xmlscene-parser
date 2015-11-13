@@ -30,9 +30,7 @@ function LinearAnimation(scene, id, span, checkpoints) {
 	this.z=checkpoints[1][2];
 
 	this.angle=0;
-
-	//this.updateSpeeds();
-	//this.updateAngle();
+	this.state=0;
 
 };
 
@@ -54,36 +52,33 @@ LinearAnimation.prototype.update = function(currTime) {
 		var diffY=this.checkpoints[i+1][1]-this.checkpoints[i][1];
 		var diffZ=this.checkpoints[i+1][2]-this.checkpoints[i][2];
 
+		if(i>this.state)
+		{
+			this.state=i;
+			//this.angle+=angleVectors(this.checkpoints[i],this.checkpoints[i+1]);
+			var vec_diff1 = [this.checkpoints[i-1][0] - this.checkpoints[i][0], this.checkpoints[i-1][2] - this.checkpoints[i][2]];
+			var vec_diff2 = [this.checkpoints[i+1][0] - this.checkpoints[i][0], this.checkpoints[i+1][2] - this.checkpoints[i][2]];
+			var ang_inc = angleVectors(vec_diff1,vec_diff2);
+			this.angle -= ang_inc;
+			if(true);
+		}
+
 		var time_from_last_check = time_since_start - this.times[i];
 		var time_diff = this.times[i+1] - this.times[i];
 		var time_perc = time_from_last_check / time_diff;
-		/*            time_diff -- 1
-		 * time_from_last_check -- time_perc */
 
-		 this.x=this.checkpoints[i][0]+diffX*time_perc;
-		 this.y=this.checkpoints[i][1]+diffY*time_perc;
-		 this.z=this.checkpoints[i][2]+diffZ*time_perc;
+		this.x=this.checkpoints[i][0]+diffX*time_perc;
+		this.y=this.checkpoints[i][1]+diffY*time_perc;
+		this.z=this.checkpoints[i][2]+diffZ*time_perc;
 
 		this.apply();
 	}
 };
 
 LinearAnimation.prototype.apply = function() {
-	mat4.rotateY(this.node.matrix, this.node.beg_matrix, this.angle);
 	mat4.translate(this.node.matrix, this.node.beg_matrix, [this.x, this.y, this.z]);
+	mat4.rotateY(this.node.matrix, this.node.matrix, this.angle);
 };
-
-/*
-LinearAnimation.prototype.updateSpeeds = function() {
-	if(this.state>=this.checkpoints.length-1) return;
-	this.speedX = (this.checkpoints[this.state+1][0]-this.x)/(this.time_per_check);
-	this.speedY = (this.checkpoints[this.state+1][1]-this.y)/(this.time_per_check);
-	this.speedZ = (this.checkpoints[this.state+1][2]-this.z)/(this.time_per_check);
-};
-
-LinearAnimation.prototype.updateAngle = function() {
-	this.angle = Math.atan2(this.checkpoints[this.state+1][2], this.checkpoints[this.state+1][0]) - Math.atan2(this.z, this.x);
-};*/
 
 function dist(point1,point2) {
 	if(point1.constructor==Array && point1.length==3 && point2.constructor==Array && point2.length==3)
@@ -91,12 +86,40 @@ function dist(point1,point2) {
 		return Math.sqrt( (point1[0]-point2[0])*(point1[0]-point2[0]) + (point1[1]-point2[1])*(point1[1]-point2[1]) + (point1[2]-point2[2])*(point1[2]-point2[2]) );
 	}
 	return null;
-}
+};
 
 function angleVectors(vec1,vec2) {
-	if(point1.constructor==Array && point1.length==3 && point2.constructor==Array && point2.length==3)
+	if(vec1.constructor==Array && vec2.constructor==Array && vec1.length==vec2.length)
 	{
-		return Math.atan2(vec2[2], vec2[0]) - Math.atan2(vec1[2], vec1[0]);
+		var dProd = dotProduct(vec1,vec2);
+		var norm1 = normVector(vec1);
+		var norm2 = normVector(vec2);
+		return Math.acos(dProd/(norm1*norm2));
 	}
 	return null;
-}
+};
+
+function dotProduct(vec1,vec2) {
+	if(vec1.constructor==Array && vec2.constructor==Array && vec1.length==vec2.length && vec1.length>0)
+	{
+		var product=0;
+		for(var i=0; i<vec1.length; i++)
+		{
+			product+=vec1[i]*vec2[i];
+		}
+		return product;
+	}
+	return null;
+};
+
+function normVector(vec) {
+	if(vec.constructor==Array && vec.length>0)
+	{
+		var sum=0;
+		for (var i = 0; i < vec.length; i++) {
+			sum += vec[i]*vec[i];
+		}
+		return Math.sqrt(sum);
+	}
+	return null;
+};
