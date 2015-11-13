@@ -41,7 +41,7 @@ LinearAnimation.prototype.update = function(currTime) {
 		if(time_dif>=this.span) return; //ANIMATION OVER
 
 	}
-	this.apply();
+	//this.apply();
 };
 
 LinearAnimation.prototype.apply = function() {

@@ -475,7 +475,7 @@ MySceneGraph.prototype.parseAnimations = function(rootElement) {
 			var radius = this.reader.getFloat(iterAnimation, "radius", true);
 			var startang = this.reader.getFloat(iterAnimation, "startang", true);
 			var rotang = this.reader.getFloat(iterAnimation, "rotang", true);
-			currAnimation = new CircularAnimation(this.scene, id, span, center, startang, rotang);
+			currAnimation = new CircularAnimation(this.scene, id, span, center, startang, rotang, radius);
 		}
 		else return "wrong animation type on animation["+id+"]";
 		this.animations[id]=currAnimation;
