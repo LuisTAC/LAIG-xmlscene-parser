@@ -13,7 +13,6 @@ function LinearAnimation(scene, id, span, checkpoints) {
 	this.dists=[];
 	this.dists.push(0);
 	for (var i = 1; i < checkpoints.length; i++) {
-		checkpoints[i]
 		this.dists[i]=dist(checkpoints[i-1],checkpoints[i])+this.dists[i-1];
 	};
 
@@ -60,7 +59,6 @@ LinearAnimation.prototype.update = function(currTime) {
 			var vec_diff2 = [this.checkpoints[i+1][0] - this.checkpoints[i][0], this.checkpoints[i+1][2] - this.checkpoints[i][2]];
 			var ang_inc = angleVectors(vec_diff1,vec_diff2);
 			this.angle -= ang_inc;
-			if(true);
 		}
 
 		var time_from_last_check = time_since_start - this.times[i];
