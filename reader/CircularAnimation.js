@@ -30,26 +30,18 @@ CircularAnimation.prototype.update = function(currTime) {
 		if((currTime-this.beg_time) >= this.span) return;
 		else 
 		{
-			var begMatrix = this.node.begMatrix;
-
-			// Moves the node to the desired center
-			mat4.translate(this.node.matrix, this.node.beg_matrix, [-this.x, -this.y, -this.z]);
-
-			// Rotates the node angle_beg+angle_rot
+			// Calculates angles to rotate
 			var ang_inc = (this.angle_rot*(currTime-this.beg_time))/this.span;
 			var total_rot = ang_inc+this.angle_beg;
 
 			// Rotates node Matrix from the Matrix_Beg
-			mat4.rotateY(this.node.matrix, this.node.matrix, total_rot);
+			mat4.rotateY(this.node.matrix, this.node.beg_matrix, total_rot);
 
-			// Moves the node to the initial center
+			// Moves the node to the desired center
 			mat4.translate(this.node.matrix, this.node.matrix, [this.x, this.y, this.z]);
+
+			// Moves the node according to the given radius
+			mat4.translate(this.node.matrix, this.node.matrix, [this.radius*Math.cos(total_rot), 0, this.radius*Math.sin(total_rot)]);
 		}
 	}
-	
 };
-
-/*CircularAnimation.prototype.apply = function() {
-	//this.scene.rotate();
-	//this.scene.translate();
-};*/

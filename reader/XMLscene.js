@@ -287,6 +287,6 @@ XMLscene.prototype.update = function(currTime) {
        console.log("update");
         for(key in this.graph.animations) {
             if(this.graph.animations[key].node!=null) this.graph.animations[key].update(currTime);
-        } 
+        }
     }
 };
