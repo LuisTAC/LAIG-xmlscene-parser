@@ -33,17 +33,17 @@ CircularAnimation.prototype.update = function(currTime) {
 			var begMatrix = this.node.begMatrix;
 
 			// Moves the node to the desired center
-			this.node.matrix = mat4.translate(this.node.matrix, this.node.beg_matrix, [-this.x, -this.y, -this.z]);
+			mat4.translate(this.node.matrix, this.node.beg_matrix, [-this.x, -this.y, -this.z]);
 
 			// Rotates the node angle_beg+angle_rot
 			var ang_inc = (this.angle_rot*(currTime-this.beg_time))/this.span;
 			var total_rot = ang_inc+this.angle_beg;
 
 			// Rotates node Matrix from the Matrix_Beg
-			this.node.matrix = mat4.rotateY(this.node.matrix, this.node.matrix, total_rot);
+			mat4.rotateY(this.node.matrix, this.node.matrix, total_rot);
 
 			// Moves the node to the initial center
-			this.node.matrix = mat4.translate(this.node.matrix, this.node.matrix, [this.x, this.y, this.z]);
+			mat4.translate(this.node.matrix, this.node.matrix, [this.x, this.y, this.z]);
 		}
 	}
 	
