@@ -157,16 +157,16 @@
     </MATERIALS>
 
     <ANIMATIONS>
-        <ANIMATION id="lin1" span="10" type="linear">
+        <!--<ANIMATION id="lin1" span="10" type="linear">
             <CONTROLPOINT xx="0" yy="0" zz="0" />
             <CONTROLPOINT xx="-5" yy="0" zz="0" />
             <CONTROLPOINT xx="-5" yy="0" zz="-7" />
             <CONTROLPOINT xx="5" yy="0" zz="-7" />
             <CONTROLPOINT xx="5" yy="0" zz="0" />
             <CONTROLPOINT xx="0" yy="0" zz="0" />
-        </ANIMATION>>
+        </ANIMATION>-->
 
-        <!-- <ANIMATION id="cir1" span="5" type="circular" center="0 0 5" radius="3" startang="0" rotang="360"/> -->
+        <ANIMATION id="cir1" span="10" type="circular" center="0 0 0" radius="3" startang="0" rotang="360"/>
     </ANIMATIONS>
 
     <LEAVES>
@@ -387,7 +387,7 @@
             <MATERIAL id="mat_red" />
             <TEXTURE id="clear" />
             
-            <ANIMATIONREF id="lin1"/>
+            <ANIMATIONREF id="cir1"/>
 
             <DESCENDANTS>
                 <DESCENDANT id="car_floor" />
