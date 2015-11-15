@@ -480,12 +480,6 @@ MySceneGraph.prototype.parseAnimations = function(rootElement) {
 		else return "wrong animation type on animation["+id+"]";
 		this.animations[id]=currAnimation;
 	}
-	for(var key in this.animations)
-	{
-		console.log("ANIMATION["+key+"]");
-		console.log("\tTYPE: "+this.animations[key].type);
-		console.log("\tTIME: "+this.animations[key].time);
-	}
 };
 
 MySceneGraph.prototype.parseLeaves = function(rootElement) {
@@ -511,64 +505,88 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 		var leaf_type = this.reader.getString(iterLeaf, "type", true);
 		currLeaf["type"] = leaf_type;
 
-		// Stores each argument into currLeaf[]
-		var args = this.reader.getString(iterLeaf, "args", true);
-		var split_args = args.split(" ");
-		for(var j=0; j<split_args.length; j++)
-		{
-			if(isNaN(split_args[j])) return "invalid leaf args (@LEAF["+i+"]="+currLeaf["id"]+" args["+j+"]="+split_args[j]+")!";
+		if(leaf_type != "patch" && leaf_type != "plane") {
+			// Stores each argument into currLeaf[]
+			var args = this.reader.getString(iterLeaf, "args", true);
+			var split_args = args.split(" ");
+			for(var j=0; j<split_args.length; j++)
+			{
+				if(isNaN(split_args[j])) return "invalid leaf args (@LEAF["+i+"]="+currLeaf["id"]+" args["+j+"]="+split_args[j]+")!";
+			}
+	
+			currLeaf["args"] = [];
+			switch(leaf_type) {
+				// CAN CONVERT HERE TO INT OR FLOAT IF NEEDED!
+				case "rectangle":
+					// Get each argument into the array
+					currLeaf["args"]["x1"] = split_args[0];
+					currLeaf["args"]["y1"] = split_args[1];
+					currLeaf["args"]["x2"] = split_args[2];
+					currLeaf["args"]["y2"] = split_args[3];
+					break;
+				case "cylinder":
+					// Get each argument into the array
+					currLeaf["args"]["height"] = split_args[0];
+					currLeaf["args"]["bottom_r"] = split_args[1];
+					currLeaf["args"]["top_r"] = split_args[2];
+					currLeaf["args"]["sections_h"] = split_args[3];
+					currLeaf["args"]["parts_sec"] = split_args[4];
+					break;
+				case "sphere":
+					// Get each argument into the array
+					currLeaf["args"]["radius"] = split_args[0];
+					currLeaf["args"]["parts_r"] = split_args[1];
+					currLeaf["args"]["parts_sec"] = split_args[2];
+					break;
+				case "triangle":
+					// Get each argument into the array
+					currLeaf["args"]["xt_1"] = split_args[0];
+					currLeaf["args"]["yt_1"] = split_args[1];
+					currLeaf["args"]["zt_1"] = split_args[2];
+	
+					currLeaf["args"]["xt_2"] = split_args[3];
+					currLeaf["args"]["yt_2"] = split_args[4];
+					currLeaf["args"]["zt_2"] = split_args[5];
+	
+					currLeaf["args"]["xt_3"] = split_args[6];
+					currLeaf["args"]["yt_3"] = split_args[7];
+					currLeaf["args"]["zt_3"] = split_args[8];
+					break;
+				default:
+					return "Not valid leaf type";
+				}
+			}
+			else if(leaf_type == "patch") { // Processes a patch type leaf
+				currLeaf["id"] = this.reader.getString(iterLeaf, "id", true);
+
+				currLeaf["order"] = this.reader.getInteger(iterLeaf, "order", true);
+
+				currLeaf["partsU"] = this.reader.getInteger(iterLeaf, "partsU", true);
+				currLeaf["partsV"] = this.reader.getInteger(iterLeaf, "partsV", true);
+
+				var controlpoints_array = iterLeaf.getElementsByTagName('controlpoint');
+				if(controlpoints_array.length == null) return "no controlpoints were found";
+
+				var controlpoints = [[], []];
+				for(var u=0; u<controlpoints_array.length; u++) {
+					var iterContr = controlpoints_array[u];
+					var x = this.reader.getFloat(iterContr, "x", true);
+					var y = this.reader.getFloat(iterContr, "y", true);
+					var z = this.reader.getFloat(iterContr, "z", true);
+
+					controlpoints[u] = [x, y, z];
+				}
+				currLeaf["controlpoints"] = controlpoints;
+			}
+			else { // Processes a plane type leaf
+				currLeaf["id"] = this.reader.getInteger(iterLeaf, "id", true);
+				currLeaf["parts"] = this.reader.getInteger(iterLeaf, "parts", true);
+			}
+			this.leaves[i] = currLeaf;
 		}
-		
-		//console.log(split_args);
-
-		currLeaf["args"] = [];
-		switch(leaf_type) {
-			// CAN CONVERT HERE TO INT OR FLOAT IF NEEDED!
-			case "rectangle":
-				// Get each argument into the array
-				currLeaf["args"]["x1"] = split_args[0];
-				currLeaf["args"]["y1"] = split_args[1];
-				currLeaf["args"]["x2"] = split_args[2];
-				currLeaf["args"]["y2"] = split_args[3];
-				break;
-			case "cylinder":
-				// Get each argument into the array
-				currLeaf["args"]["height"] = split_args[0];
-				currLeaf["args"]["bottom_r"] = split_args[1];
-				currLeaf["args"]["top_r"] = split_args[2];
-				currLeaf["args"]["sections_h"] = split_args[3];
-				currLeaf["args"]["parts_sec"] = split_args[4];
-				break;
-			case "sphere":
-				// Get each argument into the array
-				currLeaf["args"]["radius"] = split_args[0];
-				currLeaf["args"]["parts_r"] = split_args[1];
-				currLeaf["args"]["parts_sec"] = split_args[2];
-				break;
-			case "triangle":
-				// Get each argument into the array
-				currLeaf["args"]["xt_1"] = split_args[0];
-				currLeaf["args"]["yt_1"] = split_args[1];
-				currLeaf["args"]["zt_1"] = split_args[2];
-
-				currLeaf["args"]["xt_2"] = split_args[3];
-				currLeaf["args"]["yt_2"] = split_args[4];
-				currLeaf["args"]["zt_2"] = split_args[5];
-
-				currLeaf["args"]["xt_3"] = split_args[6];
-				currLeaf["args"]["yt_3"] = split_args[7];
-				currLeaf["args"]["zt_3"] = split_args[8];
-				break;
-			default:
-				return "Not valid leaf type";
-		}
-		this.leaves[i] = currLeaf;
-	}
 
 	for(var i=0; i<this.leaves.length; i++) {
-		console.log("LEAF["+i+"]: "+this.leaves[i]["id"]);
-		console.log("\tTYPE: "+this.leaves[i]["type"]);
-		console.log("\tARGS: ");console.log(this.leaves[i]["args"]);
+		console.log(this.leaves[i]);
 	}
 };
 
@@ -578,7 +596,9 @@ MySceneGraph.prototype.buildPrimitives = function() {
 	{
 		var id=this.leaves[i]["id"];
 		var type=this.leaves[i]["type"];
-		var args=this.leaves[i]["args"];
+		if((type != "patch") && (type != "plane")) {
+			var args=this.leaves[i]["args"];
+		}
 		switch(type)
 		{
 			case "rectangle":
@@ -592,6 +612,12 @@ MySceneGraph.prototype.buildPrimitives = function() {
 				break;
 			case "triangle":
 				this.primitives[id] = new MyTriangle(this.scene, args["xt_1"], args["yt_1"], args["zt_1"], args["xt_2"], args["yt_2"], args["zt_2"], args["xt_3"], args["yt_3"], args["zt_3"]);
+				break;
+			case "patch":
+				this.primitives[id] = new MyPatch(this.scene, this.leaves[i]["order"], this.leaves[i]["partsU"], this.leaves[i]["partsv"], this.leaves[i]["controlpoints"]);
+				break;
+			case "plane":
+				this.primitives[id] = new MyPlane(this.scene, this.leaves[i]["parts"]);
 				break;
 		}
 	}
@@ -863,6 +889,7 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 		var newNode = new Node(id);
 		newNode.leaf = true;
 
+		// TODO CHECK IF TYPE IS VALID TO PUT ARGS there
 		var args = this.leaves[i]["args"];
 		newNode.setArgs(args);
 		newNode.setType(type);
@@ -870,6 +897,7 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 		this.node_ret.push(newNode);
 	}
 };
+
 MySceneGraph.prototype.linkSceneNodes = function() {
 	for(var i=0; i<this.nodes.length; i++) {
 		var descendants = this.nodes[i]["descendants"];

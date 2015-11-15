@@ -166,7 +166,7 @@
             <CONTROLPOINT xx="0" yy="0" zz="0" />
         </ANIMATION>-->
 
-        <ANIMATION id="cir1" span="10" type="circular" center="0 0 0" radius="3" startang="0" rotang="360"/>
+        <ANIMATION id="cir1" span="10" type="circular" center="0 0 0" radius="10" startang="0" rotang="360" />
     </ANIMATIONS>
 
     <LEAVES>
@@ -180,6 +180,12 @@
         <LEAF id="tri_side_win1" type="triangle" args="-0.375 0.0 0.0 0.0 0.0 0.0 0.0 0.75 0.0" />
         <LEAF id="tri_side_win2" type="triangle" args="0.0 0.0 0.0 -0.375 0.0 0.0 0.0 0.75 0.0" />
         <!-- COLUMN -->
+        <!--<LEAF id="first_patch" type="patch" order="1" partsU="20" partsV="30">
+            <controlpoint x="-2" y="-2" z="0" />
+            <controlpoint x="-2" y="2" z="0" />
+            <controlpoint x="2" y="-2" z="0" />
+            <controlpoint x="2" y="2" z="0" />
+        </LEAF>-->
     </LEAVES>
 
     <NODES>
@@ -190,7 +196,8 @@
             <TEXTURE id="clear" />
 
             <DESCENDANTS>
-                <DESCENDANT id="car" />
+                <!--<DESCENDANT id="first_patch" />-->
+                                <DESCENDANT id="car" />
                 <DESCENDANT id="scene_floor" />
                 <DESCENDANT id="scene_column_left" />
                 <DESCENDANT id="scene_column_right" />

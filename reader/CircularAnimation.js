@@ -38,10 +38,10 @@ CircularAnimation.prototype.update = function(currTime) {
 			mat4.translate(this.node.matrix, this.node.beg_matrix, [this.radius*Math.cos(total_rot), 0, this.radius*Math.sin(total_rot)]);
 
 			// Moves the node to the desired center
-			mat4.translate(this.node.matrix, this.node.matrix, [this.x, this.y, this.z]);
+			mat4.translate(this.node.matrix, this.node.matrix, [this.x, this.y, this.z]);	
 
 			// Rotates node Matrix from the Matrix_Beg
-			//mat4.rotateY(this.node.matrix, this.node.matrix, total_rot);		
+			mat4.rotateY(this.node.matrix, this.node.matrix, total_rot/this.span);	
 		}
 	}
 };
