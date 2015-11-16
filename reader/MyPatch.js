@@ -1,7 +1,10 @@
-function MyPatch(scene, order, knotsU, knotsV, controlpoints) {
+function MyPatch(scene, order, knotsU, knotsV, controlpoints, partsU, partsV) {
 	this.scene = scene;
 	this.order = order;
 	this.controlpoints = controlpoints;
+
+    var partsU = partsU || 20;
+    var partsV = partsU || 20;
 
 	this.knots_a = [];
 
@@ -29,7 +32,7 @@ function MyPatch(scene, order, knotsU, knotsV, controlpoints) {
 		return surf.getPoint(u, v);
 	};
 
-	this.obj = new CGFnurbsObject(scene, getSurfacePoint, knotsU, knotsV);
+	this.obj = new CGFnurbsObject(scene, getSurfacePoint, partsU, partsV);
 };
 
 MyPatch.prototype = Object.create(CGFobject.prototype);

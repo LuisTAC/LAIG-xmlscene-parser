@@ -171,6 +171,7 @@
 
     <LEAVES>
         <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
+        <!--
         <LEAF id="rec_unit" type="rectangle" args="-0.5 0.5 0.5 -0.5" />
         <LEAF id="cyl_unit" type="cylinder" args="1.0 0.5 0.5 20 20" />
         <LEAF id="cir_unit" type="cylinder" args="0.0 0.5 0.0 2 20" />
@@ -179,13 +180,17 @@
         <LEAF id="tri_unit" type="triangle" args="-0.5 0.0 0.0 0.5 0.0 0.0 0.0 0.5 0.0" />
         <LEAF id="tri_side_win1" type="triangle" args="-0.375 0.0 0.0 0.0 0.0 0.0 0.0 0.75 0.0" />
         <LEAF id="tri_side_win2" type="triangle" args="0.0 0.0 0.0 -0.375 0.0 0.0 0.0 0.75 0.0" />
-        <!-- COLUMN -->
-        <!--<LEAF id="first_patch" type="patch" order="1" partsU="20" partsV="30">
-            <controlpoint x="-2" y="-2" z="0" />
-            <controlpoint x="-2" y="2" z="0" />
-            <controlpoint x="2" y="-2" z="0" />
-            <controlpoint x="2" y="2" z="0" />
-        </LEAF>-->
+        -->
+        <LEAF id="first_patch" type="patch" order="1" partsU="20" partsV="20">
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="-2" y="-2" z="0" />
+                <CONTROLPOINT x="-2" y="2" z="0" />
+            </CONTROLPOINTSET>
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="2" y="-2" z="0" />
+                <CONTROLPOINT x="2" y="2" z="0" />
+            </CONTROLPOINTSET>
+        </LEAF>
     </LEAVES>
 
     <NODES>
@@ -196,13 +201,15 @@
             <TEXTURE id="clear" />
 
             <DESCENDANTS>
-                <!--<DESCENDANT id="first_patch" />-->
-                                <DESCENDANT id="car" />
+                <DESCENDANT id="first_patch" />
+                <!--
+                <DESCENDANT id="car" />
                 <DESCENDANT id="scene_floor" />
                 <DESCENDANT id="scene_column_left" />
                 <DESCENDANT id="scene_column_right" />
                 <DESCENDANT id="scene_box" />
                 <DESCENDANT id="scene_bin" />
+                -->
             </DESCENDANTS>
         </NODE>
 

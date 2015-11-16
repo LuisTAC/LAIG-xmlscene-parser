@@ -564,18 +564,25 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 				currLeaf["partsU"] = this.reader.getInteger(iterLeaf, "partsU", true);
 				currLeaf["partsV"] = this.reader.getInteger(iterLeaf, "partsV", true);
 
-				var controlpoints_array = iterLeaf.getElementsByTagName('controlpoint');
-				if(controlpoints_array.length == null) return "no controlpoints were found";
+				var controlpointsets_array = iterLeaf.getElementsByTagName("CONTROLPOINTSET");
+				if(controlpointsets_array== null || controlpointsets_array.length==0) return "no controlpointsets were found";
 
-				var controlpoints = [[], []];
-				for(var u=0; u<controlpoints_array.length; u++) {
-					var iterContr = controlpoints_array[u];
-					var x = this.reader.getFloat(iterContr, "x", true);
-					var y = this.reader.getFloat(iterContr, "y", true);
-					var z = this.reader.getFloat(iterContr, "z", true);
+				var controlpoints = [];
+				for (var j = 0; j < controlpointsets_array.length; j++) {
 
-					controlpoints[u] = [x, y, z];
-				}
+					var controlpoints_array = controlpointsets_array[j].getElementsByTagName('CONTROLPOINT');
+					if(controlpoints_array == null || controlpoints_array.length==0) return "no controlpoints were found";
+
+					var set=[];
+					for(var u=0; u<controlpoints_array.length; u++) {
+						var iterContr = controlpoints_array[u];
+						var x = this.reader.getFloat(iterContr, "x", true);
+						var y = this.reader.getFloat(iterContr, "y", true);
+						var z = this.reader.getFloat(iterContr, "z", true);
+						set.push([x, y, z, 1]);
+					}
+					controlpoints.push(set);
+				};
 				currLeaf["controlpoints"] = controlpoints;
 			}
 			else { // Processes a plane type leaf

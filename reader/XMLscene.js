@@ -26,8 +26,7 @@ XMLscene.prototype.init = function (application) {
 
 	this.axis = new CGFaxis(this);
 
-
-    this.plane = new MyPlane(this, 20);
+    //this.plane = new MyPlane(this, 20);
 
     this.setUpdatePeriod(updatePeriod);
 };
@@ -282,7 +281,6 @@ XMLscene.prototype.display = function () {
 
         //this.plane.display();
         this.dfs_init();
-
 	};	
 };
 
