@@ -567,6 +567,13 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 				var controlpointsets_array = iterLeaf.getElementsByTagName("CONTROLPOINTSET");
 				if(controlpointsets_array== null || controlpointsets_array.length==0) return "no controlpointsets were found";
 
+				var cp_number = 0;
+				for(var j=0; j<controlpointsets_array.length; j++) {
+					cp_number += controlpointsets_array[j].children.length;
+				}
+
+				if(cp_number != ((currLeaf["order"]+1)*(currLeaf["order"]+1))) return "invalid controlpoints number "+cp_number+" found!";
+
 				var controlpoints = [];
 				for (var j = 0; j < controlpointsets_array.length; j++) {
 
@@ -579,6 +586,7 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 						var x = this.reader.getFloat(iterContr, "x", true);
 						var y = this.reader.getFloat(iterContr, "y", true);
 						var z = this.reader.getFloat(iterContr, "z", true);
+						// ISN'T ALWAYS ONE?
 						set.push([x, y, z, 1]);
 					}
 					controlpoints.push(set);
