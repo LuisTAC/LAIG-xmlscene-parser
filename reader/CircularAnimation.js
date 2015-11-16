@@ -41,7 +41,7 @@ CircularAnimation.prototype.update = function(currTime) {
 			mat4.translate(this.node.matrix, this.node.matrix, [this.x, this.y, this.z]);	
 
 			// Rotates node Matrix from the Matrix_Beg
-			mat4.rotateY(this.node.matrix, this.node.matrix, total_rot/this.span);	
+			mat4.rotateY(this.node.matrix, this.node.matrix, total_rot);	
 		}
 	}
 };
