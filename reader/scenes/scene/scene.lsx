@@ -68,6 +68,11 @@
             <file path="resources/metal.jpg" />                             <!-- path to file -->
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
+        <TEXTURE id="portugalshader">
+            <file path="resources/shadertextures/portugal.png" />                             <!-- path to file -->
+            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+        </TEXTURE>
+
 
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     </TEXTURES>
@@ -172,6 +177,7 @@
     <LEAVES>
         <!-- next lines define nodes of type leaf; they may be repeated, in any order, as necessary -->
         
+        <!--
         <LEAF id="rec_unit" type="rectangle" args="-0.5 0.5 0.5 -0.5" />
         <LEAF id="cyl_unit" type="cylinder" args="1.0 0.5 0.5 20 20" />
         <LEAF id="cir_unit" type="cylinder" args="0.0 0.5 0.0 2 20" />
@@ -210,6 +216,8 @@
                 <CONTROLPOINT x="2" y="2" z="0" />
             </CONTROLPOINTSET>
         </LEAF>
+        -->
+        <LEAF id="terrain" type="terrain" texture="portugalshader" heightmap="portugalshader" />
     </LEAVES>
 
     <NODES>
@@ -220,14 +228,18 @@
             <TEXTURE id="clear" />
 
             <DESCENDANTS>
+                <DESCENDANT id="terrain"/>
+
+                <!--
                 <DESCENDANT id="first_patch" />
                 
-                <!--<DESCENDANT id="car" />
+                <DESCENDANT id="car" />
                 <DESCENDANT id="scene_floor" />
                 <DESCENDANT id="scene_column_left" />
                 <DESCENDANT id="scene_column_right" />
                 <DESCENDANT id="scene_box" />
-                <DESCENDANT id="scene_bin" />-->
+                <DESCENDANT id="scene_bin" />
+                -->
                 
             </DESCENDANTS>
         </NODE>

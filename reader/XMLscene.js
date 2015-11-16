@@ -24,6 +24,11 @@ XMLscene.prototype.init = function (application) {
 
     this.enableTextures(true);
 
+    //Shaders
+    this.myShader = new CGFshader(this.gl, "shaders/myshader.vert", "shaders/myshader.frag");
+    this.myShader.setUniformsValues({normScale: 0.03});
+    this.myShader.setUniformsValues({uSampler2: 1});
+
 	this.axis = new CGFaxis(this);
 
     //this.plane = new MyPlane(this, 20);
@@ -176,14 +181,31 @@ XMLscene.prototype.dfs = function(elem) {
     if(elem.leaf)
     {
         var prim = this.graph.primitives[elem.id];
-        if(this.textureStack.length>0) {
-            if(this.textureStack[this.textureStack.length - 1]!=null) {
-                prim.updateTex(this.textureStack[this.textureStack.length - 1].fact_s, this.textureStack[this.textureStack.length - 1].fact_t);
+        if(elem.type=="terrain")
+        {
+            var texture = elem.texture;
+            
+            var mat= this.materialStack[this.materialStack.length - 1]
+            mat.setTexture(texture);
+            mat.setTextureWrap ('REPEAT', 'REPEAT');
+            mat.apply();
+            
+            this.setActiveShader(this.myShader);
+            texture.bind(1);
+
+            prim.display();
+            
+            this.setActiveShader(this.defaultShader);
+        } else {
+            if(this.textureStack.length>0) {
+                if(this.textureStack[this.textureStack.length - 1]!=null) {
+                    prim.updateTex(this.textureStack[this.textureStack.length - 1].fact_s, this.textureStack[this.textureStack.length - 1].fact_t);
+                }
+                this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
             }
-            this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
+            this.materialStack[this.materialStack.length - 1].apply();
+            prim.display(elem);
         }
-        this.materialStack[this.materialStack.length - 1].apply();
-        prim.display();
     }
     else {
         // Materials application

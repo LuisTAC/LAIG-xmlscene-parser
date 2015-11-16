@@ -505,7 +505,7 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 		var leaf_type = this.reader.getString(iterLeaf, "type", true);
 		currLeaf["type"] = leaf_type;
 
-		if(leaf_type != "patch" && leaf_type != "plane") {
+		if(leaf_type != "patch" && leaf_type != "plane" && leaf_type != "terrain") {
 			// Stores each argument into currLeaf[]
 			var args = this.reader.getString(iterLeaf, "args", true);
 			var split_args = args.split(" ");
@@ -557,7 +557,6 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 				}
 			}
 			else if(leaf_type == "patch") { // Processes a patch type leaf
-				currLeaf["id"] = this.reader.getString(iterLeaf, "id", true);
 
 				currLeaf["order"] = this.reader.getInteger(iterLeaf, "order", true);
 
@@ -593,10 +592,14 @@ MySceneGraph.prototype.parseLeaves = function(rootElement) {
 				};
 				currLeaf["controlpoints"] = controlpoints;
 			}
-			else { // Processes a plane type leaf
-				currLeaf["id"] = this.reader.getInteger(iterLeaf, "id", true);
+			else if(leaf_type == "plane"){ // Processes a plane type leaf
 				currLeaf["parts"] = this.reader.getInteger(iterLeaf, "parts", true);
 			}
+			else if(leaf_type == "terrain") { // Processes a Terrain primitve
+				currLeaf["texture"] = this.reader.getString(iterLeaf, "texture", true);
+				currLeaf["height"] = this.reader.getString(iterLeaf, "heightmap", true);
+			}
+			else return "invalid primitive type";
 			this.leaves[i] = currLeaf;
 		}
 
@@ -633,6 +636,9 @@ MySceneGraph.prototype.buildPrimitives = function() {
 				break;
 			case "plane":
 				this.primitives[id] = new MyPlane(this.scene, this.leaves[i]["parts"]);
+				break;
+			case "terrain":
+				this.primitives[id] = new MyTerrain(this.scene, 50, this.leaves[i]["texture"], this.leaves[i]["heightmap"]);
 				break;
 		}
 	}
@@ -904,7 +910,15 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 		var newNode = new Node(id);
 		newNode.leaf = true;
 
-		// TODO CHECK IF TYPE IS VALID TO PUT ARGS there
+		if(type == "terrain") {
+			texture_arr = this.getTextureByID(this.leaves[i]["texture"]);
+
+			texture = new CGFtexture(this.scene,texture_arr["file"]);
+			texture.fact_s=texture_arr["amplif_factor"]["s"];
+			texture.fact_t=texture_arr["amplif_factor"]["t"];
+			newNode.setTexture(texture);
+
+		}
 		var args = this.leaves[i]["args"];
 		newNode.setArgs(args);
 		newNode.setType(type);
