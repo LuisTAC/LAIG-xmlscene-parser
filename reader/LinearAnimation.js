@@ -30,7 +30,6 @@ function LinearAnimation(scene, id, span, checkpoints) {
 
 	this.angle=0;
 	this.state=0;
-
 };
 
 LinearAnimation.prototype = Object.create(Animation.prototype);
@@ -41,7 +40,16 @@ LinearAnimation.prototype.update = function(currTime) {
 	else
 	{
 		var time_since_start=currTime-this.beg_time;
-		if(time_since_start>=this.span) return; //ANIMATION OVER
+		if(time_since_start>this.span && !this.done) //TIME'S UP
+		{
+			this.x=this.checkpoints[this.checkpoints.length-1][0];
+			this.y=this.checkpoints[this.checkpoints.length-1][1];
+			this.z=this.checkpoints[this.checkpoints.length-1][2];
+
+			this.done=true;
+			this.apply();
+			return;
+		}
 
 		var i=0;
 		for (; i < this.times.length-1; i++) {

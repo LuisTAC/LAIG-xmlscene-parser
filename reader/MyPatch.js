@@ -42,3 +42,5 @@ MyPatch.prototype.display = function () {
 	
    	this.obj.display();
 };
+
+MyPatch.prototype.updateTex = function () {};

@@ -45,35 +45,41 @@
 
     <TEXTURES>
         <TEXTURE id="text_glass">
-            <file path="resources/glass.jpg" />                             <!-- path to file -->
-            <amplif_factor s="1.0" t="1.0" />                <!-- x/s, y/t -->
+            <file path="resources/glass.jpg" />    <!-- path to file -->
+            <amplif_factor s="1.0" t="1.0" />    <!-- x/s, y/t -->
         </TEXTURE>
         <TEXTURE id="text_asphalt">
-            <file path="resources/asphalt.jpg" />                             <!-- path to file -->
-            <amplif_factor s="0.3" t="0.3" />                <!-- x/s, y/t -->
+            <file path="resources/asphalt.jpg" />
+            <amplif_factor s="0.3" t="0.3" />
         </TEXTURE>
         <TEXTURE id="text_car_under">
-            <file path="resources/car_under.jpg" />                             <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+            <file path="resources/car_under.jpg" />
+            <amplif_factor s="1" t="1" />
         </TEXTURE>
         <TEXTURE id="text_gaspump">
-            <file path="resources/gaspump.jpg" />                             <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+            <file path="resources/gaspump.jpg" />
+            <amplif_factor s="1" t="1" />
         </TEXTURE>
         <TEXTURE id="text_gaspump1">
-            <file path="resources/gaspump1.jpg" />                             <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+            <file path="resources/gaspump1.jpg" />
+            <amplif_factor s="1" t="1" />
         </TEXTURE>
         <TEXTURE id="text_metal">
-            <file path="resources/metal.jpg" />                             <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
+            <file path="resources/metal.jpg" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="text_flag_france">
+            <file path="resources/flag_france.png" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="text_park_spot">
+            <file path="resources/park_spot.jpg" />
+            <amplif_factor s="0.1" t="0.1" />
         </TEXTURE>
         <TEXTURE id="portugalshader">
             <file path="resources/shadertextures/portugal.png" />                             <!-- path to file -->
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
-
-
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     </TEXTURES>
 
@@ -95,10 +101,10 @@
         </MATERIAL>
 
         <MATERIAL id="mat_asphalt">
-            <shininess value="50" />
+            <shininess value="1" />
             <specular r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.4" g="0.4" b="0.4" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.4" g="0.4" b="0.5" a="1.0" />         <!-- ambient reflection -->
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />         <!-- diffuse reflection -->
+            <ambient r="0.3" g="0.3" b="0.4" a="1.0" />         <!-- ambient reflection -->
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
         </MATERIAL>
 
@@ -131,6 +137,22 @@
             <specular r="0.1" g="0.1" b="0.5" a="1.0" />        <!-- specular reflection -->
             <diffuse r="0.2" g="0.2" b="0.9" a="1.0" />         <!-- diffuse reflection -->
             <ambient r="0.2" g="0.2" b="0.9" a="1.0" />         <!-- ambient reflection -->
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+        </MATERIAL>
+
+        <MATERIAL id="mat_black">
+            <shininess value="50" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- specular reflection -->
+            <diffuse r="0.05" g="0.05" b="0.05" a="1.0" />         <!-- diffuse reflection -->
+            <ambient r="0.05" g="0.05" b="0.05" a="1.0" />         <!-- ambient reflection -->
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+        </MATERIAL>
+
+        <MATERIAL id="mat_white">
+            <shininess value="50" />
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- specular reflection -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />         <!-- diffuse reflection -->
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />         <!-- ambient reflection -->
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
         </MATERIAL>
 
@@ -186,7 +208,7 @@
         <LEAF id="tri_side_win1" type="triangle" args="-0.375 0.0 0.0 0.0 0.0 0.0 0.0 0.75 0.0" />
         <LEAF id="tri_side_win2" type="triangle" args="0.0 0.0 0.0 -0.375 0.0 0.0 0.0 0.75 0.0" />
         
-        <!--<LEAF id="first_patch" type="patch" order="3" partsU="20" partsV="20">
+        <LEAF id="patch_3" type="patch" order="3" partsU="20" partsV="20">
             <CONTROLPOINTSET>
                 <CONTROLPOINT x="-2" y="-2" z="0" />
                 <CONTROLPOINT x="-2" y="-1" z="0" />
@@ -215,7 +237,19 @@
                 <CONTROLPOINT x="2" y="2" z="0" />
             </CONTROLPOINTSET>
         </LEAF>
-        -->
+
+        <LEAF id="patch_1_unit" type="patch" order="1" partsU="20" partsV="20">
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="0.5" y="0" z="-0.5" />
+                <CONTROLPOINT x="0.5" y="0" z="0.5" />
+            </CONTROLPOINTSET>
+
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="-0.5" y="0" z="-0.5" />
+                <CONTROLPOINT x="-0.5" y="0" z="0.5" />
+            </CONTROLPOINTSET>
+        </LEAF>
+
         <!--<LEAF id="terrain" type="terrain" texture="portugalshader" heightmap="portugalshader" />-->
     </LEAVES>
 
@@ -228,9 +262,6 @@
 
             <DESCENDANTS>
                 <!--<DESCENDANT id="terrain"/>-->
-
-                <!--
-                <DESCENDANT id="first_patch" />-->
                 
                 <DESCENDANT id="car" />
                 <DESCENDANT id="scene_floor" />
@@ -238,23 +269,33 @@
                 <DESCENDANT id="scene_column_right" />
                 <DESCENDANT id="scene_box" />
                 <DESCENDANT id="scene_bin" />
-                
-                
+                <DESCENDANT id="scene_floor_spot" />
             </DESCENDANTS>
         </NODE>
 
         <!--FLOOR-->
-
-        <NODE id="scene_floor">       
+        <NODE id="scene_floor">
             <MATERIAL id="mat_asphalt" /> 
             <TEXTURE id="text_asphalt" />
 
             <TRANSLATION x="0.0" y="0.0" z="-2.0" />
             <ROTATION axis="x" angle="-90.0" />
-            <SCALE sx="10.0" sy="10.0" sz="1.0" />
+            <SCALE sx="15.0" sy="17.0" sz="1.0" />
 
             <DESCENDANTS>
                 <DESCENDANT id="rec_unit" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="scene_floor_spot">
+            <MATERIAL id="mat_asphalt" />
+            <TEXTURE id="text_park_spot" />
+
+            <TRANSLATION x="0.0" y="0.01" z="0.0" />
+            <SCALE sx="6.0" sy="1.0" sz="3.0" />
+            <ROTATION axis="y" angle="90" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="patch_1_unit" />
             </DESCENDANTS>
         </NODE>
 
@@ -428,7 +469,7 @@
         <!--CAR-->
         <NODE id="car">
 
-            <MATERIAL id="mat_red" />
+            <MATERIAL id="mat_black" />
             <TEXTURE id="clear" />
             
             <ANIMATIONREF id="cir1"/>
@@ -445,6 +486,7 @@
                 <DESCENDANT id="car_ceiling" />
                 <DESCENDANT id="car_windshield" />
                 <DESCENDANT id="car_windshield_rear" />
+                <DESCENDANT id="car_flags" />
             </DESCENDANTS>
         </NODE>
 
@@ -837,6 +879,7 @@
                 <DESCENDANT id="tri_side_win2" />
             </DESCENDANTS>                
         </NODE>
+
         <!-- CAR BACK -->
         <NODE id="car_back">
             <MATERIAL id="null" />
@@ -923,6 +966,7 @@
                 <DESCENDANT id="tri_side_win2" />
             </DESCENDANTS>                
         </NODE>
+
         <!-- EXHAUST -->
         <NODE id="car_exhaust">
             <MATERIAL id="mat_rubber" />
@@ -991,6 +1035,104 @@
                 <DESCENDANT id="rec_unit" />
             </DESCENDANTS>
         </NODE>
+
+        <!-- FLAG -->
+        <NODE id="car_flags">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="-2.25" y="1.75" z="0.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="car_flag_left" />
+                <DESCENDANT id="car_flag_right" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="car_flag_left">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0.0" y="0.0" z="0.75" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="car_flag_elem" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="car_flag_right">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="0.0" y="0.0" z="-0.75" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="car_flag_elem" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="car_flag_elem">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <SCALE sx="0.75" sy="0.75" sz="0.75" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="car_flag_pole" />
+                <DESCENDANT id="car_flag_pole_top" />
+                <DESCENDANT id="car_flag_flag" />
+                <DESCENDANT id="car_flag_flag1" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="car_flag_pole">
+            <MATERIAL id="mat_black" />
+            <TEXTURE id="null"/>
+
+            <ROTATION axis="x" angle="-90" />
+            <SCALE sx="0.1" sy="0.1" sz="0.75" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="cyl_unit" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="car_flag_pole_top">
+            <MATERIAL id="mat_black" />
+            <TEXTURE id="null"/>
+
+            <TRANSLATION x="0.0" y="0.75" z="0.0" />
+            <ROTATION axis="x" angle="-90" />
+            <SCALE sx="0.1" sy="0.1" sz="0.75" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="cir_unit" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="car_flag_flag">
+            <MATERIAL id="mat_white" />
+            <TEXTURE id="text_flag_france"/>
+
+            <TRANSLATION x="0.25" y="0.5" z="0.0" />
+            <SCALE sx="0.14" sy="0.1" sz="0.1" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="patch_3" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="car_flag_flag1">
+            <MATERIAL id="mat_white" />
+            <TEXTURE id="text_flag_france"/>
+
+            <TRANSLATION x="0.25" y="0.5" z="0.0" />
+            <ROTATION axis="y" angle="180"/>
+            <SCALE sx="0.14" sy="0.1" sz="0.1" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="patch_3" />
+            </DESCENDANTS>
+        </NODE>
+
     </NODES>
 
 </SCENE>

@@ -121,10 +121,6 @@ XMLscene.prototype.setDefaultAppearance = function () {
 };
 
 XMLscene.prototype.dfs_init = function() {
-    for(var i=0; i<this.graph.node_ret.length; i++) {
-        this.graph.node_ret[i].visited = false;
-    };
-
     // Creates Transformations matrix
     var matrix = mat4.create();
     mat4.identity(matrix);

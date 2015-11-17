@@ -13,6 +13,7 @@ function Animation(scene, id, span) {
  	this.type=null;
  	this.beg_time=null;
  	this.compound=false;
+ 	this.done=false;
 };
 
 Animation.prototype.constructor = Animation;

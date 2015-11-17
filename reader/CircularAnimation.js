@@ -27,7 +27,20 @@ CircularAnimation.prototype.update = function(currTime) {
 	if(this.beg_time == null) this.beg_time = currTime;
 	else 
 	{
-		if((currTime-this.beg_time) >= this.span) return;
+		if((currTime-this.beg_time) > this.span && !this.done) //TIME'S UP
+		{
+			// Translates node to its center
+			mat4.translate(this.node.matrix, this.node.beg_matrix, [this.x, this.y, this.z]);
+
+			// Rotates the desired angle
+			mat4.rotateY(this.node.matrix, this.node.matrix, this.angle_beg+this.angle_rot);
+
+			// Translates according to its radius
+			mat4.translate(this.node.matrix, this.node.matrix, [this.radius, 0, 0]);
+
+			this.done=true;
+			return;
+		}
 		else 
 		{
 			// Calculates angles to rotate
