@@ -638,7 +638,7 @@ MySceneGraph.prototype.buildPrimitives = function() {
 				this.primitives[id] = new MyPlane(this.scene, this.leaves[i]["parts"]);
 				break;
 			case "terrain":
-				this.primitives[id] = new MyTerrain(this.scene, 50, this.leaves[i]["texture"], this.leaves[i]["heightmap"]);
+				this.primitives[id] = new MyTerrain(this.scene, 1000, this.leaves[i]["texture"], this.leaves[i]["heightmap"]);
 				break;
 		}
 	}
@@ -713,17 +713,41 @@ MySceneGraph.prototype.parseNodes = function(rootElement) {
 		currNode["animations"]=[];
 		if(nodeAnimationRefs.length>0)
 		{
-			var nodeAnimationRef = nodeAnimationRefs[0];
-			var nodeAnimationRefID = this.reader.getString(nodeAnimationRef, "id", true);
-			
-			if(nodeAnimationRefID != null)
+			if(nodeAnimationRefs.length>1)
 			{
-				if(!(nodeAnimationRefID in this.animations))
-				{
-					return "no valid animation found"
-				}
-				else currNode["animation"]=this.animations[nodeAnimationRefID];
+				var animations = [];
+				for (var j = 0; j < nodeAnimationRefs.length; j++) {
+					var nodeAnimationRef = nodeAnimationRefs[j];
+					var nodeAnimationRefID = this.reader.getString(nodeAnimationRef, "id", true);
+
+					if(nodeAnimationRefID != null)
+					{
+						if(!(nodeAnimationRefID in this.animations))
+						{
+							return "no valid animation found ("+nodeAnimationRefID+")";
+						}
+						else animations.push(this.animations[nodeAnimationRefID]);
+					}
+				};
+				var cmpAnimation = new CompoundAnimation(this.scene,animations);
+				currNode["animation"]= cmpAnimation;
+				this.animations["cmp_"+currNode["id"]] = cmpAnimation;
 			}
+			else
+			{
+				var nodeAnimationRef = nodeAnimationRefs[0];
+				var nodeAnimationRefID = this.reader.getString(nodeAnimationRef, "id", true);
+				
+				if(nodeAnimationRefID != null)
+				{
+					if(!(nodeAnimationRefID in this.animations))
+					{
+						return "no valid animation found";
+					}
+					else currNode["animation"]=this.animations[nodeAnimationRefID];
+				}
+			}
+
 		}
 
 		currNode["geo_transf"]=[];

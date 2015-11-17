@@ -310,7 +310,7 @@ XMLscene.prototype.update = function(currTime) {
     if(this.graph.loadedOk) {
        console.log("update");
         for(key in this.graph.animations) {
-            if(this.graph.animations[key].node!=null) this.graph.animations[key].update(currTime);
+            if(this.graph.animations[key].node!=null && !this.graph.animations[key].compound) this.graph.animations[key].update(currTime);
         }
     }
 };

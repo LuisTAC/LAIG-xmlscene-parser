@@ -12,11 +12,10 @@ function Animation(scene, id, span) {
 
  	this.type=null;
  	this.beg_time=null;
+ 	this.compound=false;
 };
 
-//Animation.prototype = Object.create(CGFobject.prototype);
 Animation.prototype.constructor = Animation;
-
 
 Animation.prototype.setNode = function(node) {
 	this.node = node;

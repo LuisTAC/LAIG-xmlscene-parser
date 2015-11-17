@@ -162,18 +162,16 @@
     </MATERIALS>
 
     <ANIMATIONS>
-        <ANIMATION id="lin1" span="10" type="linear">
-            <CONTROLPOINT xx="0" yy="0" zz="0" />
+        <ANIMATION id="lin1" span="5" type="linear">
+            <CONTROLPOINT xx="4" yy="0" zz="0" />
             <CONTROLPOINT xx="-5" yy="0" zz="0" />
             <CONTROLPOINT xx="-5" yy="0" zz="-7" />
-            <CONTROLPOINT xx="-3" yy="1" zz="-7" />
-            <CONTROLPOINT xx="3" yy="1" zz="-7" />
             <CONTROLPOINT xx="5" yy="0" zz="-7" />
             <CONTROLPOINT xx="5" yy="0" zz="0" />
             <CONTROLPOINT xx="0" yy="0" zz="0" />
         </ANIMATION>
 
-        <ANIMATION id="cir1" span="10" type="circular" center="0 0 0" radius="1" startang="0" rotang="360" />
+        <ANIMATION id="cir1" span="3" type="circular" center="0 0 0" radius="4" startang="180" rotang="180" />
     </ANIMATIONS>
 
     <LEAVES>
@@ -433,6 +431,7 @@
             <MATERIAL id="mat_red" />
             <TEXTURE id="clear" />
             
+            <ANIMATIONREF id="cir1"/>
             <ANIMATIONREF id="lin1"/>
 
             <DESCENDANTS>
