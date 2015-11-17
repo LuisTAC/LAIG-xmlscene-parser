@@ -3,7 +3,7 @@ var updatePeriod = 50;
 
 function XMLscene() {
     CGFscene.call(this);
-}
+};
 
 XMLscene.prototype = Object.create(CGFscene.prototype);
 XMLscene.prototype.constructor = XMLscene;
@@ -199,8 +199,7 @@ XMLscene.prototype.dfs = function(elem) {
                 this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
             }
             this.materialStack[this.materialStack.length - 1].apply();
-            // TODO TAKE ELEM OFF
-            prim.display(elem);
+            prim.display();
         }
     }
     else {
@@ -259,7 +258,6 @@ XMLscene.prototype.onGraphLoaded = function () {
     myInterface.setActiveCamera(this.camera);
     
     this.initMaterials();
-
 };
 
 XMLscene.prototype.display = function () {
@@ -304,7 +302,6 @@ XMLscene.prototype.display = function () {
 
 XMLscene.prototype.update = function(currTime) {
     if(this.graph.loadedOk) {
-       console.log("update");
         for(key in this.graph.animations) {
             if(this.graph.animations[key].node!=null && !this.graph.animations[key].compound) this.graph.animations[key].update(currTime);
         }

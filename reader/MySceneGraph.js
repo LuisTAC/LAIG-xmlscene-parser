@@ -632,13 +632,17 @@ MySceneGraph.prototype.buildPrimitives = function() {
 				this.primitives[id] = new MyTriangle(this.scene, args["xt_1"], args["yt_1"], args["zt_1"], args["xt_2"], args["yt_2"], args["zt_2"], args["xt_3"], args["yt_3"], args["zt_3"]);
 				break;
 			case "patch":
-				this.primitives[id] = new MyPatch(this.scene, this.leaves[i]["order"], this.leaves[i]["partsU"], this.leaves[i]["partsv"], this.leaves[i]["controlpoints"]);
+				this.primitives[id] = new MyPatch(this.scene, this.leaves[i]["order"], this.leaves[i]["partsU"], this.leaves[i]["partsV"], this.leaves[i]["controlpoints"]);
 				break;
 			case "plane":
 				this.primitives[id] = new MyPlane(this.scene, this.leaves[i]["parts"]);
 				break;
 			case "terrain":
-				this.primitives[id] = new MyTerrain(this.scene, 1000000, new CGFtexture(this.scene, this.leaves[i]["texture"]), new CGFtexture(this.scene, this.leaves[i]["heightmap"]));
+				var texture_arr = this.getTextureByID(this.leaves[i]["texture"]);
+				var height_arr = this.getTextureByID(this.leaves[i]["height"]);
+				var texture = new CGFtexture(this.scene,texture_arr["file"]);
+				var heightmap = new CGFtexture(this.scene,height_arr["file"]);;
+				this.primitives[id] = new MyTerrain(this.scene, 50, texture, heightmap);
 				break;
 		}
 	}
@@ -879,9 +883,9 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 		if(textureID=="clear") texture = "clear";
 		else if(textureID=="null") texture = "null";
 		else {
-			texture_arr = this.getTextureByID(textureID);
+			var texture_arr = this.getTextureByID(textureID);
 			if(texture_arr!=null) {
-				texture = new CGFtexture(this.scene,texture_arr["file"]);
+				var texture = new CGFtexture(this.scene,texture_arr["file"]);
 				texture.fact_s=texture_arr["amplif_factor"]["s"];
 				texture.fact_t=texture_arr["amplif_factor"]["t"];
 				newNode.setTexture(texture);
@@ -935,9 +939,9 @@ MySceneGraph.prototype.createSceneNodeArray = function() {
 		newNode.leaf = true;
 
 		if(type == "terrain") {
-			texture_arr = this.getTextureByID(this.leaves[i]["texture"]);
+			var texture_arr = this.getTextureByID(this.leaves[i]["texture"]);
 
-			texture = new CGFtexture(this.scene,texture_arr["file"]);
+			var texture = new CGFtexture(this.scene,texture_arr["file"]);
 			texture.fact_s=texture_arr["amplif_factor"]["s"];
 			texture.fact_t=texture_arr["amplif_factor"]["t"];
 			newNode.setTexture(texture);

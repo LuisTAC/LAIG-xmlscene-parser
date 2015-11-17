@@ -17,28 +17,26 @@
     </ILLUMINATION>
 
     <LIGHTS>
-        <LIGHT id="light0">                                    <!-- light identifier -->
-            <enable value="1" />                         <!-- enable/disable -->
-            <position x="4.0" y="6.0" z="1.0" w="1" />       <!-- light position -->
-            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />        <!-- diffuse component -->
-            <specular r="1.0" g="1.0" b="0.0" a="1.0" />       <!-- specular component -->
+        <LIGHT id="light0">     <!-- light identifier -->
+            <enable value="1" />     <!-- enable/disable -->
+            <position x="4.0" y="6.0" z="1.0" w="1" />     <!-- light position -->
+            <ambient r="0" g="0" b="0" a="1" />     <!-- ambient component -->
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />     <!-- diffuse component -->
+            <specular r="1.0" g="1.0" b="0.0" a="1.0" />     <!-- specular component -->
         </LIGHT>
-
-        <LIGHT id="light1">                                    <!-- light identifier -->
-            <enable value="1" />                         <!-- enable/disable -->
-            <position x="10.5" y="6.0" z="1.0" w="1.0" />       <!-- light position -->
-            <ambient r="0" g="0" b="0" a="1" />        <!-- ambient component -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />        <!-- diffuse component -->
-            <specular r="0" g="0" b="0" a="0" />       <!-- specular component -->
+        <LIGHT id="light1">
+            <enable value="1" />
+            <position x="0.0" y="5.0" z="5.0" w="1.0" />
+            <ambient r="0.5" g="0.5" b="0.5" a="1" />
+            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
         </LIGHT>
-
-        <LIGHT id="light2">                                    <!-- light identifier -->
-            <enable value="1" />                         <!-- enable/disable -->
-            <position x="0.0" y="5.0" z="5.0" w="1.0" />       <!-- light position -->
-            <ambient r="0.5" g="0.5" b="0.5" a="1" />        <!-- ambient component -->
-            <diffuse r="0.5" g="0.5" b="0.5" a="1.0" />        <!-- diffuse component -->
-            <specular r="0.5" g="0.5" b="0.5" a="1.0" />       <!-- specular component -->
+        <LIGHT id="light2">
+            <enable value="1" />
+            <position x="0.0" y="3.4" z="-4.0" w="1.0" />
+            <ambient r="0" g="0" b="0" a="1" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <specular r="0" g="0" b="0" a="0" />
         </LIGHT>
         <!-- NOTE: this block "LIGHT" must be repeated as necessary with different "id" -->
     </LIGHTS>
@@ -76,10 +74,6 @@
             <file path="resources/park_spot.jpg" />
             <amplif_factor s="0.1" t="0.1" />
         </TEXTURE>
-        <TEXTURE id="portugalshader">
-            <file path="resources/shadertextures/portugal.png" />                             <!-- path to file -->
-            <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
-        </TEXTURE>
         <TEXTURE id="shell_colors">
             <file path="resources/shell_colors.png" />
             <amplif_factor s="1" t="1" />
@@ -99,95 +93,83 @@
             <ambient r="0.3" g="0.3" b="0.3" a="4.0" />         <!-- ambient reflection -->
             <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
         </MATERIAL>
-
         <MATERIAL id="mat_metal">
             <shininess value="50" />
-            <specular r="0.5" g="0.5" b="0.5" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.9" g="0.9" b="0.9" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.5" g="0.5" b="0.5" a="1.0" />
+            <diffuse r="0.9" g="0.9" b="0.9" a="1.0" />
+            <ambient r="0.9" g="0.9" b="0.9" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_asphalt">
             <shininess value="1" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.3" g="0.3" b="0.4" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.3" g="0.3" b="0.3" a="1.0" />
+            <ambient r="0.3" g="0.3" b="0.4" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_rubber">
             <shininess value="5" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.1" g="0.1" b="0.1" a="1.0" />
+            <ambient r="0.1" g="0.1" b="0.1" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_red">
             <shininess value="50" />
-            <specular r="0.5" g="0.1" b="0.1" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.9" g="0.2" b="0.2" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.9" g="0.2" b="0.2" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.5" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.9" g="0.2" b="0.2" a="1.0" />
+            <ambient r="0.9" g="0.2" b="0.2" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_green">
             <shininess value="50" />
-            <specular r="0.1" g="0.5" b="0.1" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.2" g="0.9" b="0.2" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.2" g="0.9" b="0.2" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.1" g="0.5" b="0.1" a="1.0" />
+            <diffuse r="0.2" g="0.9" b="0.2" a="1.0" />
+            <ambient r="0.2" g="0.9" b="0.2" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_blue">
             <shininess value="50" />
-            <specular r="0.1" g="0.1" b="0.5" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.2" g="0.2" b="0.9" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.2" g="0.2" b="0.9" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.1" g="0.1" b="0.5" a="1.0" />
+            <diffuse r="0.2" g="0.2" b="0.9" a="1.0" />
+            <ambient r="0.2" g="0.2" b="0.9" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_black">
             <shininess value="50" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.05" g="0.05" b="0.05" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.05" g="0.05" b="0.05" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="0.05" g="0.05" b="0.05" a="1.0" />
+            <ambient r="0.05" g="0.05" b="0.05" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_white">
             <shininess value="50" />
-            <specular r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.0" g="0.0" b="0.0" a="1.0" />
+            <diffuse r="1.0" g="1.0" b="1.0" a="1.0" />
+            <ambient r="1.0" g="1.0" b="1.0" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_headlights">
             <shininess value="20" />
-            <specular r="0.1" g="0.1" b="0.1" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.6" g="0.4" b="0.1" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.6" g="0.4" b="0.1" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.6" g="0.4" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.6" g="0.4" b="0.1" a="1.0" />
+            <ambient r="0.6" g="0.4" b="0.1" a="1.0" />
+            <emission r="0.6" g="0.4" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_taillights">
             <shininess value="20" />
-            <specular r="0.1" g="0.1" b="0.1" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.5" g="0.1" b="0.1" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.5" g="0.1" b="0.1" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.5" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.1" g="0.1" b="0.1" a="1.0" />
+            <diffuse r="0.5" g="0.1" b="0.1" a="1.0" />
+            <ambient r="0.5" g="0.1" b="0.1" a="1.0" />
+            <emission r="0.5" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <MATERIAL id="mat_glass">
             <shininess value="50" />
-            <specular r="0.0" g="0.0" b="0.2" a="1.0" />        <!-- specular reflection -->
-            <diffuse r="0.3" g="0.4" b="0.6" a="1.0" />         <!-- diffuse reflection -->
-            <ambient r="0.3" g="0.4" b="0.6" a="1.0" />         <!-- ambient reflection -->
-            <emission r="0.0" g="0.0" b="0.0" a="1.0" />        <!-- emission component -->
+            <specular r="0.0" g="0.0" b="0.2" a="1.0" />
+            <diffuse r="0.3" g="0.4" b="0.6" a="1.0" />
+            <ambient r="0.3" g="0.4" b="0.6" a="1.0" />
+            <emission r="0.0" g="0.0" b="0.0" a="1.0" />
         </MATERIAL>
-
         <!-- NOTE: the "MATERIAL" block may be repeated as required. Each defined material requires a distinct "id" -->
     </MATERIALS>
 
@@ -200,7 +182,6 @@
             <CONTROLPOINT xx="5" yy="0" zz="0" />
             <CONTROLPOINT xx="0" yy="0" zz="0" />
         </ANIMATION>
-
         <ANIMATION id="cir1" span="3" type="circular" center="0 0 0" radius="4" startang="180" rotang="180" />
     </ANIMATIONS>
 
@@ -246,6 +227,66 @@
             </CONTROLPOINTSET>
         </LEAF>
 
+        <LEAF id="patch_2_top" type="patch" order="2" partsU="20" partsV="20">
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="-0.5" y="-0.5" z="0" />
+                <CONTROLPOINT x="-0.5" y="0" z="0" />
+                <CONTROLPOINT x="-0.5" y="0.5" z="0" />
+            </CONTROLPOINTSET>
+
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="0.4" y="-0.5" z="0.3" />
+                <CONTROLPOINT x="0.4" y="0" z="0.3" />
+                <CONTROLPOINT x="0.4" y="0.5" z="0.3" />
+            </CONTROLPOINTSET>
+
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="0.5" y="-0.5" z="0" />
+                <CONTROLPOINT x="0.5" y="0" z="0" />
+                <CONTROLPOINT x="0.5" y="0.5" z="0" />
+            </CONTROLPOINTSET>
+        </LEAF>
+
+        <LEAF id="patch_2_left" type="patch" order="2" partsU="20" partsV="20">
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="-0.5" y="0" z="0" />
+                <CONTROLPOINT x="-0.5" y="0" z="0" />
+                <CONTROLPOINT x="-0.5" y="0" z="0" />
+            </CONTROLPOINTSET>
+
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="0.4" y="0" z="0" />
+                <CONTROLPOINT x="0.4" y="0.15" z="0" />
+                <CONTROLPOINT x="0.4" y="0.3" z="0" />
+            </CONTROLPOINTSET>
+
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="0.5" y="0" z="0" />
+                <CONTROLPOINT x="0.5" y="0" z="0" />
+                <CONTROLPOINT x="0.5" y="0" z="0" />
+            </CONTROLPOINTSET>
+        </LEAF>
+
+        <LEAF id="patch_2_right" type="patch" order="2" partsU="20" partsV="20">
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="0.5" y="0" z="0" />
+                <CONTROLPOINT x="0.5" y="0" z="0" />
+                <CONTROLPOINT x="0.5" y="0" z="0" />
+            </CONTROLPOINTSET>
+
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="0.4" y="0" z="0" />
+                <CONTROLPOINT x="0.4" y="0.15" z="0" />
+                <CONTROLPOINT x="0.4" y="0.3" z="0" />
+            </CONTROLPOINTSET>
+
+            <CONTROLPOINTSET>
+                <CONTROLPOINT x="-0.5" y="0" z="0" />
+                <CONTROLPOINT x="-0.5" y="0" z="0" />
+                <CONTROLPOINT x="-0.5" y="0" z="0" />
+            </CONTROLPOINTSET>
+        </LEAF>
+
         <LEAF id="patch_1_unit" type="patch" order="1" partsU="20" partsV="20">
             <CONTROLPOINTSET>
                 <CONTROLPOINT x="0.5" y="0" z="-0.5" />
@@ -258,7 +299,7 @@
             </CONTROLPOINTSET>
         </LEAF>
 
-        <LEAF id="terrain" type="terrain" texture="shell_colors" heightmap="shell_height" />
+        <LEAF id="terrain_shell" type="terrain" texture="shell_colors" heightmap="shell_height" />
     </LEAVES>
 
     <NODES>
@@ -269,9 +310,9 @@
             <TEXTURE id="clear" />
 
             <DESCENDANTS>
-                <DESCENDANT id="shell"/>
-                
-                <!--<DESCENDANT id="car" />-->
+                <DESCENDANT id="shell_box"/>
+
+                <DESCENDANT id="car" />
                 <DESCENDANT id="scene_floor" />
                 <DESCENDANT id="scene_column_left" />
                 <DESCENDANT id="scene_column_right" />
@@ -279,15 +320,88 @@
                 <DESCENDANT id="scene_bin" />
                 <DESCENDANT id="scene_floor_spot" />
             </DESCENDANTS>
+        </NODE>        
+
+        <!--SHELL BOX-->
+        <NODE id="shell_box">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
+
+            <TRANSLATION x="0.0" y="3.4" z="-4.0" />
+            <SCALE sx="0.4" sy="0.4" sz="0.4" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shell_front" />
+                <DESCENDANT id="shell_back" />
+                <DESCENDANT id="shell_left" />
+                <DESCENDANT id="shell_right" />
+                <DESCENDANT id="shell_top" />
+            </DESCENDANTS>
         </NODE>
 
-        <NODE id="shell">
-            <MATERIAL id="mat_white" />
+        <NODE id="shell_front">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
+
+            <TRANSLATION x="0.0" y="0.0" z="1.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shell_elem" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="shell_back">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
+
+            <TRANSLATION x="0.0" y="0.0" z="-1.0" />
+            <ROTATION axis="y" angle="180" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shell_elem" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="shell_left">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
+
+            <TRANSLATION x="-1.0" y="0.0" z="0.0" />
+            <ROTATION axis="y" angle="-90" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shell_elem" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="shell_right">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
+
+            <TRANSLATION x="1.0" y="0.0" z="0.0" />
+            <ROTATION axis="y" angle="90" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="shell_elem" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="shell_top">
+            <MATERIAL id="null" />
             <TEXTURE id="clear" />
 
             <TRANSLATION x="0.0" y="1.0" z="0.0" />
+            <ROTATION axis="x" angle="-90" />
+
             <DESCENDANTS>
-                <DESCENDANT id="terrain" />
+                <DESCENDANT id="shell_elem" />
+            </DESCENDANTS>
+        </NODE>
+        <NODE id="shell_elem">
+            <MATERIAL id="null" />
+            <TEXTURE id="clear" />
+
+            <ROTATION axis="x" angle="90" />
+            <ROTATION axis="y" angle="-90" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="terrain_shell" />
             </DESCENDANTS>
         </NODE>
 
@@ -505,6 +619,9 @@
                 <DESCENDANT id="car_windshield" />
                 <DESCENDANT id="car_windshield_rear" />
                 <DESCENDANT id="car_flags" />
+                <DESCENDANT id="patch1"/>
+                <DESCENDANT id="patch2"/>
+                <DESCENDANT id="patch3"/>
             </DESCENDANTS>
         </NODE>
 
@@ -1148,6 +1265,44 @@
 
             <DESCENDANTS>
                 <DESCENDANT id="patch_3" />
+            </DESCENDANTS>
+        </NODE>
+
+
+        <NODE id="patch1">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="1.75" y="1.75" z="0" />
+            <ROTATION axis="x" angle="-90" />
+            <SCALE sx="1.5" sy="2.0" sz="1.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="patch_2_top"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="patch2">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="1.75" y="1.75" z="1.0" />
+            <SCALE sx="1.5" sy="1.0" sz="1.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="patch_2_left"/>
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="patch3">
+            <MATERIAL id="null" />
+            <TEXTURE id="null" />
+
+            <TRANSLATION x="1.75" y="1.75" z="-1.0" />
+            <SCALE sx="1.5" sy="1.0" sz="1.0" />
+
+            <DESCENDANTS>
+                <DESCENDANT id="patch_2_right"/>
             </DESCENDANTS>
         </NODE>
     </NODES>

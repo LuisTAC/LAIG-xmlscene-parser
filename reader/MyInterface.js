@@ -67,6 +67,7 @@ MyInterface.prototype.processKeyDown = function(event) {
 	if(num<0 || num>7) return;
 	
 	this.scene.lights[num].ena = !(this.scene.lights[num].ena);
+	//this.scene.lights[num].setVisible(this.scene.lights[num].ena);
 	console.log("LIGHT["+num+"] ("+this.scene.graph.lights[num].id+") toggled")
 
 };

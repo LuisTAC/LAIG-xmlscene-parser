@@ -1,10 +1,10 @@
-function MyPatch(scene, order, knotsU, knotsV, controlpoints, partsU, partsV) {
+function MyPatch(scene, order, partsU, partsV, controlpoints) {
 	this.scene = scene;
 	this.order = order;
 	this.controlpoints = controlpoints;
 
-    var partsU = partsU || 20;
-    var partsV = partsU || 20;
+    var partsU = partsU || 50;
+    var partsV = partsV || 50;
 
 	this.knots_a = [];
 
