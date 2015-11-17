@@ -54,11 +54,16 @@ LinearAnimation.prototype.update = function(currTime) {
 		if(i>this.state)
 		{
 			this.state=i;
-			//this.angle+=angleVectors(this.checkpoints[i],this.checkpoints[i+1]);
 			var vec_diff1 = [this.checkpoints[i-1][0] - this.checkpoints[i][0], this.checkpoints[i-1][2] - this.checkpoints[i][2]];
 			var vec_diff2 = [this.checkpoints[i+1][0] - this.checkpoints[i][0], this.checkpoints[i+1][2] - this.checkpoints[i][2]];
-			var ang_inc = angleVectors(vec_diff1,vec_diff2);
-			this.angle -= ang_inc;
+			var ang_inc = Math.atan2( vec_diff1[0]*vec_diff2[1] - vec_diff1[1]*vec_diff2[0], vec_diff1[0]*vec_diff2[0] + vec_diff1[1]*vec_diff2[1] );
+			if(Math.abs(ang_inc)==Math.PI) {
+				ang_inc=0;
+			}
+			else if(ang_inc==0) {
+				ang_inc=Math.PI;
+			}
+			this.angle += ang_inc;
 		}
 
 		var time_from_last_check = time_since_start - this.times[i];
@@ -82,42 +87,6 @@ function dist(point1,point2) {
 	if(point1.constructor==Array && point1.length==3 && point2.constructor==Array && point2.length==3)
 	{
 		return Math.sqrt( (point1[0]-point2[0])*(point1[0]-point2[0]) + (point1[1]-point2[1])*(point1[1]-point2[1]) + (point1[2]-point2[2])*(point1[2]-point2[2]) );
-	}
-	return null;
-};
-
-function angleVectors(vec1,vec2) {
-	if(vec1.constructor==Array && vec2.constructor==Array && vec1.length==vec2.length)
-	{
-		var dProd = dotProduct(vec1,vec2);
-		var norm1 = normVector(vec1);
-		var norm2 = normVector(vec2);
-		return Math.acos(dProd/(norm1*norm2));
-	}
-	return null;
-};
-
-function dotProduct(vec1,vec2) {
-	if(vec1.constructor==Array && vec2.constructor==Array && vec1.length==vec2.length && vec1.length>0)
-	{
-		var product=0;
-		for(var i=0; i<vec1.length; i++)
-		{
-			product+=vec1[i]*vec2[i];
-		}
-		return product;
-	}
-	return null;
-};
-
-function normVector(vec) {
-	if(vec.constructor==Array && vec.length>0)
-	{
-		var sum=0;
-		for (var i = 0; i < vec.length; i++) {
-			sum += vec[i]*vec[i];
-		}
-		return Math.sqrt(sum);
 	}
 	return null;
 };
