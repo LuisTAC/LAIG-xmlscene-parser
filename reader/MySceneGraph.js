@@ -638,7 +638,7 @@ MySceneGraph.prototype.buildPrimitives = function() {
 				this.primitives[id] = new MyPlane(this.scene, this.leaves[i]["parts"]);
 				break;
 			case "terrain":
-				this.primitives[id] = new MyTerrain(this.scene, 1000, this.leaves[i]["texture"], this.leaves[i]["heightmap"]);
+				this.primitives[id] = new MyTerrain(this.scene, 1000000, new CGFtexture(this.scene, this.leaves[i]["texture"]), new CGFtexture(this.scene, this.leaves[i]["heightmap"]));
 				break;
 		}
 	}

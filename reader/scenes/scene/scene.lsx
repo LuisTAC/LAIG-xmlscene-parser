@@ -80,6 +80,14 @@
             <file path="resources/shadertextures/portugal.png" />                             <!-- path to file -->
             <amplif_factor s="1" t="1" />                <!-- x/s, y/t -->
         </TEXTURE>
+        <TEXTURE id="shell_colors">
+            <file path="resources/shell_colors.png" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
+        <TEXTURE id="shell_height">
+            <file path="resources/shadertextures/shell_heightmap.png" />
+            <amplif_factor s="1" t="1" />
+        </TEXTURE>
         <!-- NOTE: this block "TEXTURE" must be repeated as necessary with different "id" -->
     </TEXTURES>
 
@@ -250,7 +258,7 @@
             </CONTROLPOINTSET>
         </LEAF>
 
-        <!--<LEAF id="terrain" type="terrain" texture="portugalshader" heightmap="portugalshader" />-->
+        <LEAF id="terrain" type="terrain" texture="shell_colors" heightmap="shell_height" />
     </LEAVES>
 
     <NODES>
@@ -261,15 +269,25 @@
             <TEXTURE id="clear" />
 
             <DESCENDANTS>
-                <!--<DESCENDANT id="terrain"/>-->
+                <DESCENDANT id="shell"/>
                 
-                <DESCENDANT id="car" />
+                <!--<DESCENDANT id="car" />-->
                 <DESCENDANT id="scene_floor" />
                 <DESCENDANT id="scene_column_left" />
                 <DESCENDANT id="scene_column_right" />
                 <DESCENDANT id="scene_box" />
                 <DESCENDANT id="scene_bin" />
                 <DESCENDANT id="scene_floor_spot" />
+            </DESCENDANTS>
+        </NODE>
+
+        <NODE id="shell">
+            <MATERIAL id="mat_white" />
+            <TEXTURE id="clear" />
+
+            <TRANSLATION x="0.0" y="1.0" z="0.0" />
+            <DESCENDANTS>
+                <DESCENDANT id="terrain" />
             </DESCENDANTS>
         </NODE>
 
@@ -1132,7 +1150,6 @@
                 <DESCENDANT id="patch_3" />
             </DESCENDANTS>
         </NODE>
-
     </NODES>
 
 </SCENE>

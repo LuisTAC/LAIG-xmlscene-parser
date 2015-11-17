@@ -55,6 +55,7 @@ LinearAnimation.prototype.update = function(currTime) {
 		for (; i < this.times.length-1; i++) {
 			if(this.times[i]<time_since_start && this.times[i+1]>time_since_start) break;
 		};
+		
 		var diffX=this.checkpoints[i+1][0]-this.checkpoints[i][0];
 		var diffY=this.checkpoints[i+1][1]-this.checkpoints[i][1];
 		var diffZ=this.checkpoints[i+1][2]-this.checkpoints[i][2];

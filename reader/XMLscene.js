@@ -179,15 +179,14 @@ XMLscene.prototype.dfs = function(elem) {
         var prim = this.graph.primitives[elem.id];
         if(elem.type=="terrain")
         {
-            var texture = elem.texture;
             
             var mat= this.materialStack[this.materialStack.length - 1]
-            mat.setTexture(texture);
+            mat.setTexture(prim.tex);
             mat.setTextureWrap ('REPEAT', 'REPEAT');
             mat.apply();
             
             this.setActiveShader(this.myShader);
-            texture.bind(1);
+            prim.h_map.bind(1);
 
             prim.display();
             
@@ -200,6 +199,7 @@ XMLscene.prototype.dfs = function(elem) {
                 this.materialStack[this.materialStack.length - 1].setTexture(this.textureStack[this.textureStack.length - 1]);
             }
             this.materialStack[this.materialStack.length - 1].apply();
+            // TODO TAKE ELEM OFF
             prim.display(elem);
         }
     }
